@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Team Status · CP3405 DT3</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f5f7fb;font-family:Inter,Segoe UI,Arial,sans-serif;color:#102033;line-height:1.55}
+a{color:#0f6fbd;text-decoration:none;font-weight:800}
+.top{background:#071426;color:#fff;border-bottom:4px solid #12c7b7;padding:18px 22px;display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}
+.brand{display:flex;gap:14px;align-items:center;font-weight:900;font-size:1.25rem}
+.badge{background:#12c7b7;color:#071426;padding:8px 12px;border-radius:8px;font-family:monospace}
+.prof{color:#12c7b7;font-family:monospace;font-size:.95rem}
+.ticker{background:#173b6a;color:#f5b942;font-weight:900;letter-spacing:.035em;white-space:nowrap;overflow:auto;padding:12px 22px;font-size:.9rem}
+.nav{display:flex;overflow:auto;background:#132747;border-bottom:1px solid #0f2040}
+.nav a{padding:14px 18px;color:#dbeafe;white-space:nowrap;font-weight:700;font-size:.9rem;transition:background .2s}
+.nav a:hover{background:#1e3a6e}
+.nav a.active{background:#12c7b7;color:#071426}
+.nav a.sys{border-left:3px solid #12c7b7}
+.hero{background:#071426;color:#fff;padding:36px 22px;border-bottom:5px solid #12c7b7}
+.hero h1{margin:0 0 8px;font-size:clamp(1.6rem,3vw,2.4rem)}
+.hero p{margin:0;color:#dbeafe;font-size:1rem}
+.main{max-width:1180px;margin:0 auto;padding:22px}
+.panel{background:#fff;border:1px solid #dbe3ef;border-radius:20px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(15,23,42,.06)}
+.panel h2{margin:0 0 14px;color:#071426}
+.flag{border-left:6px solid #f59e0b;background:#fffbeb;padding:14px 18px;border-radius:14px;margin:10px 0}
+.flag.danger{border-left-color:#ef4444;background:#fef2f2}
+.flag.ok{border-left-color:#10b981;background:#ecfdf5}
+table{width:100%;border-collapse:collapse;min-width:900px}
+.tablewrap{overflow:auto;border:1px solid #dbe3ef;border-radius:16px}
+th{background:#071426;color:white;text-align:left;padding:12px 14px;font-size:.9rem}
+td{border-top:1px solid #dbe3ef;padding:12px 14px;vertical-align:top;font-size:.9rem}
+tr:nth-child(even) td{background:#f8fafc}
+.pill{border-radius:999px;padding:5px 10px;font-size:.8rem;font-weight:900;display:inline-block}
+.p-blue{background:#dbeafe;color:#1e40af}
+.p-bad{background:#fee2e2;color:#991b1b}
+.p-ok{background:#dcfce7;color:#166534}
+.p-warn{background:#fef3c7;color:#92400e}
+.p-teal{background:#ccfbf1;color:#0f766e}
+code{background:#eef2ff;padding:2px 7px;border-radius:6px;font-family:monospace;font-size:.9em}
+.small{color:#64748b;font-size:.9rem}
+footer{text-align:center;color:#64748b;padding:36px 22px;border-top:1px solid #dbe3ef;margin-top:24px}
+@media(max-width:900px){.main{padding:12px}.nav a{padding:12px 14px}}
+</style>
+</head>
+<body><div id="g" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#0a1628;z-index:9999;align-items:center;justify-content:center;">
+  <div style="background:#0d1f3c;border:1px solid rgba(201,168,76,.3);border-radius:16px;padding:2.5rem;text-align:center;max-width:340px;width:100%;">
+    <h2 style="color:#c9a84c;margin-bottom:1rem;">🔒 Instructor Only</h2>
+    <input type="password" id="gp" placeholder="PIN" style="background:#112244;border:1px solid rgba(255,255,255,.15);border-radius:8px;color:#f0f4fa;font-size:1.4rem;letter-spacing:.4em;padding:.75rem;text-align:center;width:100%;margin-bottom:1rem;outline:none;" onkeydown="if(event.key==='Enter')gcheck()">
+    <button onclick="gcheck()" style="background:#c9a84c;color:#071426;font-weight:900;padding:.75rem;border-radius:99px;border:none;cursor:pointer;width:100%;">Unlock</button>
+  </div>
+</div>
+<script>
+(function(){
+  const p=new URLSearchParams(location.search);
+  if(p.get('pin')==='3405'){document.getElementById('g').style.display='none';}
+  else{document.getElementById('g').style.display='flex';}
+})();
+function gcheck(){
+  if(document.getElementById('gp').value.trim()==='3405'){
+    document.getElementById('g').style.display='none';
+  } else {
+    document.getElementById('gp').value='';
+  }
+}
+</script>
+
+<header class="top">
+  <div class="brand"><span class="badge">CP3405</span><span>DT3 · System Intelligence Platform</span></div>
+  <div class="prof">Prof. Dr. Tan · TR2 '26</div>
+</header>
+<div class="ticker">SPRINT W3 · TEAM STATUS BOARD · Release tag required: vW23 · Deadline: Sunday 7 June 23:59 SGT</div>
+<nav class="nav">
+  <a class="new" href="/sprint4/index.html">Sprint 4 Announcement</a>
+  <a class="new" href="/roadmap/index.html">Roadmap</a>
+  <a href="../index.html">Home</a>
+  <a class="sys" href="../system/index.html">System Architecture</a>
+  <a class="sys" href="../roles/index.html">Roles &amp; Responsibilities</a>
+  <a class="sys" href="../architecture/index.html">Architecture Deep Dive</a>
+  <a class="active" href="index.html">Team Status</a>
+  
+</nav>
+
+<section class="hero">
+  <h1>Team Status Board — Sprint W3</h1>
+  <p>Student-facing processed summary. FigJam labels reflect Claude's 4 June audit. W3 work will update this board after Sunday submissions.</p>
+</section>
+
+<main class="main">
+
+<section class="panel">
+  <h2>Scrum Reminder</h2>
+  <p><strong>The leaderboard is not here to shame teams.</strong> It makes teamwork visible while there is still time to improve. If your real work is happening only in WhatsApp, WeChat, or private messages, it is invisible to the sprint evidence trail. Invisible work does not get marked. Evidence exists or it does not.</p>
+</section>
+
+<section class="panel">
+  <h2>Team Rankings — W2 Status (W3 Update After Submission)</h2>
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th>#</th><th>Team</th><th>GitHub</th><th>Release Tag</th><th>DoD %</th><th>Discord</th><th>FigJam Audit</th><th>Sprint Health</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><strong>Team 3</strong></td>
+          <td>169 commits</td>
+          <td><span class="pill p-bad">vW22 ✗ needs vW23</span></td>
+          <td>50%</td>
+          <td><span class="pill p-ok">High activity</span></td>
+          <td><span class="pill p-warn">Unfilled boards</span></td>
+          <td><span class="pill p-blue">Strong GitHub · Fix FigJam</span></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><strong>Team 2</strong></td>
+          <td>105 commits</td>
+          <td><span class="pill p-bad">vW22 ✗ needs vW23</span></td>
+          <td>73%</td>
+          <td><span class="pill p-ok">Active</span></td>
+          <td><span class="pill p-warn">Partial</span></td>
+          <td><span class="pill p-blue">Strongest overall · Check NDX/IWM actuals</span></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><strong>Team 1</strong></td>
+          <td>49 commits</td>
+          <td><span class="pill p-bad">vW22 ✗ needs vW23</span></td>
+          <td>73%</td>
+          <td><span class="pill p-warn">Low / silent</span></td>
+          <td><span class="pill p-warn">Mostly unfilled</span></td>
+          <td><span class="pill p-blue">Strong CI/CD · Needs Discord visibility</span></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><strong>Team 4</strong></td>
+          <td>42 commits</td>
+          <td><span class="pill p-bad">v1.0.0 ✗ needs vW23</span></td>
+          <td>45%</td>
+          <td><span class="pill p-warn">Low / silent</span></td>
+          <td><span class="pill p-teal">In progress</span></td>
+          <td><span class="pill p-warn">Strong FigJam · Wrong tag · Fix now</span></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><strong>Team 5</strong></td>
+          <td>56 commits</td>
+          <td><span class="pill p-bad">No tag ✗</span></td>
+          <td>36%</td>
+          <td><span class="pill p-bad">Low</span></td>
+          <td><span class="pill p-bad">Mostly unfilled</span></td>
+          <td><span class="pill p-bad">Best technical agent · Urgent intervention</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="small" style="margin-top:10px">Sprint health is an indicator, not a final grade. All teams must create <code>vW23</code> before Sunday 7 June 23:59 SGT. A W2 tag does not count for W3.</p>
+</section>
+
+<section class="panel">
+  <h2>Urgent Flags — Act Before Sunday Midnight</h2>
+  <div class="flag danger"><strong>All teams:</strong> W3 release tag must be <code>vW23</code>. Not <code>vW22</code>. Not <code>v1.0.0</code>. Not missing. Create it before you post to Discord.</div>
+  <div class="flag danger"><strong>Team 3:</strong> Strong Discord but FigJam audit shows effectively unfilled boards. Your thinking wall must be visible before Monday.</div>
+  <div class="flag danger"><strong>Team 5:</strong> Mostly unfilled FigJam, no release tag, and low Discord presence. Urgent team intervention needed today.</div>
+  <div class="flag"><strong>Team 4:</strong> Good FigJam progress. Wrong tag observed previously. Correct to <code>vW23</code> before the deadline.</div>
+  <div class="flag ok"><strong>Team 2:</strong> Strongest overall package. Verify NDX/IWM actuals — possible QQQ/RUT confusion in calibration data.</div>
+</section>
+
+</main>
+
+<footer></footer>
+
+</body>
+</html>

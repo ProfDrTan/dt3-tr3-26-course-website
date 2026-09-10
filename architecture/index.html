@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Architecture Deep Dive · CP3405 DT3</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f5f7fb;font-family:Inter,Segoe UI,Arial,sans-serif;color:#102033;line-height:1.55}
+a{color:#0f6fbd;text-decoration:none;font-weight:800}
+.top{background:#071426;color:#fff;border-bottom:4px solid #12c7b7;padding:18px 22px;display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}
+.brand{display:flex;gap:14px;align-items:center;font-weight:900;font-size:1.25rem}
+.badge{background:#12c7b7;color:#071426;padding:8px 12px;border-radius:8px;font-family:monospace}
+.prof{color:#12c7b7;font-family:monospace;font-size:.95rem}
+.ticker{background:#173b6a;color:#f5b942;font-weight:900;letter-spacing:.035em;white-space:nowrap;overflow:auto;padding:12px 22px;font-size:.9rem}
+.nav{display:flex;overflow:auto;background:#132747;border-bottom:1px solid #0f2040}
+.nav a{padding:14px 18px;color:#dbeafe;white-space:nowrap;font-weight:700;font-size:.9rem;transition:background .2s}
+.nav a:hover{background:#1e3a6e}
+.nav a.active{background:#12c7b7;color:#071426}
+.nav a.sys{border-left:3px solid #12c7b7}
+.hero{background:linear-gradient(135deg,#071426,#0e2a52,#047857);color:#fff;text-align:center;padding:56px 22px 40px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 20%,rgba(4,120,87,.2) 0%,transparent 60%)}
+.hero-badge{display:inline-block;background:rgba(5,150,105,.25);border:1px solid #059669;color:#6ee7b7;padding:6px 16px;border-radius:999px;font-size:.85rem;font-weight:900;letter-spacing:.08em;margin-bottom:14px}
+.hero h1{font-size:clamp(1.8rem,4vw,3.2rem);margin:10px 0;position:relative}
+.hero p{max-width:800px;margin:0 auto;color:#dbeafe;font-size:1.1rem;position:relative}
+.main{max-width:1180px;margin:0 auto;padding:22px}
+.panel{background:#fff;border:1px solid #dbe3ef;border-radius:20px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(15,23,42,.06)}
+.panel h2{margin:0 0 14px;color:#071426;font-size:1.3rem}
+.label{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;font-weight:900;color:#64748b;margin-bottom:4px}
+.ok{border-left:7px solid #10b981;background:#ecfdf5}
+.warn{border-left:7px solid #f59e0b;background:#fffbeb}
+.wisdom{border-left:7px solid #7c3aed;background:#f5f3ff}
+.small{color:#64748b;font-size:.88rem}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(280px,1fr));gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(200px,1fr));gap:16px}
+.card{border:1px solid #dbe3ef;border-radius:16px;padding:18px;background:#f8fafc}
+.card-green{border-left:4px solid #10b981;background:#ecfdf5}
+.card-teal{border-left:4px solid #12c7b7;background:#f0fdfa}
+.card-blue{border-left:4px solid #1d4ed8;background:#eff6ff}
+.card-purple{border-left:4px solid #7c3aed;background:#f5f3ff}
+.card-gold{border-left:4px solid #f59e0b;background:#fffbeb}
+.card-red{border-left:4px solid #ef4444;background:#fef2f2}
+/* DATA FLOW SVG */
+.diagram-wrap{overflow:auto;margin:16px 0;border-radius:16px;border:1px solid #dbe3ef;background:#f8fafc}
+/* COMPARISON TABLE */
+table{width:100%;border-collapse:collapse;border:1px solid #dbe3ef;border-radius:12px;overflow:hidden}
+th{background:#071426;color:white;text-align:left;padding:11px 14px;font-size:.9rem}
+td{padding:11px 14px;border-top:1px solid #dbe3ef;vertical-align:top;font-size:.9rem}
+tr:nth-child(even) td{background:#f8fafc}
+code{background:#eef2ff;padding:2px 7px;border-radius:6px;font-family:monospace;font-size:.9em}
+.btn{display:inline-block;background:#12c7b7;color:#071426;font-weight:900;padding:12px 20px;border-radius:999px;margin:6px 6px 0 0;transition:opacity .2s}
+.btn:hover{opacity:.85}
+.btn.gold{background:#f5b942}
+.pill{border-radius:999px;padding:4px 10px;font-size:.8rem;font-weight:900;display:inline-block}
+.pill-green{background:#dcfce7;color:#166534}
+.pill-red{background:#fee2e2;color:#991b1b}
+.pill-yellow{background:#fef3c7;color:#92400e}
+.pill-blue{background:#dbeafe;color:#1e40af}
+footer{text-align:center;color:#64748b;padding:36px 22px;border-top:1px solid #dbe3ef;margin-top:24px}
+@media(max-width:900px){.grid,.grid3{grid-template-columns:1fr}.main{padding:12px}.nav a{padding:12px 14px}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand"><span class="badge">CP3405</span><span>DT3 · System Intelligence Platform</span></div>
+  <div class="prof">Prof. Dr. Tan · TR2 '26</div>
+</header>
+<div class="ticker">SPRINT 4 · ARCHITECTURE DEEP DIVE · From manual process to intelligent platform</div>
+<nav class="nav">
+  <a class="new" href="/sprint4/index.html">Sprint 4 Announcement</a>
+  <a class="new" href="/roadmap/index.html">Roadmap</a>
+  <a href="../index.html">Home</a>
+  <a class="sys" href="../system/index.html">System Architecture</a>
+  <a class="sys" href="../roles/index.html">Roles &amp; Responsibilities</a>
+  <a class="active sys" href="index.html">Architecture Deep Dive</a>
+  
+  
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">ARCHITECTURE DEEP DIVE</div>
+  <h1>From Manual Sprint to Intelligent Platform</h1>
+  <p>A technical examination of the CP3405 system: how it works today, how it should work tomorrow, and what your team's manual work is actually specifying.</p>
+</section>
+
+<main class="main">
+
+<!-- DATA FLOW + PRESCRIPTIVE CALIBRATION ANIMATION — MANUAL STEP THROUGH -->
+<section class="panel">
+  <div class="label">Diagram 5 — Predictive → Prescriptive Analytics (9 Stages)</div>
+  <h2>From Data Flow to Calibrated Intelligence</h2>
+  <p class="small" style="margin-bottom:8px"><strong>This is not a market prediction exercise. It is a Scrum exercise.</strong> The market is the environment your sprint operates in. The prediction is your sprint increment. The delta is your Sprint Review. The prescription is your Retrospective action item. Every stage maps to a Scrum ceremony — watch for the label at the top of the canvas as you advance.</p>
+  <p class="small" style="margin-bottom:12px;color:#7c3aed"><strong>Click Next ▶ to step through each stage at your own pace.</strong> Audio narrates when you advance. Stages 1–8 are core. Stage 9 is a bonus extension for advanced teams.</p>
+
+  <!-- PLAYER CONTROLS -->
+  <div style="background:#071426;border-radius:14px;padding:14px 18px;margin-bottom:10px;border:1px solid #1e3a5f">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px">
+      <button onclick="animControl('prev')" style="background:#132747;color:#dbeafe;border:1px solid #1e3a5f;border-radius:999px;padding:10px 20px;font-weight:700;font-size:.9rem;cursor:pointer">◀ Back</button>
+      <button onclick="animControl('next')" style="background:#12c7b7;color:#071426;border:none;border-radius:999px;padding:10px 24px;font-weight:900;font-size:.9rem;cursor:pointer">Next ▶</button>
+      <button onclick="animControl('restart')" style="background:#132747;color:#94a3b8;border:1px solid #1e3a5f;border-radius:999px;padding:10px 18px;font-weight:700;font-size:.9rem;cursor:pointer">↺ Restart</button>
+      <button id="btnAudio" onclick="animControl('audio')" style="background:#132747;color:#f5b942;border:1px solid #92400e;border-radius:999px;padding:10px 18px;font-weight:700;font-size:.9rem;cursor:pointer">🔊 Audio ON</button>
+      <!-- Stage dots -->
+      <div style="display:flex;gap:5px;margin-left:auto;align-items:center;flex-wrap:wrap">
+        <span style="font-size:.72rem;color:#64748b;font-weight:700">STAGE:</span>
+        <div id="dot0" style="width:11px;height:11px;border-radius:50%;background:#12c7b7;transition:all .3s;cursor:pointer" onclick="animControl('goto',0)" title="1: Data Sources"></div>
+        <div id="dot1" style="width:11px;height:11px;border-radius:50%;background:#1e293b;transition:all .3s;cursor:pointer" onclick="animControl('goto',1)" title="2: Agents"></div>
+        <div id="dot2" style="width:11px;height:11px;border-radius:50%;background:#1e293b;transition:all .3s;cursor:pointer" onclick="animControl('goto',2)" title="3: LLM"></div>
+        <div id="dot3" style="width:11px;height:11px;border-radius:50%;background:#1e293b;transition:all .3s;cursor:pointer" onclick="animControl('goto',3)" title="4: Human Score"></div>
+        <div id="dot4" style="width:11px;height:11px;border-radius:50%;background:#1e293b;transition:all .3s;cursor:pointer" onclick="animControl('goto',4)" title="5: Locked"></div>
+        <div id="dot5" style="width:11px;height:11px;border-radius:50%;background:#1e293b;transition:all .3s;cursor:pointer" onclick="animControl('goto',5)" title="6: Delta"></div>
+        <div id="dot6" style="width:11px;height:11px;border-radius:50%;background:#1e293b;transition:all .3s;cursor:pointer" onclick="animControl('goto',6)" title="7: Prescriptions"></div>
+        <div id="dot7" style="width:11px;height:11px;border-radius:50%;background:#1e293b;transition:all .3s;cursor:pointer" onclick="animControl('goto',7)" title="8: 11 Sectors"></div>
+        <div style="width:1px;height:14px;background:#334155;margin:0 3px"></div>
+        <div id="dot8" style="width:11px;height:11px;border-radius:50%;background:#1e293b;transition:all .3s;cursor:pointer;border:1px solid #4c1d95" onclick="animControl('goto',8)" title="9: Bonus — Multi-Timeframe"></div>
+      </div>
+    </div>
+    <!-- Progress bar -->
+    <div style="background:#0f2040;border-radius:999px;height:5px;margin-bottom:10px;overflow:hidden">
+      <div id="progressBar" style="background:linear-gradient(90deg,#12c7b7,#f472b6,#818cf8);height:100%;width:0%;transition:width .4s;border-radius:999px"></div>
+    </div>
+    <!-- Narration panel -->
+    <div style="display:flex;gap:10px;align-items:flex-start">
+      <div id="stageTag" style="background:#12c7b7;color:#071426;border-radius:999px;padding:5px 12px;font-size:.75rem;font-weight:900;white-space:nowrap;flex-shrink:0">STAGE 1/9</div>
+      <div id="narrationText" style="color:#dbeafe;font-size:.85rem;line-height:1.55;font-weight:500">Click <strong>Next ▶</strong> to begin. Audio will narrate each stage as you advance. You can also click any dot above to jump to a specific stage.</div>
+    </div>
+  </div>
+
+  <!-- Phase badges -->
+  <div style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap">
+    <div id="phase1ind" style="padding:5px 12px;border-radius:999px;border:1.5px solid #12c7b7;background:rgba(18,199,183,.1);font-size:.78rem;font-weight:900;color:#12c7b7">● PHASE 1 — Sprint Pipeline (Stages 1–5)</div>
+    <div id="phase2ind" style="padding:5px 12px;border-radius:999px;border:1.5px solid #f59e0b;background:rgba(245,158,11,.07);font-size:.78rem;font-weight:900;color:#f59e0b;opacity:.4">● PHASE 2 — Prescriptive Calibration (Stages 6–7)</div>
+    <div style="padding:5px 12px;border-radius:999px;border:1.5px solid #f472b6;background:rgba(244,114,182,.07);font-size:.78rem;font-weight:900;color:#f472b6;opacity:.4" id="coreind">● CORE — 11 Sectors (Stage 8)</div>
+    <div style="padding:5px 12px;border-radius:999px;border:1.5px solid #818cf8;background:rgba(129,140,248,.07);font-size:.78rem;font-weight:900;color:#818cf8;opacity:.4" id="bonusind">★ BONUS — Multi-Timeframe (Stage 9)</div>
+  </div>
+
+  <!-- CANVAS -->
+  <div style="border-radius:16px;overflow:hidden;border:1px solid #1e3a5f;background:#0a1628">
+    <canvas id="flowCanvas" width="860" height="390" style="display:block;max-width:100%;height:auto" title="Step through using Next ▶ button above"></canvas>
+  </div>
+  <p class="small" style="margin-top:6px;color:#64748b">Use <strong>Next ▶</strong> to advance. <strong>◀ Back</strong> to review. Click any stage dot to jump directly. 🔊 Audio plays when you advance a stage.</p>
+</section>
+
+<script>
+(function(){
+
+  // ── CHUNKED SPEECH ENGINE ─────────────────────────────────────
+  // Splits narration into short sentences and chains them via onend.
+  // Fixes Chrome's bug where long utterances are silently dropped.
+  let speechQueue=[], speechActive=false, audioOn=true;
+
+  function splitSentences(text){
+    // split on . ! ? followed by space or end, keep chunks ≤120 chars
+    return text.match(/[^.!?]+[.!?]+[\s]*/g)||[text];
+  }
+
+  function flushSpeech(){
+    if(!audioOn||!window.speechSynthesis){speechActive=false;return;}
+    if(!speechQueue.length){speechActive=false;return;}
+    speechActive=true;
+    const sentence=speechQueue.shift().trim();
+    if(!sentence){flushSpeech();return;}
+    const u=new SpeechSynthesisUtterance(sentence);
+    u.rate=0.88; u.pitch=1.0; u.volume=1.0;
+    const voices=window.speechSynthesis.getVoices();
+    const pref=voices.find(v=>v.lang.startsWith('en-')&&
+      (v.name.includes('Google UK')||v.name.includes('Daniel')||
+       v.name.includes('Samantha')||v.name.includes('Karen')||
+       v.name.includes('Google')));
+    if(pref)u.voice=pref;
+    u.onend=()=>{ setTimeout(flushSpeech,120); };
+    u.onerror=()=>{ setTimeout(flushSpeech,200); };
+    window.speechSynthesis.speak(u);
+  }
+
+  function speak(text){
+    if(!audioOn||!window.speechSynthesis)return;
+    window.speechSynthesis.cancel();
+    speechQueue=splitSentences(text);
+    speechActive=false;
+    setTimeout(flushSpeech,200); // small delay after cancel
+  }
+
+  function stopSpeech(){
+    if(window.speechSynthesis)window.speechSynthesis.cancel();
+    speechQueue=[];speechActive=false;
+  }
+
+  // ── STAGE DEFINITIONS — MANUAL ADVANCE ONLY ──────────────────
+  // Stages 1-8 = core. Stage 9 = bonus (multi-timeframe).
+  // No auto-advance. Student clicks Next to proceed.
+  const TOTAL_STAGES=9;
+  const STAGES=[
+    {
+      id:0, name:'Data Sources',
+      tag:'STAGE 1/9 · PHASE 1',
+      color:'#12c7b7',
+      narration:"Your market intelligence pipeline starts here. Four data sources feed the system simultaneously. Finviz provides sector heat maps. Yahoo Finance gives us five-day sector performance. Trading Economics supplies the macro calendar. Live chart data covers S-P-X, N-D-X, and the Russell two thousand. All four run in parallel. No single source has the complete picture.",
+      highlight:['finviz','yahoo','tecon','charts'],
+      pathIdxs:[0,1,2,3]
+    },
+    {
+      id:1, name:'Agent Analysis',
+      tag:'STAGE 2/9 · PHASE 1',
+      color:'#34d399',
+      narration:"Each data source feeds a specialist agent. The Almanac agent looks for historical seasonal patterns. The Macro agent analyses the economic environment — rates, dollar strength, bond yields. The Technical agent reads the charts and identifies key price levels. The Data agent tracks prior prediction accuracy against actual outcomes. Each agent writes independently before any LLM is consulted. This prevents groupthink.",
+      highlight:['almanac','macro','tech','data'],
+      pathIdxs:[4,5,6,7]
+    },
+    {
+      id:2, name:'LLM Synthesis',
+      tag:'STAGE 3/9 · PHASE 1',
+      color:'#c084fc',
+      narration:"The four agent outputs converge into the LLM synthesis stage. The team queries ChatGPT, Gemini, and DeepSeek with identical prompts. Claude is optional — include it if you have access. The goal is not to pick the best AI. It is to find where the models agree, where they diverge, and why. Agreement raises confidence. Divergence is a warning to investigate further before committing to a prediction.",
+      highlight:['llm'],
+      pathIdxs:[8]
+    },
+    {
+      id:3, name:'Human Score',
+      tag:'STAGE 4/9 · PHASE 1',
+      color:'#fbbf24',
+      narration:"This is the most important stage. The Human Score lead reviews everything the agents and LLMs produced, then applies independent judgement. The Wild Card insight is irreplaceable. No AI model can replicate lived pattern recognition, the news story the models missed, or a contrarian read on a crowded consensus. A weak Human Score produces a weak team prediction. Every time.",
+      highlight:['human'],
+      pathIdxs:[9]
+    },
+    {
+      id:4, name:'Locked Prediction',
+      tag:'STAGE 5/9 · PHASE 1',
+      color:'#6ee7b7',
+      narration:"The prediction is locked into GitHub with a release tag. The tag is your timestamped promise. It cannot be edited after the market opens. The locked prediction enters the Prediction Vault — a permanent sealed record. It will be compared against real outcomes the following week. No retroactive changes. No excuses. The tag is the commitment.",
+      highlight:['output','vault'],
+      pathIdxs:[10]
+    },
+    {
+      id:5, name:'Delta Measurement',
+      tag:'STAGE 6/9 · PHASE 2',
+      color:'#f87171',
+      narration:"One week later, the actuals arrive. The Delta Engine compares the locked prediction against what the market actually did. Three signals matter. First, the size of the error — how many percentage points off were you? Second, the direction — did you call up when it went down? Third, the source — which agent contributed most to the miss? In our example, S-P-X direction was right but magnitude was off. N-D-X direction was wrong. I-W-M was the closest call.",
+      highlight:['actual','delta','vault'],
+      pathIdxs:[11,12,13]
+    },
+    {
+      id:6, name:'Prescriptions',
+      tag:'STAGE 7/9 · PHASE 2',
+      color:'#fcd34d',
+      narration:"This is where predictive becomes prescriptive. The delta is not just a score. It is a system design specification. The N-D-X direction miss tells you the LLM consensus had a tech sector bias the Human Score should have caught. The prescription is specific. Increase Macro agent weight. Add a contrarian check to the LLM operator workflow. Expand the evidence set to include options flow data. These prescriptions travel back into the agent layer. The next sprint begins smarter.",
+      highlight:['rx','macro','tech','data'],
+      pathIdxs:[14,15,16]
+    },
+    {
+      id:7, name:'11 S&P 500 Sectors',
+      tag:'STAGE 8/9 · CORE',
+      color:'#f472b6',
+      narration:"Your prediction scope extends beyond just three indices. The S-and-P five hundred has eleven distinct sectors, each with its own macro sensitivity. Energy follows oil and the dollar. Technology and Consumer Discretionary are highly rate sensitive. Utilities and Real Estate behave like bond proxies. Healthcare is largely defensive. A strong team maps each agent output to the sectors it affects most. Finviz sector rotation maps show you which sectors are leading and which are lagging in real time.",
+      highlight:['finviz','yahoo','tecon','charts','almanac','macro','tech','data'],
+      pathIdxs:[0,1,2,3,4,5,6,7]
+    },
+    {
+      id:8, name:'Multi-Timeframe (Bonus)',
+      tag:'STAGE 9/9 · BONUS',
+      color:'#818cf8',
+      narration:"Bonus extension for advanced teams. Once your one-week pipeline is reliable, you can extend predictions beyond a single week. Two-week forecasts require stronger Almanac seasonal weighting and a wider prediction range. One-month forecasts require FinBERT sentiment analysis on earnings call transcripts and Fed minutes. Notice that longer horizons reduce the usefulness of technical chart signals. Macro and Almanac dominate at monthly timeframes. The architecture stays the same. Only the agent weights change.",
+      highlight:['almanac','macro','llm','human'],
+      pathIdxs:[4,5,8,9]
+    },
+  ];
+
+  // ── CANVAS SETUP ──────────────────────────────────────────────
+  const canvas = document.getElementById('flowCanvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W=860, H=390;
+
+  if(!ctx.roundRect){
+    ctx.roundRect=function(x,y,w,h,r){
+      const rad=typeof r==='number'?r:(Array.isArray(r)?r[0]:10);
+      this.moveTo(x+rad,y);this.lineTo(x+w-rad,y);
+      this.quadraticCurveTo(x+w,y,x+w,y+rad);this.lineTo(x+w,y+h-rad);
+      this.quadraticCurveTo(x+w,y+h,x+w-rad,y+h);this.lineTo(x+rad,y+h);
+      this.quadraticCurveTo(x,y+h,x,y+h-rad);this.lineTo(x,y+rad);
+      this.quadraticCurveTo(x,y,x+rad,y);this.closePath();
+    };
+  }
+  function lerp(a,b,t){return a+(b-a)*t;}
+  function cx(n){return n.x+n.w/2;}
+  function cy(n){return n.y+n.h/2;}
+
+  // ── NODE LAYOUT ───────────────────────────────────────────────
+  const N={
+    finviz: {x:15, y:18,w:90,h:44,label:'FINVIZ',  sub:'Sector Map',      fill:'#1e3a8a',text:'#bfdbfe'},
+    yahoo:  {x:120,y:18,w:90,h:44,label:'YAHOO',   sub:'5D Sectors',      fill:'#1e3a8a',text:'#bfdbfe'},
+    tecon:  {x:225,y:18,w:100,h:44,label:'TRAD.ECON',sub:'Calendar',      fill:'#1e3a8a',text:'#bfdbfe'},
+    charts: {x:340,y:18,w:90,h:44,label:'CHARTS',  sub:'SPX NDX IWM',     fill:'#1e3a8a',text:'#bfdbfe'},
+    almanac:{x:10, y:98,w:90,h:54,label:'ALMANAC', sub:'R3·Historical',   fill:'#0d9488',text:'#fff'},
+    macro:  {x:115,y:98,w:90,h:54,label:'MACRO',   sub:'R4·Macro-Econ',   fill:'#0d9488',text:'#fff'},
+    tech:   {x:225,y:98,w:100,h:54,label:'TECHNICAL',sub:'R5·Charts',     fill:'#0d9488',text:'#fff'},
+    data:   {x:340,y:98,w:90,h:54,label:'DATA/ACT',sub:'R6·Evidence',     fill:'#0d9488',text:'#fff'},
+    llm:    {x:80, y:188,w:155,h:62,label:'LLM SYNTHESIS',sub:'GPT·Gemini\nDeepSeek',fill:'#5b21b6',text:'#fff'},
+    human:  {x:255,y:188,w:140,h:62,label:'HUMAN SCORE',sub:'R7 Override\nWild Card',fill:'#92400e',text:'#fff'},
+    output: {x:415,y:188,w:125,h:62,label:'LOCKED',sub:'GitHub vW[CW#]\nPrediction',fill:'#065f46',text:'#fff'},
+    // Phase 2
+    vault:  {x:415,y:295,w:125,h:52,label:'PREDICTION\nVAULT',sub:'Week N sealed',fill:'#064e3b',text:'#a7f3d0'},
+    actual: {x:610,y:295,w:120,h:52,label:'ACTUALS',sub:'Week N+1 results',fill:'#7f1d1d',text:'#fca5a5'},
+    delta:  {x:548,y:295,w:52, h:52,label:'Δ',sub:'DELTA',fill:'#1e1b4b',text:'#a5b4fc'},
+    rx:     {x:610,y:188,w:120,h:62,label:'Rx PRESCRIBE',sub:'Signal Adjustments',fill:'#451a03',text:'#fcd34d'},
+  };
+
+  // ── ALL PATHS (indexed to match STAGES pathIdxs) ──────────────
+  const PATHS=[
+    /* 0  */ {pts:[{x:cx(N.finviz),y:N.finviz.y+N.finviz.h},{x:cx(N.almanac),y:N.almanac.y}],  color:'#60a5fa',nk:['finviz','almanac']},
+    /* 1  */ {pts:[{x:cx(N.yahoo), y:N.yahoo.y+N.yahoo.h}, {x:cx(N.macro),  y:N.macro.y}],     color:'#60a5fa',nk:['yahoo','macro']},
+    /* 2  */ {pts:[{x:cx(N.tecon), y:N.tecon.y+N.tecon.h}, {x:cx(N.tech),   y:N.tech.y}],      color:'#60a5fa',nk:['tecon','tech']},
+    /* 3  */ {pts:[{x:cx(N.charts),y:N.charts.y+N.charts.h},{x:cx(N.data),  y:N.data.y}],      color:'#60a5fa',nk:['charts','data']},
+    /* 4  */ {pts:[{x:cx(N.almanac),y:N.almanac.y+N.almanac.h},{x:cx(N.almanac),y:182},{x:cx(N.llm),y:182}], color:'#34d399',nk:['almanac','llm']},
+    /* 5  */ {pts:[{x:cx(N.macro),y:N.macro.y+N.macro.h},{x:cx(N.macro),y:182},{x:cx(N.llm),y:182}],         color:'#34d399',nk:['macro','llm']},
+    /* 6  */ {pts:[{x:cx(N.tech), y:N.tech.y+N.tech.h}, {x:cx(N.tech),y:182}, {x:cx(N.llm),y:182}],         color:'#34d399',nk:['tech','llm']},
+    /* 7  */ {pts:[{x:cx(N.data), y:N.data.y+N.data.h}, {x:cx(N.data),y:182}, {x:cx(N.llm),y:182}],         color:'#34d399',nk:['data','llm']},
+    /* 8  */ {pts:[{x:N.llm.x+N.llm.w,y:cy(N.llm)},{x:N.human.x,y:cy(N.human)}],              color:'#c084fc',nk:['llm','human']},
+    /* 9  */ {pts:[{x:N.human.x+N.human.w,y:cy(N.human)},{x:N.output.x,y:cy(N.output)}],       color:'#fbbf24',nk:['human','output']},
+    /* 10 */ {pts:[{x:cx(N.output),y:N.output.y+N.output.h},{x:cx(N.vault),y:N.vault.y}],      color:'#34d399',nk:['output','vault']},
+    /* 11 */ {pts:[{x:N.actual.x,y:cy(N.actual)},{x:N.delta.x+N.delta.w,y:cy(N.delta)}],       color:'#f87171',nk:['actual','delta']},
+    /* 12 */ {pts:[{x:N.vault.x+N.vault.w,y:cy(N.vault)},{x:N.delta.x,y:cy(N.delta)}],         color:'#a5b4fc',nk:['vault','delta']},
+    /* 13 */ {pts:[{x:cx(N.delta),y:N.delta.y},{x:cx(N.rx),y:N.rx.y+N.rx.h}],                  color:'#fcd34d',nk:['delta','rx']},
+    /* 14 */ {pts:[{x:N.rx.x,y:cy(N.rx)},{x:760,y:cy(N.rx)},{x:760,y:75},{x:N.macro.x+N.macro.w,y:cy(N.macro)}], color:'#fcd34d',nk:['rx','macro']},
+    /* 15 */ {pts:[{x:N.rx.x,y:cy(N.rx)},{x:770,y:cy(N.rx)},{x:770,y:65},{x:N.tech.x+N.tech.w, y:cy(N.tech)}],  color:'#fcd34d',nk:['rx','tech']},
+    /* 16 */ {pts:[{x:N.rx.x,y:cy(N.rx)},{x:780,y:cy(N.rx)},{x:780,y:55},{x:N.data.x+N.data.w, y:cy(N.data)}],  color:'#6ee7b7',nk:['rx','data']},
+  ];
+
+  // ── STATE ─────────────────────────────────────────────────────
+  let stageIdx=0;
+  let stageTimer=0, particles=[], tick=0;
+  const glow={};
+  Object.keys(N).forEach(k=>glow[k]=0);
+
+  // Calibration data for stage 5
+  const calibData=[
+    {ticker:'SPX',pred:'+1.2%',actual:'+0.4%',delta:'-0.8%',dir:true, score:72},
+    {ticker:'NDX',pred:'+1.8%',actual:'-0.3%',delta:'-2.1%',dir:false,score:41},
+    {ticker:'IWM',pred:'+0.5%',actual:'+1.1%',delta:'+0.6%',dir:true, score:68},
+  ];
+  const rxItems=[
+    {color:'#fcd34d',text:'↑ Macro weight — NFP surprise: macro signal was underweighted'},
+    {color:'#f87171',text:'✗ Add contrarian check — LLM consensus had tech sector bias'},
+    {color:'#6ee7b7',text:'↑ Expand R6 evidence — add options flow data to Data/Actuals'},
+  ];
+
+  // ── PARTICLE SPAWN ────────────────────────────────────────────
+  function spawnPath(pi){
+    const p=PATHS[pi];
+    particles.push({pi,t:0,speed:0.016,color:p.color,nk:p.nk});
+  }
+
+  function getPosOnPath(pts,t){
+    const segs=pts.length-1, segT=t*segs;
+    const i=Math.min(Math.floor(segT),segs-1);
+    return{x:lerp(pts[i].x,pts[i+1].x,segT-i),y:lerp(pts[i].y,pts[i+1].y,segT-i)};
+  }
+
+  // ── DRAW ──────────────────────────────────────────────────────
+  function rr(x,y,w,h,r,fill,stroke,sw){
+    ctx.beginPath();ctx.roundRect(x,y,w,h,r);
+    if(fill){ctx.fillStyle=fill;ctx.fill();}
+    if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=sw||1;ctx.stroke();}
+  }
+
+  const stage2nodes = {
+    0:['finviz','yahoo','tecon','charts'],
+    1:['almanac','macro','tech','data'],
+    2:['llm'],3:['human'],4:['output','vault'],
+    5:['vault','actual','delta'],6:['rx','macro','tech','data']
+  };
+  const phase2stages=[4,5,6];
+
+  function drawNode(k,n){
+    const g=glow[k]||0;
+    const stage=STAGES[stageIdx];
+    const isHighlit=stage.highlight.includes(k);
+    ctx.save();
+    if(g>0){ctx.shadowColor=n.fill;ctx.shadowBlur=22*g;}
+    else if(isHighlit){ctx.shadowColor=n.fill;ctx.shadowBlur=8;}
+    rr(n.x,n.y,n.w,n.h,10,n.fill);
+    // rim highlight if active
+    if(isHighlit){rr(n.x,n.y,n.w,n.h,10,null,stage.color,2);}
+    ctx.beginPath();ctx.roundRect(n.x,n.y,n.w,n.h*0.38,[10,10,0,0]);
+    ctx.fillStyle='rgba(255,255,255,0.09)';ctx.fill();
+    ctx.restore();
+    ctx.save();
+    ctx.textAlign='center';
+    ctx.fillStyle=n.text;
+    const lns=n.label.split('\n');
+    ctx.font='bold 8px Arial';
+    lns.forEach((l,i)=>ctx.fillText(l,cx(n),n.y+15+i*10));
+    ctx.font='7.5px Arial';
+    ctx.fillStyle=n.text==='#fff'?'rgba(255,255,255,.6)':n.text;
+    const subs=n.sub.split('\n');
+    const yo=n.y+15+lns.length*10+4;
+    subs.forEach((s,i)=>ctx.fillText(s,cx(n),yo+i*10));
+    ctx.restore();
+  }
+
+  function drawStaticPaths(){
+    // draw all paths as faint guides
+    PATHS.forEach((p,i)=>{
+      const isActive=STAGES[stageIdx].pathIdxs.includes(i);
+      ctx.save();
+      ctx.globalAlpha=isActive?0.35:0.12;
+      ctx.beginPath();ctx.moveTo(p.pts[0].x,p.pts[0].y);
+      for(let j=1;j<p.pts.length;j++)ctx.lineTo(p.pts[j].x,p.pts[j].y);
+      ctx.strokeStyle=p.color;ctx.lineWidth=1.5;
+      if(i>=10)ctx.setLineDash([5,4]);
+      ctx.stroke();ctx.setLineDash([]);
+      ctx.restore();
+    });
+  }
+
+  function drawCalibPanel(){
+    if(stageIdx!==5)return;
+    const alpha=Math.min(1,stageTimer/60);
+    // Bottom strip — fully below all pipeline nodes (which end ~y270)
+    const px=10,py=292,pw=840,ph=82;
+    ctx.save();ctx.globalAlpha=alpha;
+    rr(px,py,pw,ph,12,'rgba(8,18,36,0.97)','#1e3a8a',1.5);
+    ctx.fillStyle='#93c5fd';ctx.font='bold 8px Arial';ctx.textAlign='left';
+    ctx.fillText('SPRINT REVIEW — Week N Prediction vs Actuals (Scrum: Inspect the Increment)',px+10,py+14);
+    const cols=[10,105,170,230,292,375];
+    ['INDEX','PREDICTED','ACTUAL','Δ DELTA','DIRECTION','SCORE'].forEach((h,i)=>{
+      ctx.fillStyle='#475569';ctx.font='bold 6.5px Arial';
+      ctx.fillText(h,cols[i]+px,py+28);
+    });
+    calibData.forEach((d,row)=>{
+      const ry=py+42+row*14;
+      ctx.fillStyle='#e2e8f0';ctx.font='7.5px Arial';
+      ctx.fillText(d.ticker,cols[0]+px,ry);
+      ctx.fillStyle='#93c5fd';ctx.fillText(d.pred,cols[1]+px,ry);
+      ctx.fillStyle=d.dir?'#6ee7b7':'#f87171';ctx.fillText(d.actual,cols[2]+px,ry);
+      const ab=Math.abs(parseFloat(d.delta));
+      ctx.fillStyle=ab>1.5?'#f87171':ab>0.8?'#fbbf24':'#6ee7b7';
+      ctx.fillText(d.delta,cols[3]+px,ry);
+      ctx.fillStyle=d.dir?'#6ee7b7':'#f87171';
+      ctx.fillText(d.dir?'✓ RIGHT':'✗ WRONG',cols[4]+px,ry);
+      const bx=cols[5]+px,bw=90,bh=6,by=ry-6;
+      rr(bx,by,bw,bh,3,'#1e3a5f');
+      const sc=d.score>70?'#34d399':d.score>50?'#fbbf24':'#f87171';
+      rr(bx,by,bw*(d.score/100),bh,3,sc);
+      ctx.fillStyle='#cbd5e1';ctx.font='6.5px Arial';
+      ctx.fillText(d.score+'%',bx+bw+3,ry);
+    });
+    // NDX miss callout — right side
+    rr(px+490,py+8,344,66,6,'rgba(127,29,29,0.4)','#f87171',1);
+    ctx.fillStyle='#fca5a5';ctx.font='bold 7px Arial';
+    ctx.fillText('⚠ NDX direction miss — LLM consensus had tech sector bias',px+498,py+24);
+    ctx.fillStyle='#94a3b8';ctx.font='7px Arial';
+    ctx.fillText('Scrum → Sprint Review surfaces this as a team learning, not individual blame.',px+498,py+38);
+    ctx.fillText('What did the system fail to see? This is the retro question.',px+498,py+52);
+    ctx.fillText('→ Leads to Rx prescriptions in Stage 7.',px+498,py+64);
+    ctx.restore();
+  }
+
+  function drawRxPanel(){
+    if(stageIdx!==6)return;
+    const alpha=Math.min(1,stageTimer/60);
+    const px=10,py=292,pw=840,ph=82;
+    ctx.save();ctx.globalAlpha=alpha;
+    rr(px,py,pw,ph,12,'rgba(8,18,36,0.97)','#92400e',1.5);
+    ctx.fillStyle='#fcd34d';ctx.font='bold 8px Arial';ctx.textAlign='left';
+    ctx.fillText('SPRINT RETROSPECTIVE → BACKLOG — Rx Prescriptions become next sprint\'s action items',px+10,py+14);
+    rxItems.forEach((rx,i)=>{
+      const ry=py+30+i*18;
+      ctx.beginPath();ctx.arc(px+16,ry,4,0,Math.PI*2);
+      ctx.fillStyle=rx.color;ctx.shadowColor=rx.color;ctx.shadowBlur=5;ctx.fill();ctx.shadowBlur=0;
+      ctx.fillStyle='#e2e8f0';ctx.font='7.5px Arial';
+      ctx.fillText(rx.text,px+26,ry+4);
+    });
+    // Scrum loop explanation — right side
+    rr(px+490,py+8,344,66,6,'rgba(18,199,183,0.1)','#12c7b7',1);
+    ctx.fillStyle='#12c7b7';ctx.font='bold 7px Arial';
+    ctx.fillText('THIS IS SCRUM\'S INSPECT AND ADAPT LOOP — CODIFIED',px+498,py+22);
+    ctx.fillStyle='#a7f3d0';ctx.font='7px Arial';
+    ctx.fillText('Delta Engine = Sprint Review (what did we build vs what we planned?)',px+498,py+35);
+    ctx.fillText('Rx Prescription = Retro action item (what do we change next sprint?)',px+498,py+48);
+    ctx.fillStyle='#64748b';ctx.font='6.5px Arial';
+    ctx.fillText('You are not making market calls. You are practising disciplined system improvement.',px+498,py+62);
+    ctx.restore();
+  }
+
+  function drawBonusOverlay(){
+    if(stageIdx===7){
+      // 11 sectors panel — CORE stage 8
+      const alpha=Math.min(1,stageTimer/50);
+      const px=10,py=290,pw=840,ph=82;
+      ctx.save();ctx.globalAlpha=alpha;
+      rr(px,py,pw,ph,12,'rgba(8,16,40,0.97)','#f472b6',1.5);
+      ctx.fillStyle='#f9a8d4';ctx.font='bold 8px Arial';ctx.textAlign='left';
+      ctx.fillText('CORE: ALL 11 S&P 500 SECTORS — Each has different macro sensitivity',px+10,py+14);
+      const sectors=[
+        {n:'Energy',    s:'Oil·USD',       color:'#f97316'},
+        {n:'Materials', s:'Commodities',   color:'#84cc16'},
+        {n:'Industrials',s:'GDP·PMI',      color:'#22d3ee'},
+        {n:'Cons.Disc.',s:'Consumer',      color:'#f472b6'},
+        {n:'Cons.Stpls',s:'Defensive',    color:'#a3e635'},
+        {n:'Healthcare',s:'Defensive',     color:'#4ade80'},
+        {n:'Financials',s:'Rates·Yield',   color:'#60a5fa'},
+        {n:'Info Tech', s:'Rate sensitive',color:'#c084fc'},
+        {n:'Comm.Svcs', s:'Ad spend',      color:'#818cf8'},
+        {n:'Utilities', s:'Bond proxy',    color:'#fde68a'},
+        {n:'Real Estate',s:'REITs·Rates',  color:'#fb7185'},
+      ];
+      sectors.forEach((s,i)=>{
+        const sx=px+12+(i*75),sy=py+24;
+        rr(sx,sy,70,44,8,s.color+'22');
+        ctx.beginPath();ctx.roundRect(sx,sy,70,44,8);
+        ctx.strokeStyle=s.color;ctx.lineWidth=1;ctx.stroke();
+        ctx.fillStyle=s.color;ctx.font='bold 7.5px Arial';ctx.textAlign='center';
+        ctx.fillText(s.n,sx+35,sy+17);
+        ctx.fillStyle='rgba(255,255,255,.55)';ctx.font='6.5px Arial';
+        ctx.fillText(s.s,sx+35,sy+30);
+      });
+      ctx.restore();
+    } else if(stageIdx===8){
+      // Multi-timeframe panel — BONUS stage 9
+      const alpha=Math.min(1,stageTimer/50);
+      const px=455,py=10,pw=395,ph=170;
+      ctx.save();ctx.globalAlpha=alpha;
+      rr(px,py,pw,ph,12,'rgba(8,16,40,0.97)','#818cf8',1.5);
+      ctx.fillStyle='#a5b4fc';ctx.font='bold 8px Arial';ctx.textAlign='left';
+      ctx.fillText('★ BONUS: MULTI-TIMEFRAME PREDICTION HORIZONS',px+10,py+16);
+      const horizons=[
+        {label:'1 WEEK', color:'#12c7b7',agents:'All agents equal weight',     bar:1.0},
+        {label:'2 WEEKS',color:'#818cf8',agents:'↑ Almanac + Macro weighted',  bar:0.75},
+        {label:'1 MONTH',color:'#f472b6',agents:'↑↑ Macro + FinBERT required', bar:0.5},
+      ];
+      horizons.forEach((h,i)=>{
+        const ry=py+30+i*42;
+        rr(px+8,ry,pw-16,36,8,'rgba(255,255,255,0.04)');
+        ctx.beginPath();ctx.roundRect(px+10,ry+8,6,20,3);
+        ctx.fillStyle=h.color;ctx.fill();
+        ctx.fillStyle=h.color;ctx.font='bold 8.5px Arial';
+        ctx.fillText(h.label,px+22,ry+18);
+        ctx.fillStyle='#94a3b8';ctx.font='7.5px Arial';
+        ctx.fillText('Agents: '+h.agents,px+22,ry+29);
+        const bx=px+pw-90,bw=76,by=ry+10;
+        rr(bx,by,bw,12,4,'#1e3a5f');
+        rr(bx,by,bw*h.bar,12,4,h.color);
+        ctx.fillStyle='#e2e8f0';ctx.font='7px Arial';
+        ctx.fillText(Math.round(h.bar*100)+'% confidence',bx,ry+34);
+      });
+      ctx.fillStyle='#475569';ctx.font='7px Arial';
+      ctx.fillText('FinBERT required for 1-month+ horizons. Same pipeline — different agent weights.',px+10,py+162);
+      ctx.restore();
+    }
+  }
+
+  // Scrum ceremony mapping per stage
+  const SCRUM_LABELS=[
+    'Scrum: Sprint Planning inputs — what data does the team need?',
+    'Scrum: Backlog refinement — each agent = independent specialist, no groupthink',
+    'Scrum: Planning Poker — multiple estimates, surface hidden disagreement',
+    'Scrum: Product Owner — protects value, not just velocity or speed',
+    'Scrum: Definition of Done — prediction locked, immutable, timestamped',
+    'Scrum: Sprint Review — inspect the increment against real-world outcome',
+    'Scrum: Sprint Retrospective → Backlog — specific action items for next sprint',
+    'Scrum: Scope expansion — as team matures, backlog grows beyond three indices',
+    'Scrum: Release planning — thinking beyond the immediate sprint horizon',
+  ];
+
+  function drawStageBanner(){
+    const s=STAGES[stageIdx];
+    ctx.save();
+    ctx.globalAlpha=0.18;
+    ctx.fillStyle=s.color;ctx.fillRect(0,0,W,36);
+    ctx.globalAlpha=1;
+    ctx.fillStyle=s.color;ctx.font='bold 8.5px Arial';ctx.textAlign='left';
+    ctx.fillText(s.tag+' — '+s.name,10,16);
+    ctx.fillStyle='rgba(255,255,255,0.45)';ctx.font='7px Arial';
+    ctx.fillText(SCRUM_LABELS[stageIdx]||'',10,28);
+    ctx.restore();
+  }
+
+  // ── NARRATION TRIGGER ─────────────────────────────────────────
+  function triggerNarration(i){
+    if(!audioOn)return;
+    speak(STAGES[i].narration);
+  }
+
+  // ── CONTROLS UI UPDATE ────────────────────────────────────────
+  function updateUI(){
+    const s=STAGES[stageIdx];
+    const tag=document.getElementById('stageTag');
+    const nar=document.getElementById('narrationText');
+    const bar=document.getElementById('progressBar');
+    const p1=document.getElementById('phase1ind');
+    const p2=document.getElementById('phase2ind');
+    const ci=document.getElementById('coreind');
+    const bi=document.getElementById('bonusind');
+    if(tag){tag.textContent=s.tag;tag.style.background=s.color;tag.style.color='#071426';}
+    if(nar)nar.innerHTML=s.narration.replace(/\n/g,' ');
+    const pct=(stageIdx/(TOTAL_STAGES-1))*100;
+    if(bar)bar.style.width=pct+'%';
+    for(let i=0;i<TOTAL_STAGES;i++){
+      const d=document.getElementById('dot'+i);
+      if(d)d.style.background=i===stageIdx?s.color:i<stageIdx?'#475569':'#1e293b';
+    }
+    if(p1)p1.style.opacity=stageIdx<5?'1':'0.35';
+    if(p2)p2.style.opacity=(stageIdx>=5&&stageIdx<=6)?'1':'0.35';
+    if(ci)ci.style.opacity=stageIdx===7?'1':'0.35';
+    if(bi)bi.style.opacity=stageIdx===8?'1':'0.35';
+    const ab=document.getElementById('btnAudio');
+    if(ab){ab.textContent=audioOn?'🔊 Audio ON':'🔇 Audio OFF';ab.style.color=audioOn?'#f5b942':'#64748b';ab.style.borderColor=audioOn?'#92400e':'#334155';}
+  }
+
+  function goToStage(i){
+    if(i<0||i>=TOTAL_STAGES)return;
+    stopSpeech();
+    stageIdx=i; stageTimer=0; particles=[];
+    Object.keys(N).forEach(k=>glow[k]=0);
+    updateUI();
+    if(audioOn) setTimeout(()=>triggerNarration(i),250);
+  }
+
+  window.animControl=function(action, val){
+    if(action==='next'){
+      goToStage(Math.min(stageIdx+1,TOTAL_STAGES-1));
+    } else if(action==='prev'){
+      goToStage(Math.max(stageIdx-1,0));
+    } else if(action==='restart'){
+      goToStage(0);
+    } else if(action==='goto'){
+      goToStage(val);
+    } else if(action==='audio'){
+      audioOn=!audioOn;
+      if(!audioOn) stopSpeech();
+      else triggerNarration(stageIdx);
+      updateUI();
+    }
+  };
+
+  // ── MAIN LOOP ─────────────────────────────────────────────────
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#0a1628';ctx.fillRect(0,0,W,H);
+
+    const s=STAGES[stageIdx];
+
+    // draw paths
+    drawStaticPaths();
+
+    // draw all P1 nodes always; P2 nodes only in stages 4+
+    Object.entries(N).forEach(([k,n])=>{
+      const isP2node=['vault','actual','delta','rx'].includes(k);
+      if(isP2node&&stageIdx<4)return;
+      drawNode(k,n);
+    });
+
+    // overlay panels
+    drawCalibPanel();
+    drawRxPanel();
+    drawBonusOverlay();
+    drawStageBanner();
+
+    // Always running — particles animate continuously, user clicks to advance stages
+    {
+      // spawn particles for active paths
+      s.pathIdxs.forEach(pi=>{
+        if(tick%55===0) spawnPath(pi);
+      });
+
+      // update particles
+      for(let i=particles.length-1;i>=0;i--){
+        const p=particles[i];
+        p.t+=p.speed;
+        if(p.t>=1){
+          p.nk.forEach(k=>{if(glow[k]!==undefined)glow[k]=1;});
+          particles.splice(i,1);continue;
+        }
+        if(p.t<0.15&&glow[p.nk[0]]!==undefined)glow[p.nk[0]]=Math.max(glow[p.nk[0]],0.5);
+        const pos=getPosOnPath(PATHS[p.pi].pts,p.t);
+        ctx.save();
+        ctx.beginPath();ctx.arc(pos.x,pos.y,4.5,0,Math.PI*2);
+        ctx.fillStyle=p.color;ctx.shadowColor=p.color;ctx.shadowBlur=12;ctx.fill();
+        ctx.restore();
+      }
+
+      // glow fade
+      Object.keys(glow).forEach(k=>{if(glow[k]>0)glow[k]=Math.max(0,glow[k]-0.03);});
+
+      stageTimer++;tick++;
+      // NO auto-advance, NO auto-narrate in frame — both triggered by user click only
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  // init voices (Chrome requires a getVoices call before first speak)
+  if(window.speechSynthesis){
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();
+  }
+
+  updateUI();
+  frame();
+})();
+</script>
+
+
+<!-- LLM COMPARISON BREAKDOWN -->
+<section class="panel">
+  <div class="label">LLM Architecture</div>
+  <h2>Four Models — One Identical Prompt — What Divergence Reveals</h2>
+  <p class="small" style="margin-bottom:12px">Querying four LLMs with identical inputs is not redundant. Divergence is signal. Agreement is confidence. Understanding <em>why</em> they differ is what separates an intelligent system from a chatbot wrapper.</p>
+  <div class="grid">
+    <div class="card card-blue">
+      <strong>ChatGPT (OpenAI)</strong><br>
+      <span class="small">Strong on narrative synthesis and macro framing. Watch for confident-sounding hallucinations on specific data. Best used for reasoning through scenarios.</span>
+    </div>
+    <div class="card card-teal">
+      <strong>Claude (Anthropic) — Optional</strong><br>
+      <span class="small">Strong on nuanced reasoning and uncertainty acknowledgement. Free tier available at claude.ai with message limits. Include it if you have access — it adds a useful calibration perspective.</span>
+    </div>
+    <div class="card card-purple">
+      <strong>Gemini (Google)</strong><br>
+      <span class="small">Strong on recency and web-grounded data. May surface recent news others miss. Check for factual grounding and source quality in outputs.</span>
+    </div>
+    <div class="card card-red">
+      <strong>DeepSeek</strong><br>
+      <span class="small">Different training distribution. Useful as a divergence check. When DeepSeek alone disagrees with the other three, investigate why — it may be picking up something different.</span>
+    </div>
+  </div>
+  <div class="card card-gold" style="margin-top:14px">
+    <strong>How to read the comparison table:</strong>
+    <span class="small"> When 4/4 models agree → high consensus signal (verify calibration). When 3/1 split → investigate the outlier. When 2/2 split → maximum uncertainty; Human Score R7 lead carries the decision.</span>
+  </div>
+</section>
+
+<!-- WHAT AUTOMATION LOOKS LIKE -->
+<section class="panel ok">
+  <div class="label">From Manual to Automated</div>
+  <h2>What Each Step Looks Like When Automated</h2>
+  <table>
+    <tr><th>Manual Now (Sprint 4)</th><th>Automated in Prism (Future)</th><th>Human Role Remaining</th></tr>
+    <tr><td>Screenshot Finviz sector map</td><td>API call fetches sector data on schedule</td><td>Review anomalies flagged by system</td></tr>
+    <tr><td>Write Almanac analysis by hand</td><td>Calendar parser + historical pattern DB</td><td>Approve or override seasonal weight</td></tr>
+    <tr><td>Run 4 LLM prompts manually</td><td>Parallel API calls, auto-saved responses</td><td>Review comparison and set weight</td></tr>
+    <tr><td>Build comparison table in Word</td><td>Auto-generated agreement matrix</td><td>Interpret divergence, apply scepticism</td></tr>
+    <tr><td>R7 lead writes Human Score</td><td>Structured input form with guided fields</td><td>Wild Card insight — irreplaceable</td></tr>
+    <tr><td>Create GitHub release manually</td><td>CI/CD pipeline auto-tags on approval</td><td>Final approval click</td></tr>
+    <tr><td>Post Discord submission by hand</td><td>Bot posts from template on release trigger</td><td>Verify accuracy before send</td></tr>
+  </table>
+</section>
+
+<!-- PRISM REFERENCE -->
+<section class="panel wisdom">
+  <div class="label">PRISM Platform Reference</div>
+  <h2>Where This Is Heading — The Prism Architecture</h2>
+  <p>Prism (Predictive Reasoning and Intelligence Synthesis for Markets) is Professor Dr. Tan's deployed AI market intelligence platform. It embodies the exact architecture you are learning to specify manually this sprint.</p>
+  <div class="grid3">
+    <div class="card">
+      <strong>Flask + FinBERT Backend</strong><br>
+      <span class="small">Python Flask serving a FinBERT sentiment model. Market text → structured sentiment signal. This is your "Macro Agent R4" as code.</span>
+    </div>
+    <div class="card">
+      <strong>TradingView Lightweight Charts</strong><br>
+      <span class="small">Interactive candlestick rendering for SPX, NDX, IWM. Visual layer on top of the Technical Agent R5 output.</span>
+    </div>
+    <div class="card">
+      <strong>Multi-LLM Insights Panel</strong><br>
+      <span class="small">ChatGPT and Gemini panels running identical prompts. The comparison table your R8 operator builds manually — automated.</span>
+    </div>
+  </div>
+  <p class="small" style="margin-top:12px"></p>
+</section>
+
+<!-- GUIDING QUESTIONS -->
+<section class="panel">
+  <h2>Architecture Guiding Questions — Sprint Retrospective Prompts</h2>
+  <div class="grid">
+    <div class="card card-teal"><strong>What was the most repetitive step this sprint?</strong><br><span class="small">That is your first automation candidate. Define the input, output, and frequency. Write it as a system requirement.</span></div>
+    <div class="card card-purple"><strong>Where did the four LLMs disagree most?</strong><br><span class="small">Disagreement zones reveal where human judgement is most valuable and where the system should request escalation.</span></div>
+    <div class="card card-gold"><strong>What would break if your team had 50 members?</strong><br><span class="small">Current processes that rely on one person knowing something informally are not scalable. Document and systematise them.</span></div>
+    <div class="card card-blue"><strong>What data are you not collecting yet?</strong><br><span class="small">Every Almanac, Macro, and Technical output implies a data source. Which ones are missing from your current pipeline?</span></div>
+  </div>
+</section>
+
+<a class="btn" href="../index.html">← Back to Sprint Instructions</a>
+<a class="btn gold" href="../system/index.html">System Architecture Overview</a>
+
+</main>
+
+<footer></footer>
+
+</body>
+</html>

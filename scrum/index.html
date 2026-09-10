@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scrum &amp; Agile Reference · CP3405 DT3 TR2 2026</title>
+<style>
+    :root {
+      --navy:#0a1628;--navy-2:#0d1f3c;--navy-3:#112244;
+      --gold:#c9a84c;--gold-lt:#e2c97e;--teal:#2dd4bf;
+      --white:#f0f4fa;--muted:#8fa3bf;--danger:#e05c5c;
+      --success:#3dcc8a;--warn:#f0a500;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--navy);color:var(--white);font-family:'Segoe UI',system-ui,sans-serif;font-size:16px;line-height:1.7;}
+    header{background:linear-gradient(135deg,#070e1c 0%,var(--navy-3) 60%,#0b2040 100%);border-bottom:2px solid var(--gold);padding:2.5rem 2rem 2rem;text-align:center;position:relative;overflow:hidden;}
+    header::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:600px;height:200px;background:radial-gradient(ellipse,rgba(201,168,76,.12) 0%,transparent 70%);pointer-events:none;}
+    .eyebrow{font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:.5rem;}
+    header h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;color:var(--gold);line-height:1.15;}
+    header h1 span{color:var(--white);font-weight:300;}
+    .header-meta{margin-top:1rem;display:flex;justify-content:center;flex-wrap:wrap;gap:.5rem .75rem;}
+    .badge{display:inline-block;padding:.25rem .75rem;border-radius:99px;font-size:.78rem;font-weight:600;}
+    .badge-gold{background:rgba(201,168,76,.18);color:var(--gold);border:1px solid rgba(201,168,76,.4);}
+    .badge-teal{background:rgba(45,212,191,.15);color:var(--teal);border:1px solid rgba(45,212,191,.35);}
+    .badge-white{background:rgba(240,244,250,.08);color:var(--white);border:1px solid rgba(240,244,250,.2);}
+    nav{background:var(--navy-2);border-bottom:1px solid rgba(201,168,76,.2);padding:.75rem 2rem;display:flex;gap:1.25rem;flex-wrap:wrap;align-items:center;}
+    nav a{color:var(--muted);text-decoration:none;font-size:.85rem;}
+    nav a:hover{color:var(--gold);}
+    nav a.active{color:var(--gold);font-weight:600;}
+    .nav-sep{color:rgba(255,255,255,.15);}
+    main{max-width:960px;margin:0 auto;padding:2.5rem 1.5rem 5rem;}
+    section{margin-bottom:3rem;}
+    .section-title{font-size:1.05rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--teal);border-bottom:1px solid rgba(45,212,191,.25);padding-bottom:.5rem;margin-bottom:1.5rem;}
+    p{color:rgba(240,244,250,.82);margin-bottom:1rem;}
+    strong{color:var(--white);}
+    em{color:var(--gold-lt);font-style:italic;}
+    code{background:rgba(45,212,191,.12);color:var(--teal);padding:.1rem .4rem;border-radius:4px;font-size:.88em;}
+
+    /* ── Opening framing ── */
+    .framing{background:linear-gradient(135deg,rgba(45,212,191,.08),rgba(201,168,76,.05));border:1px solid rgba(45,212,191,.2);border-radius:14px;padding:2rem;margin-bottom:2.5rem;text-align:center;}
+    .framing .headline{font-size:clamp(1.2rem,3vw,1.7rem);font-weight:700;color:var(--white);line-height:1.3;margin-bottom:.75rem;}
+    .framing .sub{font-size:.95rem;color:rgba(240,244,250,.7);max-width:620px;margin:0 auto;}
+
+    /* ── Principle cards ── */
+    .principles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.1rem;}
+    .p-card{background:var(--navy-2);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:1.25rem 1.4rem;position:relative;overflow:hidden;}
+    .p-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--teal);}
+    .p-card.gold::before{background:var(--gold);}
+    .p-card.gradient::before{background:linear-gradient(90deg,var(--teal),var(--gold));}
+    .p-num{font-size:2.2rem;font-weight:800;color:rgba(45,212,191,.15);line-height:1;margin-bottom:.4rem;}
+    .p-card.gold .p-num{color:rgba(201,168,76,.15);}
+    .p-title{font-size:.95rem;font-weight:700;color:var(--white);margin-bottom:.5rem;}
+    .p-body{font-size:.84rem;color:var(--muted);line-height:1.55;}
+    .p-quote{display:block;margin-top:.65rem;font-size:.82rem;color:var(--teal);font-style:italic;border-left:2px solid rgba(45,212,191,.3);padding-left:.6rem;}
+    .p-card.gold .p-quote{color:var(--gold-lt);border-left-color:rgba(201,168,76,.3);}
+
+    /* ── Project mapping ── */
+    .mapping-table{width:100%;border-collapse:collapse;font-size:.9rem;}
+    .mapping-table th{background:var(--navy-3);color:var(--gold);font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;padding:.65rem 1rem;text-align:left;border-bottom:1px solid rgba(201,168,76,.3);}
+    .mapping-table td{padding:.8rem 1rem;border-bottom:1px solid rgba(255,255,255,.07);color:rgba(240,244,250,.82);vertical-align:top;}
+    .mapping-table tr:last-child td{border-bottom:none;}
+    .mapping-table tr:hover td{background:rgba(255,255,255,.025);}
+    .scrum-term{color:var(--teal);font-weight:700;}
+    .project-term{color:var(--gold-lt);}
+    .ai-angle{color:var(--muted);font-size:.82rem;margin-top:.2rem;}
+
+    /* ── AI + Scrum ── */
+    .ai-scrum-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;}
+    .ai-card{background:var(--navy-2);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:1.1rem 1.25rem;}
+    .ai-role{font-size:.72rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem;}
+    .ai-title{font-size:.92rem;font-weight:700;color:var(--white);margin-bottom:.3rem;}
+    .ai-scrum{font-size:.78rem;color:var(--teal);margin-bottom:.25rem;}
+    .ai-workforce{font-size:.78rem;color:var(--muted);font-style:italic;}
+
+    /* ── Callouts ── */
+    .callout{border-left:3px solid var(--gold);background:rgba(201,168,76,.07);border-radius:0 8px 8px 0;padding:1rem 1.25rem;margin-bottom:1.25rem;}
+    .callout.teal{border-color:var(--teal);background:rgba(45,212,191,.07);}
+    .callout-title{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem;color:var(--gold);}
+    .callout.teal .callout-title{color:var(--teal);}
+    .callout p{margin-bottom:0;font-size:.92rem;}
+
+    /* ── Mantra strip ── */
+    .mantra-strip{background:var(--navy-3);border-radius:12px;padding:1.5rem;margin-bottom:2rem;}
+    .mantra-list{display:flex;flex-direction:column;gap:.6rem;}
+    .mantra{font-size:.9rem;color:rgba(240,244,250,.7);padding:.5rem .75rem;border-left:2px solid rgba(201,168,76,.3);}
+    .mantra strong{color:var(--gold-lt);}
+
+    footer{border-top:1px solid rgba(201,168,76,.15);padding:1.5rem 2rem;text-align:center;font-size:.8rem;color:var(--muted);}
+    @media(max-width:600px){.principles-grid,.ai-scrum-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">CP3405 Design Thinking 3 · TR2 2026 · Permanent Reference</p>
+  <h1>Scrum &amp; Agile <span>— With AI</span></h1>
+  <div class="header-meta">
+    <span class="badge badge-teal">Applies to every sprint</span>
+    <span class="badge badge-gold">Not financial markets — professional skills</span>
+    <span class="badge badge-white">Reference this page any time</span>
+  </div>
+</header>
+
+<nav>
+  <a href="/">Home</a><span class="nav-sep">·</span>
+  <a href="/sprint7/">Sprint 7</a><span class="nav-sep">·</span>
+  <a href="/sprint6/">Sprint 6</a><span class="nav-sep">·</span>
+  <a href="/scrum/" class="active">Scrum Reference</a><span class="nav-sep">·</span>
+  <a href="/roadmap/">Roadmap</a><span class="nav-sep">·</span>
+  <a href="/system/">System</a>
+</nav>
+
+<main>
+
+<!-- FRAMING -->
+<div class="framing">
+  <div class="headline">This project is a Scrum exercise.<br>The market data is where you practise it.</div>
+  <div class="sub">You are not training to be traders or financial analysts. You are learning to run a professional delivery cadence — planning, execution, review, retrospective — with AI tools doing the repeatable work and humans providing the judgment. That combination is what the workforce is hiring for right now.</div>
+</div>
+
+<!-- WHY SCRUM + AI -->
+<section id="why">
+  <div class="section-title">Why Scrum and AI Belong Together</div>
+
+  <p>Scrum was designed for problems where the requirements aren't fully known upfront — where you learn by doing, deliver in short cycles, and improve based on what you find. That is exactly the environment AI tools operate in today.</p>
+
+  <p>AI handles the <strong>repeatable execution</strong> — fetching data, running analysis, calling models, logging outputs. Scrum handles the <strong>continuous improvement</strong> — sprint goals, daily cadence, retrospectives, Definition of Done. Neither is sufficient without the other.</p>
+
+  <div class="callout teal">
+    <div class="callout-title">The compounding effect</div>
+    <p>A team that uses AI without Scrum produces good outputs inconsistently. A team that uses Scrum without AI works hard but slowly. A team that uses both — with a disciplined retrospective each sprint — builds a compounding advantage. Each sprint the automation gets slightly better, the process gets slightly tighter, and the output gets slightly more accurate. Over eight sprints, that compounds into something significant.</p>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">The key insight from this project</div>
+    <p>By Sprint 6, the best teams have a GitHub Actions workflow that fires automatically after the US market closes on Friday (Saturday morning SGT), collects all instrument data, runs agent scripts, calls LLMs via API, and commits the output — without anyone touching a keyboard. That didn't happen because they used smarter AI. It happened because every retrospective produced one concrete improvement to the automation. <strong>Scrum compounded what AI started.</strong></p>
+  </div>
+</section>
+
+<!-- 10 PRINCIPLES -->
+<section id="principles">
+  <div class="section-title">13 Scrum Principles — Applied to This Project</div>
+  <p>These are the principles your team should be improving on every sprint. Each one has a project-specific meaning.</p>
+
+  <div class="principles-grid">
+
+    <div class="p-card">
+      <div class="p-num">01</div>
+      <div class="p-title">A sprint goal is a commitment, not a description</div>
+      <div class="p-body">Weak: "We will work on the pipeline." Strong: "We will deliver a fully automated end-to-end pipeline that runs without manual intervention and is sealed with vW28 by Sunday midnight." If you can't tell at midnight Sunday whether you met it — it's not a goal.</div>
+      <span class="p-quote">R1 writes this. R2 holds the team to it.</span>
+    </div>
+
+    <div class="p-card gold">
+      <div class="p-num">02</div>
+      <div class="p-title">Done means done. Not mostly done.</div>
+      <div class="p-body">A pipeline task that is "almost finished" is not a sprint increment. The Definition of Done is a checklist — if an item isn't checked, the sprint isn't done. Tasks that linger across sprints blur your velocity and make it impossible to measure progress.</div>
+      <span class="p-quote">The DoD is the contract your team makes with itself.</span>
+    </div>
+
+    <div class="p-card">
+      <div class="p-num">03</div>
+      <div class="p-title">Agree on timeboxes early — enforce them even if they feel wrong</div>
+      <div class="p-body">Define timeboxes for every Scrum event: sprint (one week), daily standup (15 min), sprint review (per-team slot), retrospective (30 min). An incorrect timebox you enforce teaches you more than no timebox at all. Adjust by consensus in the next retrospective — never ad hoc.</div>
+      <span class="p-quote">R2 owns the clock.</span>
+    </div>
+
+    <div class="p-card gold">
+      <div class="p-num">04</div>
+      <div class="p-title">A blocker surfaced Wednesday can be resolved. Sunday cannot.</div>
+      <div class="p-body">The daily standup exists precisely for this. If your pipeline broke on Thursday and you didn't say anything until Sunday — that's not a pipeline problem, it's a communication problem. R2 must make it psychologically safe to raise blockers early.</div>
+      <span class="p-quote">Hiding a blocker is not Scrum.</span>
+    </div>
+
+    <div class="p-card">
+      <div class="p-num">05</div>
+      <div class="p-title">The daily standup is the heartbeat of Scrum</div>
+      <div class="p-body">15 minutes. Stand up. Three questions: what did I do, what will I do, what is blocking me. One person speaks at a time. No laptops. Defer detailed discussions until after. If it's running 30 minutes, that's a symptom — someone is problem-solving instead of flagging.</div>
+      <span class="p-quote">Short, sharp, every day.</span>
+    </div>
+
+    <div class="p-card gold">
+      <div class="p-num">06</div>
+      <div class="p-title">Velocity is an outcome — you can't optimise for it without gaming it</div>
+      <div class="p-body">Never add backlog items to hit a velocity target. Never inflate story points to look productive. Velocity is a planning tool, not a performance metric. Your sprint goal drives what goes in — velocity follows from honest work.</div>
+      <span class="p-quote">Focus on the goal. Velocity follows.</span>
+    </div>
+
+    <div class="p-card">
+      <div class="p-num">07</div>
+      <div class="p-title">The demo either runs or it doesn't</div>
+      <div class="p-body">Come to Sprint Review prepared. Never create the demo on the spot. Show the GitHub Actions run log — not a screenshot of code that "works on my machine." Incomplete items go back to the backlog, not into the demo as "nearly done." Well-structured demos build stakeholder confidence.</div>
+      <span class="p-quote">If it doesn't run in the room, it doesn't count.</span>
+    </div>
+
+    <div class="p-card gold">
+      <div class="p-num">08</div>
+      <div class="p-title">The retrospective is where the team gets better — not the pipeline</div>
+      <div class="p-body">Retrospective is separate from Sprint Review. Every team member speaks — not just the loudest voices. The goal is to identify problems and plan when to address them — not solve everything live. One concrete change committed for the next sprint. Written in the repo.</div>
+      <span class="p-quote">Small consistent improvements turn Scrum from process into culture.</span>
+    </div>
+
+    <div class="p-card">
+      <div class="p-num">09</div>
+      <div class="p-title">Mid-sprint interruptions are a tax on velocity</div>
+      <div class="p-body">When something urgent arrives mid-sprint, log it in the backlog and address it next sprint — unless it is truly blocking delivery. Don't estimate the new work; just know it cost you something. If your team is regularly interrupted, surface that pattern in the retrospective and decide how to protect the sprint goal.</div>
+      <span class="p-quote">Protect the sprint goal. Everything else is backlog.</span>
+    </div>
+
+    <div class="p-card gradient">
+      <div class="p-num">10</div>
+      <div class="p-title">Sustainable pace — the sprint that breaks you helps no one</div>
+      <div class="p-body">Set realistic sprint goals. Distribute intensive tasks across team members. If your team is consistently finishing at 11:55pm Sunday, the goal was too ambitious or the work wasn't distributed. Scrum is designed to be sustainable across eight sprints — not heroic for one.</div>
+      <span class="p-quote">The team that lasts eight sprints beats the one that burns out at four.</span>
+    </div>
+
+    <div class="p-card gold">
+      <div class="p-num">11</div>
+      <div class="p-title">The Scrum Master's value is proportional to how early they surface what is not working</div>
+      <div class="p-body">A dependency that surfaces on Sunday was visible on Wednesday. The SM who discovers a blocker on Sunday night did not fail on Sunday — they failed on Tuesday when they did not check in. The Wednesday Test: by mid-week, R2 must know the status of every role individually. Not from a group chat. Individually. One message, one person, one status.</div>
+      <span class="p-quote">Wednesday discovery = solvable. Sunday discovery = damage control.</span>
+    </div>
+
+    <div class="p-card">
+      <div class="p-num">12</div>
+      <div class="p-title">Dependency collapse is a Scrum Master failure — not a team member failure</div>
+      <div class="p-body">When R8 cannot synthesise because R3 did not commit, the team blames R3. The correct diagnosis is that R2 did not know R3 was behind until it was too late to fix it. R2's job is not to do R3's work. It is to know by Wednesday whether R3's work will be done before Thursday — when R8 needs it. The pipeline has a strict execution order. R2 watches the chain, not the deadline.</div>
+      <span class="p-quote">The SM does not wait for the standup to find out what people are doing.</span>
+    </div>
+
+    <div class="p-card gradient">
+      <div class="p-num">13</div>
+      <div class="p-title">The mid-week check-in is not a group message — it is individual, documented, and acted upon</div>
+      <div class="p-body">Posting "hey how is everyone going?" in the team channel is not a check-in. R2 contacts each role member individually: "R3 — your Almanac output needs to be committed by Wednesday noon. R8 is blocked until it lands. What's your status?" The response — and R2's action if the response reveals a problem — is committed to the repository as a standup note. If it is not documented, it did not happen.</div>
+      <span class="p-quote">A check-in that produces no documentation helped no one.</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- SCRUM EVENTS MAPPED TO THIS PROJECT -->
+<section id="mapping">
+  <div class="section-title">Scrum Events — What They Mean in This Project</div>
+  <table class="mapping-table">
+    <thead>
+      <tr><th>Scrum Event</th><th>In This Project</th><th>AI Angle</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="scrum-term">Sprint Planning</span><br><small>Monday · in class</small></td>
+        <td><span class="project-term">R1 writes sprint goal. R2 assigns roles. DoD checklist written. DECISION.md committed.</span></td>
+        <td><div class="ai-angle">The sprint goal defines what the AI pipeline must produce by Sunday. Writing it forces clarity about what "automated" actually means for this team this week.</div></td>
+      </tr>
+      <tr>
+        <td><span class="scrum-term">Daily Scrum</span><br><small>15 min · every day</small></td>
+        <td><span class="project-term">Three questions. Blockers surfaced immediately. R2 chases by Wednesday.</span></td>
+        <td><div class="ai-angle">Pipeline failures, API key issues, GitHub Actions errors — these are Wednesday blockers, not Sunday surprises. The daily standup is what catches them early.</div></td>
+      </tr>
+      <tr>
+        <td><span class="scrum-term">Sprint Execution</span><br><small>Mon–Sat</small></td>
+        <td><span class="project-term">Agents commit independently (R3–R6). LLM API calls run (R8). Automated fetch fires Saturday morning SGT after Friday US market close (R9).</span></td>
+        <td><div class="ai-angle">The best teams have AI doing the execution. Humans do the judgment — Wild Card (R7), calibration (R10), pipeline monitoring (R9). The sprint cadence keeps this ordered.</div></td>
+      </tr>
+      <tr>
+        <td><span class="scrum-term">Sprint Review</span><br><small>Monday presentation</small></td>
+        <td><span class="project-term">Every role has a speaking point. Show GitHub Actions log live. Demo the pipeline running — or explain the failure honestly.</span></td>
+        <td><div class="ai-angle">The Sprint Review is where the AI system is evaluated against reality. Did the automated fetch run? Did the LLM comparison table generate correctly? Did the prediction reflect what the agents produced?</div></td>
+      </tr>
+      <tr>
+        <td><span class="scrum-term">Retrospective</span><br><small>After Sprint Review</small></td>
+        <td><span class="project-term">Separate from Sprint Review. Every member speaks. One concrete change for next sprint. Committed to repo.</span></td>
+        <td><div class="ai-angle">The retrospective question for an AI team is specific: did the automation run without failure? Did the output improve? What checklist item prevents the failure next sprint? These are engineering questions — and they compound.</div></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- AI ROLES MAPPED TO SCRUM + WORKFORCE -->
+<section id="roles-ai">
+  <div class="section-title">Your Role · Scrum · Workforce</div>
+  <p>Every role in this project practises a real skill. The Scrum framework is what makes those individual skills add up to a functioning system.</p>
+
+  <div class="ai-scrum-grid">
+    <div class="ai-card">
+      <div class="ai-role">R1</div>
+      <div class="ai-title">Product Owner</div>
+      <div class="ai-scrum">Scrum: owns the sprint goal and DoD</div>
+      <div class="ai-workforce">→ Product Manager in industry</div>
+    </div>
+    <div class="ai-card">
+      <div class="ai-role">R2</div>
+      <div class="ai-title">Scrum Master</div>
+      <div class="ai-scrum">Scrum: protects cadence, removes blockers</div>
+      <div class="ai-workforce">→ Team Lead / Agile Coach</div>
+    </div>
+    <div class="ai-card">
+      <div class="ai-role">R3</div>
+      <div class="ai-title">Almanac Agent</div>
+      <div class="ai-scrum">Scrum: delivers a sprint backlog item (historical analysis) on time</div>
+      <div class="ai-workforce">→ Research Analyst</div>
+    </div>
+    <div class="ai-card">
+      <div class="ai-role">R4</div>
+      <div class="ai-title">Macro Agent</div>
+      <div class="ai-scrum">Scrum: delivers a sprint backlog item (macro analysis) on time</div>
+      <div class="ai-workforce">→ Macro / Strategy Analyst</div>
+    </div>
+    <div class="ai-card">
+      <div class="ai-role">R5</div>
+      <div class="ai-title">Technical Agent</div>
+      <div class="ai-scrum">Scrum: delivers a sprint backlog item (technical analysis) on time</div>
+      <div class="ai-workforce">→ Data Analyst</div>
+    </div>
+    <div class="ai-card">
+      <div class="ai-role">R6</div>
+      <div class="ai-title">Data Collector</div>
+      <div class="ai-scrum">Scrum: owns the infrastructure that feeds the sprint</div>
+      <div class="ai-workforce">→ Data Engineer</div>
+    </div>
+    <div class="ai-card">
+      <div class="ai-role">R7</div>
+      <div class="ai-title">Human Score Lead</div>
+      <div class="ai-scrum">Scrum: the Product Owner's counterpart — applies human acceptance criteria that AI cannot</div>
+      <div class="ai-workforce">→ Senior Analyst / Decision Maker</div>
+    </div>
+    <div class="ai-card">
+      <div class="ai-role">R8</div>
+      <div class="ai-title">LLM Operator</div>
+      <div class="ai-scrum">Scrum: builds the AI synthesis layer — the highest-value technical backlog item</div>
+      <div class="ai-workforce">→ AI / ML Engineer</div>
+    </div>
+    <div class="ai-card">
+      <div class="ai-role">R9</div>
+      <div class="ai-title">GitHub Lead</div>
+      <div class="ai-scrum">Scrum: owns the Definition of Done — nothing is done until the tag is cut</div>
+      <div class="ai-workforce">→ DevOps / Platform Engineer</div>
+    </div>
+    <div class="ai-card">
+      <div class="ai-role">R10</div>
+      <div class="ai-title">Calibration Lead</div>
+      <div class="ai-scrum">Scrum: generates the retrospective data — did the system improve?</div>
+      <div class="ai-workforce">→ Product Analyst / KPI Owner</div>
+    </div>
+  </div>
+</section>
+
+<!-- MANTRAS -->
+<section id="mantras">
+  <div class="section-title">10 Lines Worth Saying Out Loud Every Sprint</div>
+  <p>One per class session. These are the ideas that compound.</p>
+  <div class="mantra-strip">
+    <div class="mantra-list">
+      <div class="mantra"><strong>"A sprint goal is a commitment, not a description."</strong> — If you can't tell at midnight Sunday whether you met it, rewrite it.</div>
+      <div class="mantra"><strong>"Done means done. Not mostly done."</strong> — A task that is almost finished is not a sprint increment. It goes back to the backlog.</div>
+      <div class="mantra"><strong>"Velocity is an outcome. You can't optimise for it without gaming it."</strong> — Focus on the goal. Velocity follows from honest work.</div>
+      <div class="mantra"><strong>"A blocker surfaced Wednesday can be resolved. Sunday cannot."</strong> — The daily standup exists precisely for this.</div>
+      <div class="mantra"><strong>"The retrospective is where the team gets better — not the pipeline."</strong> — One concrete change per sprint compounds over eight sprints.</div>
+      <div class="mantra"><strong>"Build the pipe. Don't carry the bucket."</strong> — Calling an LLM via API and pasting from a chat window both produce output. Only one scales.</div>
+      <div class="mantra"><strong>"Small consistent improvements turn Scrum from process into culture."</strong> — Sprint 8 belongs to the team that improved every sprint, not the one that sprinted hardest once.</div>
+      <div class="mantra"><strong>"The demo either runs or it doesn't. There is no 'we were close'."</strong> — If it doesn't run in the room, it goes back to the backlog.</div>
+      <div class="mantra"><strong>"The data domain is the training environment. The professional habits are what transfer."</strong> — You are not learning to predict markets. You are learning to deliver a working system on a cadence.</div>
+      <div class="mantra"><strong>"If it's not on the DoD checklist, it won't get done."</strong> — The Definition of Done is not paperwork. It is the only thing standing between a completed sprint and a forgotten one.</div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>CP3405 Design Thinking 3 · TR2 2026 · Scrum &amp; Agile Reference · Permanent · Updated Sprint 6 · 6 July 2026</footer>
+
+</body>
+</html>

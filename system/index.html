@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>System Architecture · CP3405 DT3</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f5f7fb;font-family:Inter,Segoe UI,Arial,sans-serif;color:#102033;line-height:1.55}
+a{color:#0f6fbd;text-decoration:none;font-weight:800}
+.top{background:#071426;color:#fff;border-bottom:4px solid #12c7b7;padding:18px 22px;display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}
+.brand{display:flex;gap:14px;align-items:center;font-weight:900;font-size:1.25rem}
+.badge{background:#12c7b7;color:#071426;padding:8px 12px;border-radius:8px;font-family:monospace}
+.prof{color:#12c7b7;font-family:monospace;font-size:.95rem}
+.ticker{background:#173b6a;color:#f5b942;font-weight:900;letter-spacing:.035em;white-space:nowrap;overflow:auto;padding:12px 22px;font-size:.9rem}
+.nav{display:flex;overflow:auto;background:#132747;border-bottom:1px solid #0f2040}
+.nav a{padding:14px 18px;color:#dbeafe;white-space:nowrap;font-weight:700;font-size:.9rem;transition:background .2s}
+.nav a:hover{background:#1e3a6e}
+.nav a.active{background:#12c7b7;color:#071426}
+.nav a.sys{border-left:3px solid #12c7b7}
+.hero{background:linear-gradient(135deg,#0b1a31,#0e2a52,#0a3d6b);color:#fff;text-align:center;padding:60px 22px 44px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 30% 60%,rgba(18,199,183,.15) 0%,transparent 60%)}
+.hero-badge{display:inline-block;background:rgba(18,199,183,.2);border:1px solid #12c7b7;color:#12c7b7;padding:6px 16px;border-radius:999px;font-size:.85rem;font-weight:900;letter-spacing:.08em;margin-bottom:14px}
+.hero h1{font-size:clamp(1.8rem,4vw,3.2rem);margin:10px 0;position:relative}
+.hero p{max-width:800px;margin:0 auto;color:#dbeafe;font-size:1.1rem;position:relative}
+.main{max-width:1180px;margin:0 auto;padding:22px}
+.panel{background:#fff;border:1px solid #dbe3ef;border-radius:20px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(15,23,42,.06)}
+.panel h2{margin:0 0 6px;color:#071426;font-size:1.3rem}
+.panel h3{margin:20px 0 10px;color:#071426}
+.label{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;font-weight:900;color:#64748b;margin-bottom:4px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(280px,1fr));gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(200px,1fr));gap:16px}
+.card{border:1px solid #dbe3ef;border-radius:16px;padding:18px;background:#f8fafc}
+.card-teal{border-left:4px solid #12c7b7;background:#f0fdfa}
+.card-gold{border-left:4px solid #f5b942;background:#fffbeb}
+.card-purple{border-left:4px solid #7c3aed;background:#f5f3ff}
+.card-green{border-left:4px solid #10b981;background:#ecfdf5}
+.wisdom{border-left:7px solid #7c3aed;background:#f5f3ff}
+.ok{border-left:7px solid #10b981;background:#ecfdf5}
+.small{color:#64748b;font-size:.9rem}
+.btn{display:inline-block;background:#12c7b7;color:#071426;font-weight:900;padding:12px 20px;border-radius:999px;margin:6px 6px 0 0;transition:opacity .2s}
+.btn:hover{opacity:.85}
+.btn.gold{background:#f5b942}
+/* DIAGRAMS */
+.diagram-wrap{overflow:auto;margin:16px 0;border-radius:16px;border:1px solid #dbe3ef;background:#fafcff}
+svg{display:block;max-width:100%}
+/* LAYER GRID */
+.layer-stack{display:flex;flex-direction:column;gap:8px;margin:16px 0}
+.layer-row{display:flex;gap:8px;align-items:stretch}
+.layer-label{width:140px;flex-shrink:0;display:flex;align-items:center;justify-content:flex-end;padding-right:12px;font-weight:900;font-size:.85rem;color:#64748b}
+.layer-items{display:flex;gap:8px;flex:1;flex-wrap:wrap}
+.layer-item{padding:12px 16px;border-radius:10px;font-size:.85rem;font-weight:700;flex:1;min-width:100px;text-align:center}
+.layer-item.navy{background:#071426;color:#12c7b7}
+.layer-item.teal{background:#0d9488;color:#fff}
+.layer-item.blue{background:#1d4ed8;color:#fff}
+.layer-item.purple{background:#7c3aed;color:#fff}
+.layer-item.gold{background:#d97706;color:#fff}
+.layer-item.green{background:#059669;color:#fff}
+.layer-item.light{background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd}
+footer{text-align:center;color:#64748b;padding:36px 22px;border-top:1px solid #dbe3ef;margin-top:24px}
+@media(max-width:900px){.grid,.grid3{grid-template-columns:1fr}.main{padding:12px}.nav a{padding:12px 14px}.layer-row{flex-direction:column}.layer-label{width:auto;justify-content:flex-start;padding:0}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand"><span class="badge">CP3405</span><span>DT3 · System Intelligence Platform</span></div>
+  <div class="prof">Prof. Dr. Tan · TR2 '26</div>
+</header>
+<div class="ticker">SPRINT 4 · SYSTEM ARCHITECTURE · Manual → Structured → Automated → Intelligent</div>
+<nav class="nav">
+  <a class="new" href="/sprint4/index.html">Sprint 4 Announcement</a>
+  <a class="new" href="/roadmap/index.html">Roadmap</a>
+  <a href="../index.html">Home</a>
+  <a class="active sys" href="index.html">System Architecture</a>
+  <a class="sys" href="../roles/index.html">Roles &amp; Responsibilities</a>
+  <a class="sys" href="../architecture/index.html">Architecture Deep Dive</a>
+  
+  
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">SYSTEM THINKING</div>
+  <h1>CP3405 System Architecture</h1>
+  <p>Scrum does not change. The complexity of the system changes. Your team is not completing tasks — you are designing an intelligence pipeline.</p>
+</section>
+
+<main class="main">
+
+<!-- FRAMING -->
+<section class="panel wisdom">
+  <div class="label">Core Principle</div>
+  <h2 style="margin-bottom:8px">Manual Work Is a System Design Signal</h2>
+  <p>Every time your team does something manually — collecting data, running prompts, comparing outputs, scoring evidence — you are discovering a future automation requirement. This is not inefficiency. This is <strong>system specification through lived experience</strong>.</p>
+  <p>Strong teams don't just complete the sprint. They ask: <em>how would we build this so a machine could do it at scale?</em></p>
+</section>
+
+<!-- PIPELINE DIAGRAM (SVG) -->
+<section class="panel">
+  <div class="label">Diagram 1 — Intelligence Pipeline + Scrum Ceremony Map</div>
+  <h2>Data Sources → Agents → LLM Synthesis → Human Score → Lock → Delta → Prescribe → Repeat</h2>
+  <p class="small">This is the complete Scrum-aligned sprint cycle. The left half is <strong>Sprint Execution</strong> (Planning, Backlog Refinement, Daily Scrum). The right half — from Locked Decision onward — is the <strong>Sprint Review and Retrospective codified as a system</strong>. The teal calibration loop at the bottom is Scrum's Inspect and Adapt principle made visible: every Rx prescription is a retrospective action item that enters next sprint's backlog. You are not building a trading system. You are building a disciplined system improvement engine.</p>
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 960 320" xmlns="http://www.w3.org/2000/svg" width="960" height="320">
+      <defs>
+        <marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto" markerUnits="strokeWidth">
+          <path d="M0,0.5 L0,5.5 L5.5,3 z" fill="#94a3b8"/>
+        </marker>
+        <marker id="arrow-ret" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto" markerUnits="strokeWidth">
+          <path d="M0,0.5 L0,5.5 L5.5,3 z" fill="#12c7b7"/>
+        </marker>
+      </defs>
+      <!-- Phase labels -->
+      <rect x="10" y="4" width="440" height="14" rx="4" fill="rgba(18,199,183,0.12)"/>
+      <text x="230" y="14" text-anchor="middle" fill="#12c7b7" font-size="8" font-weight="900" font-family="Arial">SPRINT EXECUTION</text>
+      <rect x="458" y="4" width="492" height="14" rx="4" fill="rgba(245,158,11,0.12)"/>
+      <text x="704" y="14" text-anchor="middle" fill="#f5b942" font-size="8" font-weight="900" font-family="Arial">SPRINT REVIEW + RETROSPECTIVE</text>
+      <!-- Stage 1: DATA SOURCES -->
+      <rect x="10" y="22" width="118" height="115" rx="12" fill="#1d4ed8"/>
+      <text x="69" y="52" text-anchor="middle" fill="#fff" font-size="16" font-family="Arial">📡</text>
+      <text x="69" y="70" text-anchor="middle" fill="#fff" font-size="9" font-weight="900" font-family="Arial">DATA SOURCES</text>
+      <text x="69" y="83" text-anchor="middle" fill="#bfdbfe" font-size="8" font-family="Arial">Finviz · Yahoo</text>
+      <text x="69" y="95" text-anchor="middle" fill="#bfdbfe" font-size="8" font-family="Arial">TradingEcon · Charts</text>
+      <text x="69" y="129" text-anchor="middle" fill="#93c5fd" font-size="7" font-family="Arial" font-style="italic">Sprint Planning inputs</text>
+      <path d="M130 80 L144 80" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+      <!-- Stage 2: AGENTS -->
+      <rect x="146" y="22" width="118" height="115" rx="12" fill="#0d9488"/>
+      <text x="205" y="52" text-anchor="middle" fill="#fff" font-size="16" font-family="Arial">🔬</text>
+      <text x="205" y="70" text-anchor="middle" fill="#fff" font-size="9" font-weight="900" font-family="Arial">AGENTS</text>
+      <text x="205" y="83" text-anchor="middle" fill="#ccfbf1" font-size="8" font-family="Arial">Almanac R3 · Macro R4</text>
+      <text x="205" y="95" text-anchor="middle" fill="#ccfbf1" font-size="8" font-family="Arial">Technical R5 · Data R6</text>
+      <text x="205" y="129" text-anchor="middle" fill="#99f6e4" font-size="7" font-family="Arial" font-style="italic">Backlog refinement</text>
+      <path d="M266 80 L280 80" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+      <!-- Stage 3: LLM -->
+      <rect x="282" y="22" width="118" height="115" rx="12" fill="#7c3aed"/>
+      <text x="341" y="52" text-anchor="middle" fill="#fff" font-size="16" font-family="Arial">🤖</text>
+      <text x="341" y="70" text-anchor="middle" fill="#fff" font-size="9" font-weight="900" font-family="Arial">LLM SYNTHESIS</text>
+      <text x="341" y="83" text-anchor="middle" fill="#ddd6fe" font-size="8" font-family="Arial">GPT · Gemini</text>
+      <text x="341" y="95" text-anchor="middle" fill="#ddd6fe" font-size="8" font-family="Arial">DeepSeek</text>
+      <text x="341" y="129" text-anchor="middle" fill="#c4b5fd" font-size="7" font-family="Arial" font-style="italic">Planning Poker</text>
+      <path d="M402 80 L416 80" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+      <!-- Stage 4: HUMAN SCORE -->
+      <rect x="418" y="22" width="118" height="115" rx="12" fill="#b45309"/>
+      <text x="477" y="52" text-anchor="middle" fill="#fff" font-size="16" font-family="Arial">🧠</text>
+      <text x="477" y="70" text-anchor="middle" fill="#fff" font-size="9" font-weight="900" font-family="Arial">HUMAN SCORE</text>
+      <text x="477" y="83" text-anchor="middle" fill="#fde68a" font-size="8" font-family="Arial">R7 Override</text>
+      <text x="477" y="95" text-anchor="middle" fill="#fde68a" font-size="8" font-family="Arial">Wild Card Insight</text>
+      <text x="477" y="129" text-anchor="middle" fill="#fde68a" font-size="7" font-family="Arial" font-style="italic">Product Owner</text>
+      <path d="M538 80 L552 80" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+      <!-- Stage 5: LOCKED -->
+      <rect x="554" y="22" width="118" height="115" rx="12" fill="#047857"/>
+      <text x="613" y="52" text-anchor="middle" fill="#fff" font-size="16" font-family="Arial">🔒</text>
+      <text x="613" y="70" text-anchor="middle" fill="#fff" font-size="9" font-weight="900" font-family="Arial">LOCKED</text>
+      <text x="613" y="83" text-anchor="middle" fill="#a7f3d0" font-size="8" font-family="Arial">GitHub vW[CW#] Tag</text>
+      <text x="613" y="95" text-anchor="middle" fill="#a7f3d0" font-size="8" font-family="Arial">Discord · Deck</text>
+      <text x="613" y="129" text-anchor="middle" fill="#6ee7b7" font-size="7" font-family="Arial" font-style="italic">Definition of Done</text>
+      <path d="M674 80 L688 80" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+      <!-- Stage 6: DELTA -->
+      <rect x="690" y="22" width="118" height="115" rx="12" fill="#7f1d1d"/>
+      <text x="749" y="52" text-anchor="middle" fill="#fff" font-size="16" font-family="Arial">Δ</text>
+      <text x="749" y="70" text-anchor="middle" fill="#fff" font-size="9" font-weight="900" font-family="Arial">DELTA ENGINE</text>
+      <text x="749" y="83" text-anchor="middle" fill="#fca5a5" font-size="8" font-family="Arial">Predicted vs Actual</text>
+      <text x="749" y="95" text-anchor="middle" fill="#fca5a5" font-size="8" font-family="Arial">Direction · Size</text>
+      <text x="749" y="129" text-anchor="middle" fill="#fca5a5" font-size="7" font-family="Arial" font-style="italic">Sprint Review</text>
+      <path d="M810 80 L824 80" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+      <!-- Stage 7: PRESCRIPTIONS -->
+      <rect x="826" y="22" width="120" height="115" rx="12" fill="#451a03"/>
+      <text x="886" y="52" text-anchor="middle" fill="#fff" font-size="16" font-family="Arial">Rx</text>
+      <text x="886" y="70" text-anchor="middle" fill="#fff" font-size="9" font-weight="900" font-family="Arial">PRESCRIBE</text>
+      <text x="886" y="83" text-anchor="middle" fill="#fcd34d" font-size="8" font-family="Arial">Agent re-weights</text>
+      <text x="886" y="95" text-anchor="middle" fill="#fcd34d" font-size="8" font-family="Arial">New signals</text>
+      <text x="886" y="129" text-anchor="middle" fill="#fcd34d" font-size="7" font-family="Arial" font-style="italic">Retro → Backlog</text>
+      <!-- CALIBRATION LOOP -->
+      <path d="M886 137 L886 192" stroke="#12c7b7" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <path d="M886 192 L69 192" stroke="#12c7b7" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <path d="M69 192 L69 137" stroke="#12c7b7" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow-ret)"/>
+      <path d="M205 192 L205 137" stroke="#12c7b7" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow-ret)"/>
+      <path d="M341 192 L341 137" stroke="#12c7b7" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow-ret)"/>
+      <rect x="380" y="180" width="240" height="22" rx="7" fill="rgba(18,199,183,0.12)" stroke="#12c7b7" stroke-width="1"/>
+      <text x="500" y="190" text-anchor="middle" fill="#12c7b7" font-size="7.5" font-weight="900" font-family="Arial">R10 CALIBRATION — Inspect and Adapt</text>
+      <text x="500" y="199" text-anchor="middle" fill="#a7f3d0" font-size="6.5" font-family="Arial">Rx prescriptions feed next sprint backlog</text>
+      <!-- Scrum ceremony row -->
+      <rect x="10" y="215" width="940" height="100" rx="10" fill="rgba(7,20,38,0.7)" stroke="#1e3a5f" stroke-width="1"/>
+      <text x="480" y="229" text-anchor="middle" fill="#facc15" font-size="7.5" font-weight="900" font-family="Arial">SCRUM CEREMONY MAPPING — This pipeline IS your Agile practice, not separate from it</text>
+      <line x1="146" y1="236" x2="146" y2="308" stroke="#1e3a5f" stroke-width="0.5"/>
+      <line x1="282" y1="236" x2="282" y2="308" stroke="#1e3a5f" stroke-width="0.5"/>
+      <line x1="418" y1="236" x2="418" y2="308" stroke="#1e3a5f" stroke-width="0.5"/>
+      <line x1="554" y1="236" x2="554" y2="308" stroke="#1e3a5f" stroke-width="0.5"/>
+      <line x1="690" y1="236" x2="690" y2="308" stroke="#1e3a5f" stroke-width="0.5"/>
+      <line x1="826" y1="236" x2="826" y2="308" stroke="#1e3a5f" stroke-width="0.5"/>
+      <text x="69"  y="248" text-anchor="middle" fill="#93c5fd" font-size="7" font-weight="900" font-family="Arial">SPRINT PLANNING</text>
+      <text x="69"  y="260" text-anchor="middle" fill="#facc15" font-size="6.5" font-family="Arial">What data do we need?</text>
+      <text x="69"  y="272" text-anchor="middle" fill="#facc15" font-size="6.5" font-family="Arial">What is the sprint goal?</text>
+      <text x="205" y="248" text-anchor="middle" fill="#34d399" font-size="7" font-weight="900" font-family="Arial">BACKLOG REFINEMENT</text>
+      <text x="205" y="260" text-anchor="middle" fill="#facc15" font-size="6.5" font-family="Arial">Each agent = specialist.</text>
+      <text x="205" y="272" text-anchor="middle" fill="#facc15" font-size="6.5" font-family="Arial">No groupthink before LLMs.</text>
+      <text x="341" y="248" text-anchor="middle" fill="#c084fc" font-size="7" font-weight="900" font-family="Arial">PLANNING POKER</text>
+      <text x="341" y="260" text-anchor="middle" fill="#facc15" font-size="6.5" font-family="Arial">4 LLMs = 4 estimates.</text>
+      <text x="341" y="272" text-anchor="middle" fill="#facc15" font-size="6.5" font-family="Arial">Divergence = hidden risk.</text>
+      <text x="477" y="248" text-anchor="middle" fill="#fbbf24" font-size="7" font-weight="900" font-family="Arial">PRODUCT OWNER</text>
+      <text x="477" y="260" text-anchor="middle" fill="#facc15" font-size="6.5" font-family="Arial">R7 protects value,</text>
+      <text x="477" y="272" text-anchor="middle" fill="#facc15" font-size="6.5" font-family="Arial">not just speed.</text>
+      <text x="613" y="248" text-anchor="middle" fill="#6ee7b7" font-size="7" font-weight="900" font-family="Arial">DEFINITION OF DONE</text>
+      <text x="613" y="260" text-anchor="middle" fill="#facc15" font-size="6.5" font-family="Arial">Tag seals prediction.</text>
+      <text x="613" y="272" text-anchor="middle" fill="#facc15" font-size="6.5" font-family="Arial">No retroactive edits.</text>
+      <text x="749" y="248" text-anchor="middle" fill="#f87171" font-size="7" font-weight="900" font-family="Arial">SPRINT REVIEW</text>
+      <text x="749" y="260" text-anchor="middle" fill="#facc15" font-size="6.5" font-family="Arial">Inspect the increment.</text>
+      <text x="749" y="272" text-anchor="middle" fill="#facc15" font-size="6.5" font-family="Arial">Delta = learning, not blame.</text>
+      <text x="886" y="248" text-anchor="middle" fill="#fcd34d" font-size="7" font-weight="900" font-family="Arial">SPRINT RETRO</text>
+      <text x="886" y="260" text-anchor="middle" fill="#facc15" font-size="6.5" font-family="Arial">Rx = action items.</text>
+      <text x="886" y="272" text-anchor="middle" fill="#facc15" font-size="6.5" font-family="Arial">Enter next sprint backlog.</text>
+    </svg>
+  </div>
+</section>
+
+<!-- LAYERED ARCHITECTURE DIAGRAM -->
+<section class="panel">
+  <div class="label">Diagram 2 — Layered Architecture</div>
+  <h2>Sources → Ingestion → Storage → Processing → Output</h2>
+  <p class="small">A software architecture view of how Prism — your future tool — would be structured. Each layer your team touches manually this sprint will eventually become code.</p>
+  <div class="layer-stack">
+    <div class="layer-row">
+      <div class="layer-label">OUTPUT LAYER</div>
+      <div class="layer-items">
+        <div class="layer-item green">SPX Prediction</div>
+        <div class="layer-item green">NDX Prediction</div>
+        <div class="layer-item green">IWM Prediction</div>
+        <div class="layer-item green">Monday Presentation</div>
+        <div class="layer-item green">GitHub Release</div>
+      </div>
+    </div>
+    <div class="layer-row">
+      <div class="layer-label">PROCESSING</div>
+      <div class="layer-items">
+        <div class="layer-item gold">Human Score Engine (R7)</div>
+        <div class="layer-item gold">LLM Comparison Engine</div>
+        <div class="layer-item gold">Confidence Scoring</div>
+        <div class="layer-item gold">Invalidation Logic</div>
+      </div>
+    </div>
+    <div class="layer-row">
+      <div class="layer-label">INTELLIGENCE</div>
+      <div class="layer-items">
+        <div class="layer-item purple">ChatGPT API</div>
+        
+        <div class="layer-item purple">Gemini API</div>
+        <div class="layer-item purple">DeepSeek API</div>
+        <div class="layer-item purple">FinBERT (Sentiment)</div>
+      </div>
+    </div>
+    <div class="layer-row">
+      <div class="layer-label">AGENT LAYER</div>
+      <div class="layer-items">
+        <div class="layer-item blue">Almanac Agent R3</div>
+        <div class="layer-item blue">Macro Agent R4</div>
+        <div class="layer-item blue">Technical Agent R5</div>
+        <div class="layer-item blue">Data / Actuals R6</div>
+      </div>
+    </div>
+    <div class="layer-row">
+      <div class="layer-label">STORAGE</div>
+      <div class="layer-items">
+        <div class="layer-item teal">GitHub Repository</div>
+        <div class="layer-item teal">Evidence Folder</div>
+        <div class="layer-item teal">FigJam Thinking Wall</div>
+        <div class="layer-item teal">Discord Thread</div>
+      </div>
+    </div>
+    <div class="layer-row">
+      <div class="layer-label">INGESTION</div>
+      <div class="layer-items">
+        <div class="layer-item navy">Data Collector (Manual → Scripted)</div>
+        <div class="layer-item navy">Screenshot / URL Evidence</div>
+        <div class="layer-item navy">Market Calendar Parser</div>
+      </div>
+    </div>
+    <div class="layer-row">
+      <div class="layer-label">SOURCE LAYER</div>
+      <div class="layer-items">
+        <div class="layer-item light">Finviz Sector Map</div>
+        <div class="layer-item light">Yahoo Finance 5D</div>
+        <div class="layer-item light">TradingEconomics</div>
+        <div class="layer-item light">Chart Evidence</div>
+        <div class="layer-item light">SPX · NDX · IWM Live</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SYSTEM MATURITY DIAGRAM (SVG) -->
+<section class="panel">
+  <div class="label">Diagram 3 — System Maturity</div>
+  <h2>Level 1 → Level 2 → Level 3 → Level 4</h2>
+  <p class="small">Honest assessment: most teams are currently at Level 1–2. The goal of this course is to get you thinking and building toward Level 3–4.</p>
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 900 230" xmlns="http://www.w3.org/2000/svg" width="900" height="230">
+      <defs>
+        <marker id="arrow2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto" markerUnits="strokeWidth">
+          <path d="M0,0.5 L0,5.5 L5.5,3 z" fill="#94a3b8"/>
+        </marker>
+      </defs>
+      <!-- Level 1 -->
+      <rect x="20" y="20" width="190" height="190" rx="16" fill="#fef2f2" stroke="#ef4444" stroke-width="2"/>
+      <text x="115" y="60" text-anchor="middle" font-size="32" font-family="Arial">🛠️</text>
+      <text x="115" y="95" text-anchor="middle" fill="#991b1b" font-size="15" font-weight="900" font-family="Arial">LEVEL 1</text>
+      <text x="115" y="113" text-anchor="middle" fill="#991b1b" font-size="13" font-family="Arial">MANUAL</text>
+      <text x="115" y="140" text-anchor="middle" fill="#facc15" font-size="11" font-family="Arial">Everything by hand.</text>
+      <text x="115" y="156" text-anchor="middle" fill="#facc15" font-size="11" font-family="Arial">High effort. Low scale.</text>
+      <text x="115" y="172" text-anchor="middle" fill="#facc15" font-size="11" font-family="Arial">Prone to errors.</text>
+      <text x="115" y="195" text-anchor="middle" fill="#ef4444" font-size="10" font-weight="900" font-family="Arial">← MOST TEAMS NOW</text>
+      <!-- Arrow -->
+      <path d="M212 115 L235 115" stroke="#94a3b8" stroke-width="2.5" marker-end="url(#arrow2)"/>
+      <!-- Level 2 -->
+      <rect x="237" y="20" width="190" height="190" rx="16" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+      <text x="332" y="60" text-anchor="middle" font-size="32" font-family="Arial">📋</text>
+      <text x="332" y="95" text-anchor="middle" fill="#92400e" font-size="15" font-weight="900" font-family="Arial">LEVEL 2</text>
+      <text x="332" y="113" text-anchor="middle" fill="#92400e" font-size="13" font-family="Arial">STRUCTURED</text>
+      <text x="332" y="140" text-anchor="middle" fill="#facc15" font-size="11" font-family="Arial">Templates &amp; roles.</text>
+      <text x="332" y="156" text-anchor="middle" fill="#facc15" font-size="11" font-family="Arial">GitHub evidence trail.</text>
+      <text x="332" y="172" text-anchor="middle" fill="#facc15" font-size="11" font-family="Arial">Repeatable process.</text>
+      <text x="332" y="195" text-anchor="middle" fill="#f59e0b" font-size="10" font-weight="900" font-family="Arial">← TARGET FOR THIS SPRINT</text>
+      <!-- Arrow -->
+      <path d="M429 115 L452 115" stroke="#94a3b8" stroke-width="2.5" marker-end="url(#arrow2)"/>
+      <!-- Level 3 -->
+      <rect x="454" y="20" width="190" height="190" rx="16" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+      <text x="549" y="60" text-anchor="middle" font-size="32" font-family="Arial">⚙️</text>
+      <text x="549" y="95" text-anchor="middle" fill="#065f46" font-size="15" font-weight="900" font-family="Arial">LEVEL 3</text>
+      <text x="549" y="113" text-anchor="middle" fill="#065f46" font-size="13" font-family="Arial">AUTOMATED</text>
+      <text x="549" y="140" text-anchor="middle" fill="#facc15" font-size="11" font-family="Arial">Scripts, APIs, jobs.</text>
+      <text x="549" y="156" text-anchor="middle" fill="#facc15" font-size="11" font-family="Arial">Human reviews output,</text>
+      <text x="549" y="172" text-anchor="middle" fill="#facc15" font-size="11" font-family="Arial">not inputs.</text>
+      <text x="549" y="195" text-anchor="middle" fill="#10b981" font-size="10" font-weight="900" font-family="Arial">← COURSE ASPIRATION</text>
+      <!-- Arrow -->
+      <path d="M646 115 L669 115" stroke="#94a3b8" stroke-width="2.5" marker-end="url(#arrow2)"/>
+      <!-- Level 4 -->
+      <rect x="671" y="20" width="190" height="190" rx="16" fill="#eff6ff" stroke="#1d4ed8" stroke-width="2"/>
+      <text x="766" y="60" text-anchor="middle" font-size="32" font-family="Arial">🧠</text>
+      <text x="766" y="95" text-anchor="middle" fill="#1e40af" font-size="15" font-weight="900" font-family="Arial">LEVEL 4</text>
+      <text x="766" y="113" text-anchor="middle" fill="#1e40af" font-size="13" font-family="Arial">INTELLIGENT</text>
+      <text x="766" y="140" text-anchor="middle" fill="#facc15" font-size="11" font-family="Arial">AI synthesis, anomaly</text>
+      <text x="766" y="156" text-anchor="middle" fill="#facc15" font-size="11" font-family="Arial">detection. Self-improving</text>
+      <text x="766" y="172" text-anchor="middle" fill="#facc15" font-size="11" font-family="Arial">predictions. PRISM.</text>
+      <text x="766" y="195" text-anchor="middle" fill="#1d4ed8" font-size="10" font-weight="900" font-family="Arial">← WHERE PRISM LIVES</text>
+    </svg>
+  </div>
+</section>
+
+<!-- SYSTEM THINKING CONTENT -->
+<section class="panel ok">
+  <div class="label">System Thinking Principles</div>
+  <h2>What Strong Teams Understand</h2>
+  <div class="grid3">
+    <div class="card card-teal">
+      <strong>Manual = System Signal</strong><br>
+      <span class="small">Every repetitive manual step is a future automation requirement. Do not accept friction as the natural state.</span>
+    </div>
+    <div class="card card-gold">
+      <strong>You Are Building Systems</strong><br>
+      <span class="small">This course is not about completing assignments. It is about designing, testing, and improving a market intelligence system.</span>
+    </div>
+    <div class="card card-purple">
+      <strong>Automation Frees Judgement</strong><br>
+      <span class="small">When data collection is automated, human attention moves to where it matters: interpretation, scepticism, and the Wild Card.</span>
+    </div>
+    <div class="card card-green">
+      <strong>Scale Test Everything</strong><br>
+      <span class="small">Ask: "What breaks when we scale to 10 teams?" If the answer is "everything", your process is not a system yet.</span>
+    </div>
+    <div class="card card-teal">
+      <strong>Scrum Exposes the System</strong><br>
+      <span class="small">Sprints, standups, retrospectives, and release tags are not ceremony. They are the feedback loop that makes the system self-correcting.</span>
+    </div>
+    <div class="card card-gold">
+      <strong>Human Score = Irreplaceable</strong><br>
+      <span class="small">Four LLMs cannot replace the R7 Human Score. Pattern recognition, news intuition, and contrarian thinking remain human advantages.</span>
+    </div>
+  </div>
+  <a class="btn" href="../architecture/index.html" style="margin-top:14px">Architecture Deep Dive →</a>
+</section>
+
+</main>
+
+<footer></footer>
+
+</body>
+</html>

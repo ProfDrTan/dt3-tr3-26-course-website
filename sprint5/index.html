@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sprint 5 — CP3405 DT3 TR2 2026</title>
+  <style>
+    /* ── Palette ── */
+    :root {
+      --navy:    #0a1628;
+      --navy-2:  #0d1f3c;
+      --navy-3:  #112244;
+      --gold:    #c9a84c;
+      --gold-lt: #e2c97e;
+      --teal:    #2dd4bf;
+      --teal-dk: #1fa89a;
+      --white:   #f0f4fa;
+      --muted:   #8fa3bf;
+      --danger:  #e05c5c;
+      --success: #3dcc8a;
+      --warn:    #f0a500;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, #070e1c 0%, var(--navy-3) 60%, #0b2040 100%);
+      border-bottom: 2px solid var(--gold);
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 200px;
+      background: radial-gradient(ellipse, rgba(201,168,76,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .eyebrow {
+      font-size: .75rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: .5rem;
+    }
+    header h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: -.01em;
+      line-height: 1.15;
+    }
+    header h1 span { color: var(--white); font-weight: 300; }
+    .header-meta {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: .5rem .75rem;
+    }
+    .badge {
+      display: inline-block;
+      padding: .25rem .75rem;
+      border-radius: 99px;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .05em;
+    }
+    .badge-gold   { background: rgba(201,168,76,.18); color: var(--gold); border: 1px solid rgba(201,168,76,.4); }
+    .badge-teal   { background: rgba(45,212,191,.15); color: var(--teal); border: 1px solid rgba(45,212,191,.35); }
+    .badge-white  { background: rgba(240,244,250,.08); color: var(--white); border: 1px solid rgba(240,244,250,.2); }
+
+    /* ── Nav ── */
+    nav {
+      background: var(--navy-2);
+      border-bottom: 1px solid rgba(201,168,76,.2);
+      padding: .75rem 2rem;
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .85rem;
+      transition: color .2s;
+    }
+    nav a:hover { color: var(--gold); }
+    nav a.active { color: var(--gold); font-weight: 600; }
+    .nav-sep { color: rgba(255,255,255,.15); }
+
+    /* ── Layout ── */
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    /* ── Countdown strip ── */
+    .countdown-strip {
+      background: linear-gradient(90deg, rgba(201,168,76,.1) 0%, rgba(45,212,191,.08) 100%);
+      border: 1px solid rgba(201,168,76,.3);
+      border-radius: 10px;
+      padding: 1.1rem 1.5rem;
+      margin-bottom: 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem 2rem;
+      align-items: center;
+    }
+    .countdown-strip .label { color: var(--muted); font-size: .82rem; text-transform: uppercase; letter-spacing: .1em; }
+    .countdown-strip .value { color: var(--gold); font-size: 1.05rem; font-weight: 700; }
+    .cd-item { display: flex; flex-direction: column; }
+
+    /* ── Section ── */
+    section { margin-bottom: 2.75rem; }
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--teal);
+      border-bottom: 1px solid rgba(45,212,191,.25);
+      padding-bottom: .5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    /* ── Prose ── */
+    p { color: rgba(240,244,250,.82); margin-bottom: 1rem; }
+    strong { color: var(--white); }
+
+    /* ── Callout boxes ── */
+    .callout {
+      border-left: 3px solid var(--gold);
+      background: rgba(201,168,76,.07);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+    .callout.teal  { border-color: var(--teal);  background: rgba(45,212,191,.07); }
+    .callout.danger{ border-color: var(--danger); background: rgba(224,92,92,.07); }
+    .callout .callout-title {
+      font-size: .8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: .4rem;
+    }
+    .callout .callout-title.gold   { color: var(--gold); }
+    .callout .callout-title.teal   { color: var(--teal); }
+    .callout .callout-title.danger { color: var(--danger); }
+    .callout p { margin-bottom: 0; font-size: .92rem; }
+
+    /* ── Tier cards ── */
+    .tier-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .tier-card {
+      background: var(--navy-2);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 10px;
+      padding: 1.1rem 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .tier-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .tier-card.l1::before  { background: var(--muted); }
+    .tier-card.l2::before  { background: var(--teal); }
+    .tier-card.l3::before  { background: var(--gold); }
+    .tier-card.l4::before  { background: linear-gradient(90deg, var(--gold), var(--teal)); }
+    .tier-label {
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin-bottom: .4rem;
+    }
+    .tier-card.l1 .tier-label  { color: var(--muted); }
+    .tier-card.l2 .tier-label  { color: var(--teal); }
+    .tier-card.l3 .tier-label  { color: var(--gold); }
+    .tier-card.l4 .tier-label  { background: linear-gradient(90deg, var(--gold), var(--teal)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .tier-title { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: .35rem; }
+    .tier-desc  { font-size: .84rem; color: var(--muted); line-height: 1.5; }
+    .tier-badge {
+      display: inline-block;
+      margin-top: .6rem;
+      font-size: .72rem;
+      padding: .15rem .55rem;
+      border-radius: 99px;
+      font-weight: 600;
+    }
+    .tier-badge.baseline { background: rgba(143,163,191,.15); color: var(--muted); }
+    .tier-badge.target   { background: rgba(45,212,191,.15); color: var(--teal); }
+    .tier-badge.stretch  { background: rgba(201,168,76,.15); color: var(--gold); }
+    .tier-badge.elite    { background: linear-gradient(90deg, rgba(201,168,76,.15), rgba(45,212,191,.15)); color: var(--gold-lt); }
+
+    /* ── Deliverables table ── */
+    .del-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .9rem;
+    }
+    .del-table th {
+      background: var(--navy-3);
+      color: var(--gold);
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      padding: .65rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(201,168,76,.3);
+    }
+    .del-table td {
+      padding: .75rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      color: rgba(240,244,250,.8);
+      vertical-align: top;
+    }
+    .del-table tr:last-child td { border-bottom: none; }
+    .del-table tr:hover td { background: rgba(255,255,255,.03); }
+    .del-table .role-chip {
+      display: inline-block;
+      background: rgba(45,212,191,.1);
+      color: var(--teal);
+      border-radius: 4px;
+      padding: .1rem .45rem;
+      font-size: .78rem;
+      font-weight: 600;
+    }
+    .del-table .req { color: var(--danger); font-weight: 700; font-size: .8rem; }
+    .del-table .opt { color: var(--muted);  font-weight: 600; font-size: .8rem; }
+
+    /* ── Role focus ── */
+    .role-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: .75rem;
+    }
+    .role-card {
+      background: var(--navy-2);
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 8px;
+      padding: .85rem 1rem;
+    }
+    .role-id { font-size: .7rem; color: var(--teal); font-weight: 700; letter-spacing: .08em; margin-bottom: .25rem; }
+    .role-name { font-size: .88rem; font-weight: 600; color: var(--white); margin-bottom: .3rem; }
+    .role-focus { font-size: .78rem; color: var(--muted); line-height: 1.45; }
+    .role-card.spotlight { border-color: rgba(201,168,76,.4); background: rgba(201,168,76,.06); }
+    .role-card.spotlight .role-id { color: var(--gold); }
+
+    /* ── Timeline ── */
+    .timeline { position: relative; padding-left: 1.5rem; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: .45rem; top: 6px; bottom: 6px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--teal) 0%, var(--gold) 100%);
+      border-radius: 2px;
+    }
+    .tl-item { position: relative; margin-bottom: 1.25rem; }
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -1.06rem;
+      top: .35rem;
+      width: 9px; height: 9px;
+      background: var(--navy);
+      border: 2px solid var(--teal);
+      border-radius: 50%;
+    }
+    .tl-item.deadline::before { border-color: var(--gold); background: var(--gold); }
+    .tl-date { font-size: .78rem; color: var(--teal); font-weight: 700; letter-spacing: .06em; margin-bottom: .15rem; }
+    .tl-item.deadline .tl-date { color: var(--gold); }
+    .tl-event { font-size: .92rem; color: var(--white); font-weight: 600; }
+    .tl-detail { font-size: .82rem; color: var(--muted); margin-top: .1rem; }
+
+    /* ── Five Things ── */
+    .five-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    .five-card {
+      background: var(--navy-2);
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+    }
+    .five-card .num { font-size: 1.6rem; font-weight: 800; color: rgba(201,168,76,.25); line-height: 1; margin-bottom: .35rem; }
+    .five-card .five-title { font-size: .95rem; font-weight: 700; color: var(--white); margin-bottom: .35rem; }
+    .five-card .five-body  { font-size: .84rem; color: var(--muted); line-height: 1.55; }
+
+    /* ── A1 reminder ── */
+    .a1-bar {
+      background: rgba(240,165,0,.1);
+      border: 1px solid rgba(240,165,0,.35);
+      border-radius: 10px;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .a1-icon { font-size: 1.6rem; flex-shrink: 0; }
+    .a1-title { font-size: .95rem; font-weight: 700; color: var(--warn); margin-bottom: .2rem; }
+    .a1-body  { font-size: .85rem; color: rgba(240,244,250,.75); }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid rgba(201,168,76,.15);
+      padding: 1.5rem 2rem;
+      text-align: center;
+      font-size: .8rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      .countdown-strip { flex-direction: column; gap: .6rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <p class="eyebrow">CP3405 Design Thinking 3 · TR2 2026 · Course Week 5</p>
+  <h1>Sprint 5 <span>— Integration & Intelligence Sprint</span></h1>
+  <div class="header-meta">
+    <span class="badge badge-gold">vW25 · Due Sun 21 June 2026 · 23:59 SGT</span>
+    <span class="badge badge-teal">Presentation · Mon 22 June 2026</span>
+    <span class="badge badge-white">Sprints 1–8 · TR2 2026</span>
+  </div>
+</header>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="/">Home</a><span class="nav-sep">·</span>
+  <a href="/sprint4/">Sprint 4</a><span class="nav-sep">·</span>
+  <a href="/sprint5/" class="active">Sprint 5</a><span class="nav-sep">·</span>
+  <a href="/roadmap/">Roadmap</a><span class="nav-sep">·</span>
+  <a href="/roles/">Roles</a><span class="nav-sep">·</span>
+  <a href="/system/">System</a><span class="nav-sep">·</span>
+  <a href="/leaderboard/">Leaderboard</a>
+</nav>
+
+<!-- ── MAIN ── -->
+<main>
+
+  <!-- Countdown strip -->
+  <div class="countdown-strip">
+    <div class="cd-item"><span class="label">Sprint</span><span class="value">5 of 8</span></div>
+    <div class="cd-item"><span class="label">Release Tag</span><span class="value">vW25</span></div>
+    <div class="cd-item"><span class="label">Tag Deadline</span><span class="value">Sun 21 June · 23:59 SGT</span></div>
+    <div class="cd-item"><span class="label">Presentation</span><span class="value">Mon 22 June 2026</span></div>
+    <div class="cd-item"><span class="label">A1 Deadline</span><span class="value">Sun 28 June · 23:59 SGT 📓</span></div>
+  </div>
+
+  <!-- What is Sprint 5 -->
+  <section>
+    <p class="section-title">What Sprint 5 Is About</p>
+    <p>
+      Sprint 4 was your <strong>Software Development Sprint</strong> — you built the pipeline that collects data, runs it through LLMs, and seals a prediction. If you achieved that, well done. Sprint 5 raises the bar: this is the <strong>Integration and Intelligence Sprint</strong>, where your pipeline stops being a collection of scripts and starts behaving like a coherent, self-contained system.
+    </p>
+    <p>
+      The single question Sprint 5 asks is this: <strong>can your system run end-to-end with minimal human intervention?</strong> The Scrum team's job this week is to close the gaps — between agents, between scripts, between the human score and the final prediction file — so that by Sunday night, the only human decision is the Wild Card override.
+    </p>
+
+    <div class="callout teal">
+      <p class="callout-title teal">Sprint 5 in One Sentence</p>
+      <p>Connect what you built in Sprint 4 into one coherent pipeline — from Friday market close to Sunday's sealed prediction — and make it visible in a dashboard or structured output your whole team can read.</p>
+    </div>
+  </section>
+
+  <!-- Capability Tiers -->
+  <section>
+    <p class="section-title">Capability Tiers — Where Should Your Team Be?</p>
+    <div class="tier-grid">
+      <div class="tier-card l1">
+        <p class="tier-label">Level 1</p>
+        <p class="tier-title">Manual</p>
+        <p class="tier-desc">Data collected by hand. Predictions typed. No scripts. No automation.</p>
+        <span class="tier-badge baseline">Sprint 1–3 Baseline</span>
+      </div>
+      <div class="tier-card l2">
+        <p class="tier-label">Level 2</p>
+        <p class="tier-title">Structured</p>
+        <p class="tier-desc">Scripts fetch data. Output saved to GitHub. Some automation in place but still manually triggered.</p>
+        <span class="tier-badge target">Sprint 4 → 5 Floor</span>
+      </div>
+      <div class="tier-card l3">
+        <p class="tier-label">Level 3</p>
+        <p class="tier-title">Automated Pipeline</p>
+        <p class="tier-desc">GitHub Actions runs fetch automatically. LLM API calls scripted. Delta scoring runs after actuals are known. Prediction file structured and sealed by tag.</p>
+        <span class="tier-badge stretch">Sprint 5 Target</span>
+      </div>
+      <div class="tier-card l4">
+        <p class="tier-label">Level 4</p>
+        <p class="tier-title">Intelligent System</p>
+        <p class="tier-desc">Full pipeline plus a live dashboard or structured HTML report your team can read. Prescriptive output, not just data. Human Score integrated into output automatically.</p>
+        <span class="tier-badge elite">Sprint 5–6 Stretch</span>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:1.25rem;">
+      <p class="callout-title gold">Sprint 5 Expectation</p>
+      <p>Teams that completed a working <code>fetch_market_data.py</code> and GitHub Actions trigger in Sprint 4 should be reaching Level 3 this sprint. Teams still at Level 1 need to close that gap this week — the window is narrowing as A1 approaches.</p>
+    </div>
+  </section>
+
+  <!-- Sprint 5 Deliverables -->
+  <section>
+    <p class="section-title">Sprint 5 Deliverables — What Goes into vW25</p>
+    <p>Your <code>vW25</code> release tag must contain the following. Seal it by <strong>Sunday 21 June 23:59 SGT</strong>. Late tags cannot receive a delta score.</p>
+
+    <table class="del-table">
+      <thead>
+        <tr>
+          <th>Deliverable</th>
+          <th>Owner</th>
+          <th>Level</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Prediction file</strong><br><code>prediction_W25.json</code></td>
+          <td><span class="role-chip">R7</span> <span class="role-chip">R2</span></td>
+          <td><span class="req">REQ</span></td>
+          <td>SPX, NDX, IWM directional prediction + confidence + Human Score Wild Card. Structured JSON or Markdown. Sealed inside vW25 tag.</td>
+        </tr>
+        <tr>
+          <td><strong>Agent outputs</strong><br>Almanac · Macro · Technical</td>
+          <td><span class="role-chip">R3</span> <span class="role-chip">R4</span> <span class="role-chip">R5</span></td>
+          <td><span class="req">REQ</span></td>
+          <td>Each agent writes independently before LLM synthesis. All three must be present and committed before the tag is cut.</td>
+        </tr>
+        <tr>
+          <td><strong>LLM synthesis</strong><br>ChatGPT · Gemini · DeepSeek</td>
+          <td><span class="role-chip">R8</span></td>
+          <td><span class="req">REQ</span></td>
+          <td>Identical prompt sent to all three mandatory LLMs. Responses saved and committed. Comparison table showing where LLMs agree and diverge.</td>
+        </tr>
+        <tr>
+          <td><strong>Automated fetch log</strong></td>
+          <td><span class="role-chip">R9</span></td>
+          <td><span class="req">REQ L3</span></td>
+          <td>Evidence that data was fetched automatically (GitHub Actions run log, auto-committed data file with timestamp, or equivalent). Teams at Level 2 must show manual fetch with a commit timestamp before Friday midnight SGT.</td>
+        </tr>
+        <tr>
+          <td><strong>Pipeline diagram or README update</strong></td>
+          <td><span class="role-chip">R1</span> <span class="role-chip">R9</span></td>
+          <td><span class="req">REQ</span></td>
+          <td>A diagram (FigJam, draw.io, or Mermaid in README) showing end-to-end data flow from market close → prediction seal. R1 signs off the README update.</td>
+        </tr>
+        <tr>
+          <td><strong>Delta score report — vW24</strong></td>
+          <td><span class="role-chip">R10</span> <span class="role-chip">R6</span></td>
+          <td><span class="req">REQ</span></td>
+          <td>R10 calculates direction accuracy and error % for last week's vW24 prediction vs Friday's actual close. Committed as <code>delta_W24.md</code> or equivalent. R6 provides actuals data.</td>
+        </tr>
+        <tr>
+          <td><strong>Dashboard or structured report</strong></td>
+          <td><span class="role-chip">R9</span> <span class="role-chip">R1</span></td>
+          <td><span class="opt">STRETCH L4</span></td>
+          <td>A simple HTML page, Streamlit app, or GitHub Pages view showing the current week's prediction, agent summaries, and LLM comparison in a readable format. Not required to be live — a screenshot in the repo counts.</td>
+        </tr>
+        <tr>
+          <td><strong>Sprint Retrospective notes</strong></td>
+          <td><span class="role-chip">R2</span></td>
+          <td><span class="opt">SCRUM</span></td>
+          <td>R2 Scrum Master documents what the team completed, what was blocked, and what changes in the next sprint. Goes into the Weekly Workbook and FigJam board.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Role Focus This Sprint -->
+  <section>
+    <p class="section-title">Role Focus — Sprint 5 Priorities</p>
+    <div class="role-grid">
+      <div class="role-card spotlight">
+        <p class="role-id">R1 · Product Owner</p>
+        <p class="role-name">System Coherence</p>
+        <p class="role-focus">Define what "done" means for the integrated pipeline. Sign off the README. Ensure all agent outputs connect to the prediction file.</p>
+      </div>
+      <div class="role-card spotlight">
+        <p class="role-id">R2 · Scrum Master</p>
+        <p class="role-name">Integration Unblocking</p>
+        <p class="role-focus">Chase every role daily. Run a mid-week check by Wednesday. Retrospective is mandatory this sprint — A1 workbook needs it.</p>
+      </div>
+      <div class="role-card">
+        <p class="role-id">R3 · Almanac Agent</p>
+        <p class="role-name">Seasonal Context</p>
+        <p class="role-focus">Historical patterns for the week of 16–20 June. Document sources. Output must be committed before R8 runs LLMs.</p>
+      </div>
+      <div class="role-card">
+        <p class="role-id">R4 · Macro Agent</p>
+        <p class="role-name">Fed + Data Watch</p>
+        <p class="role-focus">Macro events for w/c 16 June: Fed speakers, CPI revisions, any major data releases. Structured Markdown output.</p>
+      </div>
+      <div class="role-card">
+        <p class="role-id">R5 · Technical Agent</p>
+        <p class="role-name">Trend + Momentum</p>
+        <p class="role-focus">SPX/NDX/IWM technical read from Friday 13 June close. Key levels, trend direction, momentum signal.</p>
+      </div>
+      <div class="role-card">
+        <p class="role-id">R6 · Data / Actuals</p>
+        <p class="role-name">vW24 Actuals</p>
+        <p class="role-focus">Pull confirmed Friday 13 June closes. Feed to R10 for delta scoring. Also prepare data structure for current week's collection.</p>
+      </div>
+      <div class="role-card spotlight">
+        <p class="role-id">R7 · Human Score</p>
+        <p class="role-name">Wild Card Override</p>
+        <p class="role-focus">Review all three LLM outputs + three agent outputs. Apply override if consensus is wrong. Write Wild Card insight — this is the primary marks differentiator.</p>
+      </div>
+      <div class="role-card">
+        <p class="role-id">R8 · LLM Operator</p>
+        <p class="role-name">Synthesis + Comparison</p>
+        <p class="role-focus">Send identical prompt to ChatGPT, Gemini, DeepSeek. Save all responses. Build comparison table. Claude optional if access available.</p>
+      </div>
+      <div class="role-card spotlight">
+        <p class="role-id">R9 · GitHub Lead</p>
+        <p class="role-name">Pipeline Owner</p>
+        <p class="role-focus">Get GitHub Actions fetch running automatically if not yet done. Ensure all branches merged before Sunday. Cut the vW25 tag.</p>
+      </div>
+      <div class="role-card">
+        <p class="role-id">R10 · Calibration</p>
+        <p class="role-name">Delta Score vW24</p>
+        <p class="role-focus">Calculate how accurate last week's prediction was. Direction correct? Error %? Commit delta_W24.md with retrospective notes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Five Things guardrails -->
+  <section>
+    <p class="section-title">Five Things That Will Sink Your Sprint</p>
+    <div class="five-grid">
+      <div class="five-card">
+        <p class="num">01</p>
+        <p class="five-title">Waiting until Sunday to merge</p>
+        <p class="five-body">If all branches land Sunday afternoon, there is no time to fix merge conflicts. R2 must chase commits by Thursday. R9 merges by Saturday.</p>
+      </div>
+      <div class="five-card">
+        <p class="num">02</p>
+        <p class="five-title">Agent outputs after LLM synthesis</p>
+        <p class="five-body">R8 cannot run LLM synthesis until R3, R4, and R5 have committed their outputs. The dependency is strict. R2 enforces the order.</p>
+      </div>
+      <div class="five-card">
+        <p class="num">03</p>
+        <p class="five-title">No delta score for vW24</p>
+        <p class="five-body">R10 must commit <code>delta_W24.md</code> this sprint. A prediction sealed last week with no retrospective score is an incomplete Scrum cycle.</p>
+      </div>
+      <div class="five-card">
+        <p class="num">04</p>
+        <p class="five-title">Wild Card with no reasoning</p>
+        <p class="five-body">R7's Human Score is the primary differentiator. "I agree with the LLMs" is not a Wild Card. Write a specific, sourced, non-obvious insight.</p>
+      </div>
+      <div class="five-card">
+        <p class="num">05</p>
+        <p class="five-title">Missing the vW25 tag</p>
+        <p class="five-body">A tag not cut by Sunday 23:59 SGT cannot receive a delta score next sprint. The tag is the immutable seal. There are no extensions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section>
+    <p class="section-title">Sprint 5 Timeline</p>
+    <div class="timeline">
+      <div class="tl-item">
+        <p class="tl-date">Monday 15 June 2026</p>
+        <p class="tl-event">Sprint 5 Kickoff — after Sprint 4 presentations</p>
+        <p class="tl-detail">Teams receive Sprint 5 brief. R1 and R2 plan the week's backlog.</p>
+      </div>
+      <div class="tl-item">
+        <p class="tl-date">Mon–Wed 15–17 June</p>
+        <p class="tl-event">Agent work week — R3, R4, R5 research and write</p>
+        <p class="tl-detail">Almanac, Macro, and Technical agents commit initial outputs. R9 ensures pipeline is running.</p>
+      </div>
+      <div class="tl-item">
+        <p class="tl-date">Thursday 18 June</p>
+        <p class="tl-event">R8 LLM synthesis — runs all three mandatory LLMs</p>
+        <p class="tl-detail">Identical prompt sent to ChatGPT, Gemini, DeepSeek. Comparison table committed. R10 begins delta_W24 calculation.</p>
+      </div>
+      <div class="tl-item">
+        <p class="tl-date">Friday 20 June — US market close</p>
+        <p class="tl-event">R6 collects actuals · Automated fetch runs</p>
+        <p class="tl-detail">Friday close data for SPX, NDX, IWM collected. GitHub Actions pipeline should trigger automatically at 22:00 SGT.</p>
+      </div>
+      <div class="tl-item">
+        <p class="tl-date">Saturday 21 June</p>
+        <p class="tl-event">R7 Human Score + Wild Card — final review</p>
+        <p class="tl-detail">R7 reads all outputs, applies override if warranted, writes Wild Card insight. R2 chases any missing role submissions.</p>
+      </div>
+      <div class="tl-item deadline">
+        <p class="tl-date">Sunday 21 June 2026 · 23:59 SGT ⚑</p>
+        <p class="tl-event">vW25 Release Tag Deadline</p>
+        <p class="tl-detail">R9 cuts the vW25 tag. All prediction files, agent outputs, LLM synthesis, and delta score must be committed before the tag is created. No extensions.</p>
+      </div>
+      <div class="tl-item">
+        <p class="tl-date">Monday 22 June 2026</p>
+        <p class="tl-event">Sprint 5 Presentations · Sprint 6 Kickoff</p>
+        <p class="tl-detail">Every role (R1–R10) speaks. Demo of the integrated pipeline. R10 presents delta score for vW25 prediction.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- A1 Reminder -->
+  <section>
+    <div class="a1-bar">
+      <div class="a1-icon">📓</div>
+      <div>
+        <p class="a1-title">Assessment 1 — Weekly Workbook — Due Sunday 28 June 2026 · 23:59 SGT</p>
+        <p class="a1-body">Sprint 5 is the last sprint before the A1 deadline. Your Weekly Workbook covers Weeks 1–5 and must include: Knowledge Checks, Application Tasks, AI Conversation Reflections, and a Micro Reflection (~200 words) for every week. Sprint 5 activities — your pipeline diagram, delta score, agent outputs, and retrospective notes — all feed directly into the workbook. Do not leave the workbook until after Sprint 5 ends.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  CP3405 Design Thinking 3 · TR2 2026 · Sprint 5 · vW25 Due Sunday 21 June 2026
+</footer>
+
+</body>
+</html>

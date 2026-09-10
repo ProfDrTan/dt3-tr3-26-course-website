@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Roles &amp; Responsibilities · CP3405 DT3</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f5f7fb;font-family:Inter,Segoe UI,Arial,sans-serif;color:#102033;line-height:1.55}
+a{color:#0f6fbd;text-decoration:none;font-weight:800}
+.top{background:#071426;color:#fff;border-bottom:4px solid #12c7b7;padding:18px 22px;display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}
+.brand{display:flex;gap:14px;align-items:center;font-weight:900;font-size:1.25rem}
+.badge{background:#12c7b7;color:#071426;padding:8px 12px;border-radius:8px;font-family:monospace}
+.prof{color:#12c7b7;font-family:monospace;font-size:.95rem}
+.ticker{background:#173b6a;color:#f5b942;font-weight:900;letter-spacing:.035em;white-space:nowrap;overflow:auto;padding:12px 22px;font-size:.9rem}
+.nav{display:flex;overflow:auto;background:#132747;border-bottom:1px solid #0f2040}
+.nav a{padding:14px 18px;color:#dbeafe;white-space:nowrap;font-weight:700;font-size:.9rem;transition:background .2s}
+.nav a:hover{background:#1e3a6e}
+.nav a.active{background:#12c7b7;color:#071426}
+.nav a.sys{border-left:3px solid #12c7b7}
+.hero{background:linear-gradient(135deg,#0b1a31,#0e2a52,#160a42);color:#fff;text-align:center;padding:56px 22px 40px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(124,58,237,.15) 0%,transparent 60%)}
+.hero-badge{display:inline-block;background:rgba(124,58,237,.25);border:1px solid #7c3aed;color:#c4b5fd;padding:6px 16px;border-radius:999px;font-size:.85rem;font-weight:900;letter-spacing:.08em;margin-bottom:14px}
+.hero h1{font-size:clamp(1.8rem,4vw,3.2rem);margin:10px 0;position:relative}
+.hero p{max-width:800px;margin:0 auto;color:#dbeafe;font-size:1.1rem;position:relative}
+.main{max-width:1180px;margin:0 auto;padding:22px}
+.panel{background:#fff;border:1px solid #dbe3ef;border-radius:20px;padding:26px;margin:18px 0;box-shadow:0 8px 24px rgba(15,23,42,.06)}
+.panel h2{margin:0 0 14px;color:#071426;font-size:1.3rem}
+.label{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;font-weight:900;color:#64748b;margin-bottom:4px}
+.wisdom{border-left:7px solid #7c3aed;background:#f5f3ff}
+.ok{border-left:7px solid #10b981;background:#ecfdf5}
+/* ROLE MAPPING DIAGRAM */
+.role-map{display:grid;grid-template-columns:1fr 60px 1fr;gap:0;margin:16px 0;align-items:start}
+.role-col{display:flex;flex-direction:column;gap:8px}
+.role-col-title{text-align:center;font-weight:900;font-size:.85rem;text-transform:uppercase;letter-spacing:.07em;padding:10px;border-radius:10px;margin-bottom:8px}
+.scrum-title{background:#071426;color:#12c7b7}
+.sys-title{background:#7c3aed;color:#fff}
+.arrow-col{display:flex;flex-direction:column;justify-content:flex-start;align-items:center;padding-top:56px;gap:8px}
+.role-card{border-radius:12px;padding:14px 16px;font-size:.88rem;transition:box-shadow .2s}
+.role-card:hover{box-shadow:0 4px 14px rgba(15,23,42,.12)}
+.r-scrum{background:#f0fdfa;border:1.5px solid #0d9488;border-left:5px solid #12c7b7}
+.r-sys{background:#f5f3ff;border:1.5px solid #7c3aed;border-right:5px solid #7c3aed}
+.r-name{font-weight:900;color:#071426;margin-bottom:4px}
+.r-code{font-family:monospace;font-size:.78rem;color:#64748b}
+.r-desc{font-size:.82rem;color:#64748b;margin-top:4px}
+.r-key{font-size:.8rem;font-weight:900;color:#0f766e;margin-top:6px}
+.r-sys .r-key{color:#7c3aed}
+.connect-arrow{color:#94a3b8;font-size:1.3rem;margin:4px 0}
+/* ROLE DETAIL CARDS */
+.role-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:16px 0}
+.rcard{border-radius:16px;padding:18px;border:1px solid #dbe3ef}
+.rcard-po{background:#eff6ff;border-left:5px solid #1d4ed8}
+.rcard-sm{background:#f0fdfa;border-left:5px solid #0d9488}
+.rcard-dev{background:#f5f3ff;border-left:5px solid #7c3aed}
+.rcard-r7{background:#fffbeb;border-left:5px solid #f59e0b}
+.rcard-git{background:#ecfdf5;border-left:5px solid #10b981}
+.rcard-llm{background:#fdf4ff;border-left:5px solid #a21caf}
+.rcard-title{font-weight:900;font-size:1rem;margin-bottom:6px}
+.rcard-role{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;font-weight:900;margin-bottom:8px}
+.po{color:#1e40af}.sm{color:#0f766e}.dev{color:#6d28d9}.r7{color:#92400e}.git{color:#166534}.llm{color:#86198f}
+.small{color:#64748b;font-size:.88rem}
+table{width:100%;border-collapse:collapse;border:1px solid #dbe3ef;border-radius:12px;overflow:hidden}
+th{background:#071426;color:white;text-align:left;padding:11px 14px;font-size:.9rem}
+td{padding:11px 14px;border-top:1px solid #dbe3ef;vertical-align:top;font-size:.9rem}
+tr:nth-child(even) td{background:#f8fafc}
+.pill{border-radius:999px;padding:4px 10px;font-size:.8rem;font-weight:900;display:inline-block}
+.pill-blue{background:#dbeafe;color:#1e40af}
+.pill-teal{background:#ccfbf1;color:#0f766e}
+.pill-purple{background:#ede9fe;color:#6d28d9}
+.pill-yellow{background:#fef3c7;color:#92400e}
+.pill-red{background:#fee2e2;color:#991b1b}
+.pill-green{background:#dcfce7;color:#166534}
+.btn{display:inline-block;background:#12c7b7;color:#071426;font-weight:900;padding:12px 20px;border-radius:999px;margin:6px 6px 0 0;transition:opacity .2s}
+.btn:hover{opacity:.85}
+.btn.gold{background:#f5b942}
+.callout{background:#071426;color:#12c7b7;padding:16px 22px;border-radius:14px;margin:16px 0;font-weight:900;font-size:1.05rem}
+footer{text-align:center;color:#64748b;padding:36px 22px;border-top:1px solid #dbe3ef;margin-top:24px}
+@media(max-width:900px){.role-map{grid-template-columns:1fr}.arrow-col{flex-direction:row;flex-wrap:wrap;padding-top:0}.role-grid{grid-template-columns:1fr}.main{padding:12px}.nav a{padding:12px 14px}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand"><span class="badge">CP3405</span><span>DT3 · System Intelligence Platform</span></div>
+  <div class="prof">Prof. Dr. Tan · TR2 '26</div>
+</header>
+<div class="ticker">SPRINT 4 · ROLES &amp; RESPONSIBILITIES · Scrum does not change. The complexity of the system changes.</div>
+<nav class="nav">
+  <a class="new" href="/sprint4/index.html">Sprint 4 Announcement</a>
+  <a class="new" href="/roadmap/index.html">Roadmap</a>
+  <a href="../index.html">Home</a>
+  <a class="sys" href="../system/index.html">System Architecture</a>
+  <a class="active sys" href="index.html">Roles &amp; Responsibilities</a>
+  <a class="sys" href="../architecture/index.html">Architecture Deep Dive</a>
+  
+  
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">SCRUM + SYSTEM ROLES</div>
+  <h1>Roles &amp; Responsibilities</h1>
+  <p>Scrum does not change. The complexity of the system changes. System roles are internal specialisations within the Dev Team — not replacements of the Scrum framework.</p>
+</section>
+
+<main class="main">
+
+<div class="callout">
+  "Scrum does not change. The complexity of the system changes." — This is not a cliché. Every role on your team has two lenses: a Scrum responsibility and a system intelligence responsibility. Both must be fulfilled.
+</div>
+
+<!-- ROLE-SYSTEM MAPPING DIAGRAM -->
+<section class="panel">
+  <div class="label">Diagram 4 — Role-System Mapping</div>
+  <h2>Scrum Roles → System Responsibilities</h2>
+  <p class="small" style="margin-bottom:12px">Each standard Scrum role carries additional system intelligence responsibilities in CP3405. The Dev Team roles (R3–R10) are internal specialisations, not separate entities.</p>
+  <div class="role-map">
+    <div class="role-col">
+      <div class="role-col-title scrum-title">SCRUM ROLES</div>
+      <div class="role-card r-scrum">
+        <div class="r-name">Product Owner</div>
+        <div class="r-code">R1</div>
+        <div class="r-desc">Guards sprint value. Confirms Definition of Done. Owns the prediction call narrative.</div>
+        <div class="r-key">↔ Sprint Goal Owner</div>
+      </div>
+      <div class="role-card r-scrum">
+        <div class="r-name">Scrum Master</div>
+        <div class="r-code">R2</div>
+        <div class="r-desc">Removes blockers. Protects team flow. Facilitates retrospective. Does NOT command the team.</div>
+        <div class="r-key">↔ Process Health Guardian</div>
+      </div>
+      <div class="role-card r-scrum">
+        <div class="r-name">Development Team</div>
+        <div class="r-code">R3 – R10</div>
+        <div class="r-desc">Self-organising. Cross-functional. Builds and delivers the sprint increment. Internal specialisation below.</div>
+        <div class="r-key">↔ Intelligence Pipeline Operators</div>
+      </div>
+    </div>
+    <div class="arrow-col">
+      <div class="connect-arrow">↔</div>
+      <div class="connect-arrow">↔</div>
+      <div class="connect-arrow">↔</div>
+    </div>
+    <div class="role-col">
+      <div class="role-col-title sys-title">SYSTEM RESPONSIBILITIES</div>
+      <div class="role-card r-sys">
+        <div class="r-name">Sprint Intelligence Lead</div>
+        <div class="r-code">System Layer: Output</div>
+        <div class="r-desc">Defines the prediction quality bar. Approves the final locked prediction. Narrates the system story on Monday.</div>
+        <div class="r-key">↔ Final release sign-off</div>
+      </div>
+      <div class="role-card r-sys">
+        <div class="r-name">Pipeline Integrity Lead</div>
+        <div class="r-code">System Layer: Process</div>
+        <div class="r-desc">Ensures the pipeline runs end-to-end. Identifies where the process broke down. Proposes system improvements in retro.</div>
+        <div class="r-key">↔ Process → System feedback loop</div>
+      </div>
+      <div class="role-card r-sys">
+        <div class="r-name">Agent + LLM Operators</div>
+        <div class="r-code">System Layer: Processing</div>
+        <div class="r-desc">Almanac R3, Macro R4, Technical R5, Data R6, LLM R8, Calibration R10 — each owns one stage of the pipeline.</div>
+        <div class="r-key">↔ Manual → Automated pipeline</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DETAILED ROLE CARDS -->
+<section class="panel">
+  <div class="label">All Ten Roles — Sprint 4 Responsibilities</div>
+  <h2>Every Role Has a Weekend Job and a Monday Speaking Point</h2>
+  <div class="role-grid">
+    <div class="rcard rcard-po">
+      <div class="rcard-role po">R1 — Product Owner</div>
+      <div class="rcard-title">Sprint Goal Guardian</div>
+      <div class="small"><strong>Weekend:</strong> Confirm the W4 sprint goal. Validate the Definition of Done. Make the final call on which prediction represents the team's best work.<br><br><strong>Monday:</strong> State the sprint goal. Announce DoD status. Deliver the final W4 prediction with confidence level.</div>
+    </div>
+    <div class="rcard rcard-sm">
+      <div class="rcard-role sm">R2 — Scrum Master</div>
+      <div class="rcard-title">Process Flow Protector</div>
+      <div class="small"><strong>Weekend:</strong> Coordinate deadlines across the team. Identify and remove blockers. Ensure every role participates. Run a brief Sunday retrospective check.<br><br><strong>Monday:</strong> Present the retrospective: what failed, what improved, and one specific process change for Sprint W4.</div>
+    </div>
+    <div class="rcard rcard-dev">
+      <div class="rcard-role dev">R3 — Almanac Agent</div>
+      <div class="rcard-title">Historical Pattern Analyst</div>
+      <div class="small"><strong>Weekend:</strong> Pull seasonal patterns, historical analogues, and calendar-based signals (Fed meetings, options expiry, earnings seasons). Produce a written analysis before LLMs are queried.<br><br><strong>Monday:</strong> Present key seasonal insight and confidence contribution to final call.</div>
+    </div>
+    <div class="rcard rcard-dev">
+      <div class="rcard-role dev">R4 — Macro Agent</div>
+      <div class="rcard-title">Macro-Economic Analyst</div>
+      <div class="small"><strong>Weekend:</strong> Analyse macro environment: inflation signals, Fed language, bond yields, dollar strength, sector rotation from Yahoo 5D / Finviz. Produce written output independently.<br><br><strong>Monday:</strong> Present the macro thesis supporting or undermining the team prediction.</div>
+    </div>
+    <div class="rcard rcard-dev">
+      <div class="rcard-role dev">R5 — Technical Agent</div>
+      <div class="rcard-title">Chart &amp; Pattern Analyst</div>
+      <div class="small"><strong>Weekend:</strong> Analyse SPX, NDX, IWM charts. Identify key levels, trend structure, momentum signals, and volume patterns. Write independent technical output before LLMs.<br><br><strong>Monday:</strong> Present chart evidence and explain why the technical picture supports (or contradicts) the prediction.</div>
+    </div>
+    <div class="rcard rcard-dev">
+      <div class="rcard-role dev">R6 — Data / Actuals Agent</div>
+      <div class="rcard-title">Evidence &amp; Calibration Tracker</div>
+      <div class="small"><strong>Weekend:</strong> Record W2 actual outcomes against predictions. Calculate accuracy. Identify model disagreement vs. actual. Feed actuals into the calibration file.<br><br><strong>Monday:</strong> Present the W2 outcome vs. prediction and calibration score update.</div>
+    </div>
+    <div class="rcard rcard-r7">
+      <div class="rcard-role r7">R7 — Human Score Analyst ⭐ Most Important</div>
+      <div class="rcard-title">Wild Card &amp; Override Lead</div>
+      <div class="small"><strong>Weekend:</strong> After all agents and LLMs have reported, the R7 lead reviews the synthesis. Applies the Human Score. Decides whether to confirm, adjust, or override the AI consensus. Must justify the Wild Card observation.<br><br><strong>Monday:</strong> Present the Human Score reasoning. This is the primary marks differentiator. Weak R7 = weak team score.</div>
+    </div>
+    <div class="rcard rcard-llm">
+      <div class="rcard-role llm">R8 — LLM Operator</div>
+      <div class="rcard-title">Multi-Model Comparison Lead</div>
+      <div class="small"><strong>Weekend:</strong> Query the three LLMs (ChatGPT, Gemini, DeepSeek) with identical prompts. Claude is optional — include it if you have access. Save raw responses. Build comparison table showing agreement, disagreement, and credibility assessment.<br><br><strong>Monday:</strong> Present which models agreed, which diverged, and what that reveals about the prediction uncertainty.</div>
+    </div>
+    <div class="rcard rcard-git">
+      <div class="rcard-role git">R9 — GitHub Lead</div>
+      <div class="rcard-title">Evidence &amp; Release Manager</div>
+      <div class="small"><strong>Weekend:</strong> Commit all evidence files. Ensure folder structure is clean. Create the correct release tag: <code>vW24</code>. Verify the release link is accessible before the Sunday deadline.<br><br><strong>Monday:</strong> Open GitHub live in the presentation. Show the release tag. Walk through the evidence folder structure.</div>
+    </div>
+    <div class="rcard rcard-dev">
+      <div class="rcard-role dev">R10 — Calibration Lead</div>
+      <div class="rcard-title">Accuracy &amp; Learning Tracker</div>
+      <div class="small"><strong>Weekend:</strong> Maintain the calibration suite. Track directional accuracy per model and per agent over time. Identify systematic biases. Feed findings into R7's Human Score input.<br><br><strong>Monday:</strong> Present calibration trend. Are predictions improving? Which model has the best track record so far?</div>
+    </div>
+  </div>
+</section>
+
+<!-- MONDAY TABLE -->
+<section class="panel ok">
+  <h2>Monday 15 June — Who Says What</h2>
+  <table>
+    <tr><th>Role</th><th>Speaking Point</th><th>Evidence to Show</th></tr>
+    <tr><td><span class="pill pill-blue">R1 Product Owner</span></td><td>Sprint goal, DoD status, final W4 call</td><td>Prediction file, DoD checklist</td></tr>
+    <tr><td><span class="pill pill-teal">R2 Scrum Master</span></td><td>Retrospective: fail / improve / change</td><td>Sprint board or retro notes</td></tr>
+    <tr><td><span class="pill pill-purple">R3 Almanac</span></td><td>Seasonal pattern and calendar signal</td><td>Written Almanac output file</td></tr>
+    <tr><td><span class="pill pill-purple">R4 Macro</span></td><td>Macro thesis supporting the call</td><td>Macro analysis file with sources</td></tr>
+    <tr><td><span class="pill pill-purple">R5 Technical</span></td><td>Chart evidence and key levels</td><td>Chart screenshots + technical file</td></tr>
+    <tr><td><span class="pill pill-purple">R6 Data</span></td><td>W2 outcome vs. prediction, accuracy</td><td>Actuals vs. predictions comparison</td></tr>
+    <tr><td><span class="pill pill-yellow">R7 Human Score ⭐</span></td><td>Human Score reasoning + Wild Card</td><td>Human Score file with justification</td></tr>
+    <tr><td><span class="pill pill-red">R8 LLM Operator</span></td><td>Agreement, disagreement, credibility</td><td>LLM comparison table (all 4 models)</td></tr>
+    <tr><td><span class="pill pill-green">R9 GitHub Lead</span></td><td>Live repo walk-through + vW24 tag</td><td>GitHub open on screen</td></tr>
+    <tr><td><span class="pill pill-purple">R10 Calibration</span></td><td>Accuracy trend + model biases</td><td>Calibration suite file</td></tr>
+  </table>
+</section>
+
+</main>
+
+<footer></footer>
+
+</body>
+</html>

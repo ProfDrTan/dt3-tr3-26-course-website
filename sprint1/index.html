@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sprint 1 (vW1) · CP3405 DT3 · TR3 2026</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f5f7fb;font-family:Inter,Segoe UI,Arial,sans-serif;color:#102033;line-height:1.6}
+a{color:#0f6fbd;text-decoration:none;font-weight:800}
+.top{background:#071426;color:#fff;border-bottom:4px solid #12c7b7;padding:18px 22px;display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}
+.brand{display:flex;gap:14px;align-items:center;font-weight:900;font-size:1.25rem}
+.badge{background:#12c7b7;color:#071426;padding:8px 12px;border-radius:8px;font-family:monospace}
+.nav{display:flex;overflow:auto;background:#132747;border-bottom:1px solid #0f2040}
+.nav a{padding:14px 18px;color:#dbeafe;white-space:nowrap;font-weight:700;font-size:.9rem;transition:background .2s}
+.nav a:hover{background:#1e3a6e}
+.nav a.active{background:#f5b942;color:#111827}
+.nav a.sys{border-left:3px solid #12c7b7}
+.main{max-width:920px;margin:0 auto;padding:36px 22px 70px}
+h1{font-size:2rem;margin:0 0 6px}
+h2{color:#0e2a52;margin-top:40px;border-bottom:2px solid #e8edf5;padding-bottom:8px}
+.eyebrow{display:inline-block;background:rgba(18,199,183,.15);border:1px solid #12c7b7;color:#0e7a70;padding:5px 14px;border-radius:999px;font-size:.8rem;font-weight:900;letter-spacing:.06em;margin-bottom:14px}
+.card{background:#fff;border:1px solid #e6ebf3;border-radius:12px;padding:18px 20px;margin:14px 0;box-shadow:0 1px 3px rgba(16,32,51,.06)}
+.card b{color:#0e2a52}
+code{background:#eef2f8;padding:2px 7px;border-radius:5px;font-family:monospace;font-size:.92em;color:#0e2a52}
+.daygrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:18px 0}
+.day{background:#fff;border:1px solid #e6ebf3;border-radius:10px;padding:12px;text-align:center}
+.day .dname{font-size:.75rem;color:#8493a8;font-weight:800;letter-spacing:.05em}
+.day .ddate{font-size:1.1rem;font-weight:900;color:#0e2a52;margin-top:4px}
+.day.due{border-color:#e8a020;background:#fff8ea}
+footer{max-width:920px;margin:40px auto 0;padding:20px 22px;border-top:1px solid #e6ebf3;color:#8493a8;font-size:.82rem;text-align:center}
+@media(max-width:700px){.main{padding:24px 16px 50px}}
+</style>
+</head>
+<body data-sprint-monday="2026-09-14" data-sprint-number="1">
+
+<div class="top">
+  <div class="brand"><span class="badge" data-tag>vW1</span> CP3405 · Design Thinking III</div>
+  <div style="color:#12c7b7;font-family:monospace;font-size:.9rem">TR3 2026</div>
+</div>
+
+<nav class="nav">
+  <a class="active" href="index.html">Sprint 1</a>
+  <a href="../architecture-constitution/index.html">Architecture Constitution</a>
+  <a href="../pat-checklist/index.html">PAT Checklist</a>
+  <a class="sys" href="../scrum/index.html">Scrum Reference</a>
+  <a class="sys" href="../system/index.html">System Architecture</a>
+  <a class="sys" href="../roles/index.html">Roles</a>
+</nav>
+
+<div class="main">
+  <span class="eyebrow">Orientation — no teams yet</span>
+  <h1>Sprint 1 <span style="color:#8493a8;font-weight:700">— vW1</span></h1>
+  <p style="color:#3a4a5e;font-size:1.05rem">First class of TR3. This sprint is orientation only — there is no deliverable due and no team assignment yet. By the end of this week you'll know how the trimester is structured and what Sprint 2 asks of you.</p>
+
+  <div class="daygrid">
+    <div class="day"><div class="dname">MON</div><div class="ddate" data-day="0"></div></div>
+    <div class="day"><div class="dname">TUE</div><div class="ddate" data-day="1"></div></div>
+    <div class="day"><div class="dname">WED</div><div class="ddate" data-day="2"></div></div>
+    <div class="day"><div class="dname">THU</div><div class="ddate" data-day="3"></div></div>
+    <div class="day"><div class="dname">FRI</div><div class="ddate" data-day="4"></div></div>
+    <div class="day"><div class="dname">SAT</div><div class="ddate" data-day="5"></div></div>
+    <div class="day due"><div class="dname">SUN · nothing due this week</div><div class="ddate" data-day="6"></div></div>
+  </div>
+
+  <h2>The Convention — Read This First</h2>
+  <div class="card">
+    <b>Sprint N = Week N of teaching. Always. No exceptions, no offsets.</b>
+    <p>The tag you'll see on every sprint (<code data-tag>vW1</code>, <code>vW2</code>, ... <code>vW9</code>) is just the sprint number. Not a calendar week number, not an ISO week — the same number, every time. If it's Sprint 4, the tag is <code>vW4</code>. That's the whole rule.</p>
+  </div>
+  <div class="card">
+    <b>Study Week gets no number and no tag.</b>
+    <p>It's skipped in the sequence entirely — you won't see a "Sprint 5.5" or a gap tag. Sprint 5 is followed by Study Week (unnumbered), then Sprint 6 picks up where the count left off.</p>
+  </div>
+  <div class="card">
+    <b>The last numbered sprint is Sprint 9 — not Demo Day.</b>
+    <p>Demo Day is the Monday after Sprint 9 closes. It has no sprint number and no tag. Nothing new is predicted or submitted that week — it's presentation only.</p>
+  </div>
+
+  <h2>The Trimester at a Glance</h2>
+  <table>
+    <tr><th>Sprint</th><th>Tag</th><th>Monday</th><th>Notes</th></tr>
+    <tr><td>Sprint 1</td><td>vW1</td><td>14 Sep</td><td>Orientation — you are here</td></tr>
+    <tr><td>Sprint 2</td><td>vW2</td><td>21 Sep</td><td>Teams form, first deliverable opens</td></tr>
+    <tr><td>Sprint 3</td><td>vW3</td><td>28 Sep</td><td></td></tr>
+    <tr><td>Sprint 4</td><td>vW4</td><td>5 Oct</td><td></td></tr>
+    <tr><td>Sprint 5</td><td>vW5</td><td>12 Oct</td><td></td></tr>
+    <tr class="gap"><td colspan="4">Study Week — Mon 19 – Fri 23 Oct · no sprint number, no tag</td></tr>
+    <tr><td>Sprint 6</td><td>vW6</td><td>26 Oct</td><td></td></tr>
+    <tr><td>Sprint 7</td><td>vW7</td><td>2 Nov</td><td></td></tr>
+    <tr><td>Sprint 8</td><td>vW8</td><td>9 Nov</td><td></td></tr>
+    <tr><td>Sprint 9</td><td>vW9</td><td>16 Nov</td><td>Final numbered sprint</td></tr>
+    <tr class="demo"><td colspan="4">🏁 Demo Day — Monday 23 Nov · last face-to-face · not a sprint, no tag</td></tr>
+  </table>
+
+  <h2>Before Sprint 2</h2>
+  <ul class="checklist">
+    <li>Read the <a href="../architecture-constitution/index.html">Architecture Constitution</a> — the technical rules every team's pipeline must follow, before you write a line of code.</li>
+    <li>Work through the <a href="../pat-checklist/index.html">PAT Checklist</a> — get your GitHub access token scoped correctly now, not mid-sprint when it breaks something.</li>
+    <li>Teams and the first deliverable are announced at the start of Sprint 2 (vW2, 21 Sep).</li>
+  </ul>
+</div>
+
+<footer>CP3405 Design Thinking III · TR3 2026 · Sprint 1 (vW1)</footer>
+
+<script>
+(function(){
+  const body = document.body;
+  const monday = new Date(body.dataset.sprintMonday + 'T00:00:00');
+  const sprintN = body.dataset.sprintNumber;
+  const dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  document.querySelectorAll('[data-day]').forEach(el => {
+    const offset = parseInt(el.dataset.day, 10);
+    const d = new Date(monday);
+    d.setDate(d.getDate() + offset);
+    el.textContent = `${d.getDate()} ${d.toLocaleString('en-US',{month:'short'})}`;
+  });
+  document.querySelectorAll('[data-tag]').forEach(el => { el.textContent = `vW${sprintN}`; });
+})();
+</script>
+</body>
+</html>

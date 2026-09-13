@@ -49,9 +49,9 @@ footer{max-width:920px;margin:40px auto 0;padding:20px 22px;border-top:1px solid
 </nav>
 
 <div class="main">
-  <span class="eyebrow">Do this before Sprint 2, not during it</span>
+  <span class="eyebrow">Reference for whoever sets up your team's automation — not everyone needs this</span>
   <h1>GitHub Personal Access Token — Setup Checklist</h1>
-  <p style="color:#3a4a5e;font-size:1.05rem">Your pipeline needs a token to read and write your repo automatically. Fine-grained PATs split permissions into separate scopes — get the wrong ones and your Action fails with a permissions error that looks nothing like "you're missing a scope." Set it up right, once, now.</p>
+  <p style="color:#3a4a5e;font-size:1.05rem">If your team automates anything (a script that updates your repo on a schedule), whoever sets that up needs a token so GitHub lets the automation read and write files on its own. This is a reference for that one person, when your team gets there — not a Sprint 1 task, and not something every team member needs to do individually. If none of this is familiar yet, that's completely fine; come back to it once your team is actually setting up automation.</p>
 
   <h2>Steps</h2>
   <div class="step"><div class="stepnum">1</div><div><b>Go to GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens.</b><p style="margin:6px 0 0">Not the "classic" token type — use fine-grained, so you can scope it tightly to just your team's repo.</p></div></div>

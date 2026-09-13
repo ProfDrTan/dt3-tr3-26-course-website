@@ -85,6 +85,7 @@ footer{max-width:920px;margin:40px auto 0;padding:20px 22px;border-top:1px solid
 
   <h2>What This Means Day-to-Day</h2>
   <ul>
+    <li>Your team's repo lives under the <code>cp3405-tr3-2026</code> GitHub organization, not a personal account — branch protection on <code>main</code> means commit history can't be rewritten or backdated, so your commit record actually means what it says.</li>
     <li>Before you add any new service to your pipeline, ask: "does this route around GitHub as the datastore?" If yes, don't.</li>
     <li>Before your dashboard fetches anything, ask: "is this path public, or would this call fail with no token?" If it would fail, publish the data first.</li>
     <li>Name your CI file <code>main-pipeline.yml</code> from the very first commit — renaming it later just means old runs vanish from the history you can point to.</li>

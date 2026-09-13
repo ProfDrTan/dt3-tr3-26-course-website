@@ -55,7 +55,7 @@ footer{max-width:920px;margin:40px auto 0;padding:20px 22px;border-top:1px solid
 
   <h2>Steps</h2>
   <div class="step"><div class="stepnum">1</div><div><b>Go to GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens.</b><p style="margin:6px 0 0">Not the "classic" token type — use fine-grained, so you can scope it tightly to just your team's repo.</p></div></div>
-  <div class="step"><div class="stepnum">2</div><div><b>Set "Resource owner" and "Repository access" to your team's repo only.</b><p style="margin:6px 0 0">Don't grant access to all repos. One token, one repo.</p></div></div>
+  <div class="step"><div class="stepnum">2</div><div><b>Set "Resource owner" to <code>cp3405-tr3-2026</code> (the org, not your personal account), and "Repository access" to your team's repo only.</b><p style="margin:6px 0 0">Team repos live under the class organization this trimester. Don't grant access to all repos — one token, one repo.</p></div></div>
   <div class="step"><div class="stepnum">3</div><div><b>Set an expiration.</b><p style="margin:6px 0 0">90 days comfortably covers the trimester. Note the date somewhere your team can see it — an expired token mid-sprint looks identical to a broken pipeline.</p></div></div>
   <div class="step"><div class="stepnum">4</div><div><b>Grant exactly these permission scopes — no more, no fewer:</b>
   <table>

@@ -165,6 +165,32 @@ footer{text-align:center;color:#64748b;padding:36px 22px;border-top:1px solid #d
   <p class="small">Staying in the same role every sprint is comfortable — you get good at it, so there's no reason to switch. That comfort is exactly the problem: it means one person never learns the other five roles. So rotation isn't left to teams to decide. <strong>Every member takes a different role each sprint.</strong> The Product Owner &amp; Scrum Master keeps a week-by-week log of who held which role and includes it in the team's weekly report — same as the attendance record above.</p>
 </section>
 
+<!-- WEEKLY REPORT TEMPLATE -->
+<section class="panel" style="border-left:5px solid #0d9488" id="weekly-report">
+  <div class="label">R1's Weekly Commit — Fixed Format</div>
+  <h2>Weekly Report Template</h2>
+  <p class="small" style="margin-bottom:12px">One file per sprint, committed to your repo at <code style="background:#eef2f8;padding:2px 7px;border-radius:5px">reports/vW&lt;N&gt;.md</code> — same fixed-path convention as everything else this trimester. One block per member. This is what makes rotation and attendance across every team something that can actually be checked week to week, not just claimed.</p>
+  <pre style="background:#0b1a31;color:#dbeafe;padding:16px 18px;border-radius:10px;overflow:auto;font-size:.85rem;line-height:1.7">SPRINT: 2
+TEAM: Team 1
+
+MEMBER: Aye Phyu Sin Soe
+ROLE: R1
+PRESENTED: Y
+MINUTES: 3
+---
+MEMBER: Wai Linn Thaw
+ROLE: R3
+PRESENTED: N
+MINUTES: 0
+---
+MEMBER: Hoai An Duong
+ROLE: R5
+PRESENTED: Y
+MINUTES: 4
+---</pre>
+  <p class="small" style="margin-top:12px">Rotation is checked automatically by comparing <code style="background:#eef2f8;padding:2px 7px;border-radius:5px">ROLE</code> for the same member across sprint files — no need to manually note "last week's role," it's already sitting in the repo's own history.</p>
+</section>
+
 <!-- TEAM SIZE ALLOCATION -->
 <section class="panel wisdom">
   <div class="label">Split by Your Actual Team Size</div>
@@ -198,7 +224,7 @@ footer{text-align:center;color:#64748b;padding:36px 22px;border-top:1px solid #d
     <div class="rcard rcard-po">
       <div class="rcard-role po">R1 — Product Owner &amp; Scrum Master</div>
       <div class="rcard-title">Sprint Goal Guardian + Process Flow Protector</div>
-      <div class="small"><strong>Weekend:</strong> Confirm this sprint's goal and validate the Definition of Done. Coordinate deadlines, remove blockers, ensure every role participates, run a brief retro check. Make the final call on which prediction represents the team's best work.<br><br><strong>Monday:</strong> State the sprint goal, DoD status, and deliver the final prediction with confidence level. Present the retrospective: what failed, what improved, one specific process change.<br><br><strong>Also Monday — every sprint, no exceptions:</strong> Record who actually presented, not just who's listed on the roster — name exactly who didn't, if anyone. Note the length of each person's speaking part if you can. This is what protects the rest of your team when someone did the work on paper but never showed up to speak for it. Also log which role each person held this sprint — role rotation is mandatory, and this log is how the team proves it's actually happening, not just claimed. Submit both to Prof Tan as part of your report.</div>
+      <div class="small"><strong>Weekend:</strong> Confirm this sprint's goal and validate the Definition of Done. Coordinate deadlines, remove blockers, ensure every role participates, run a brief retro check. Make the final call on which prediction represents the team's best work.<br><br><strong>Monday:</strong> State the sprint goal, DoD status, and deliver the final prediction with confidence level. Present the retrospective: what failed, what improved, one specific process change.<br><br><strong>Also Monday — every sprint, no exceptions:</strong> Record who actually presented, not just who's listed on the roster — name exactly who didn't, if anyone. Note the length of each person's speaking part if you can. This is what protects the rest of your team when someone did the work on paper but never showed up to speak for it. Also log which role each person held this sprint — role rotation is mandatory, and this log is how the team proves it's actually happening, not just claimed. Commit both using the <a href="#weekly-report">Weekly Report Template</a> below, not a separate format.</div>
     </div>
     <div class="rcard rcard-dev">
       <div class="rcard-role dev">R2 — Almanac &amp; Macro Analyst</div>

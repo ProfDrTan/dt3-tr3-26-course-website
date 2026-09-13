@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Almanac Agent · CP3405 DT3 · TR3 2026</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f5f7fb;font-family:Inter,Segoe UI,Arial,sans-serif;color:#102033;line-height:1.6}
+a{color:#0f6fbd;text-decoration:none;font-weight:800}
+.top{background:#071426;color:#fff;border-bottom:4px solid #12c7b7;padding:18px 22px;display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}
+.brand{display:flex;gap:14px;align-items:center;font-weight:900;font-size:1.25rem}
+.nav{display:flex;overflow:auto;background:#132747;border-bottom:1px solid #0f2040}
+.nav a{padding:14px 18px;color:#dbeafe;white-space:nowrap;font-weight:700;font-size:.9rem}
+.nav a:hover{background:#1e3a6e}
+.nav a.active{background:#f5b942;color:#111827}
+.main{max-width:960px;margin:0 auto;padding:36px 22px 70px}
+h1{font-size:2rem;margin:0 0 6px}
+h2{color:#0e2a52;margin-top:40px;border-bottom:2px solid #e8edf5;padding-bottom:8px}
+.eyebrow{display:inline-block;background:rgba(18,199,183,.15);border:1px solid #12c7b7;color:#0e7a70;padding:5px 14px;border-radius:999px;font-size:.8rem;font-weight:900;letter-spacing:.06em;margin-bottom:14px}
+.card{background:#fff;border:1px solid #e6ebf3;border-radius:12px;padding:20px 22px;margin:14px 0;box-shadow:0 1px 3px rgba(16,32,51,.06)}
+.card b{color:#0e2a52}
+.cycle-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:16px 0}
+.cycle-card{border-radius:10px;padding:16px 18px}
+.cycle-red{background:#fef2f2;border-left:3px solid #dc2626}
+.cycle-amber{background:#fef9ee;border-left:3px solid #f59e0b}
+.cycle-green{background:#f0fdf4;border-left:3px solid #16a34a}
+.cycle-label{font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.strength-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:14px 0}
+.strength-card{border-radius:9px;padding:12px 14px;font-size:.88rem}
+table{width:100%;border-collapse:collapse;margin:16px 0}
+th{background:#132747;color:#dbeafe;text-align:left;padding:10px 12px;font-size:.85rem}
+td{padding:10px 12px;border-bottom:1px solid #e6ebf3;font-size:.9rem}
+.output-box{background:#0b1a31;color:#dbeafe;padding:22px 24px;border-radius:12px;font-family:monospace;font-size:.82rem;line-height:1.9;overflow-x:auto}
+.gold{color:#f5b942}
+.warn{background:#fef9ee;border:1px solid #f0d98c;border-radius:10px;padding:16px 18px;margin:18px 0;font-size:.92rem;color:#5c4a12}
+footer{max-width:960px;margin:40px auto 0;padding:20px 22px;border-top:1px solid #e6ebf3;color:#8493a8;font-size:.82rem;text-align:center}
+@media(max-width:700px){.main{padding:24px 16px 50px}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="brand">📅 CP3405 · Design Thinking III</div>
+  <div style="color:#12c7b7;font-family:monospace;font-size:.9rem">TR3 2026</div>
+</div>
+
+<nav class="nav">
+  <a href="../sprint1/index.html">Sprint 1</a>
+  <a href="../sprint2/index.html">Sprint 2</a>
+  <a href="../github/index.html">GitHub</a>
+  <a class="active" href="index.html">Almanac Agent</a>
+  <a href="../retrospective/index.html">TR2 Retrospective</a>
+  <a href="../motivation/index.html">Why This, Why Now</a>
+</nav>
+
+<div class="main">
+  <span class="eyebrow">First time seeing this? Start here.</span>
+  <h1>The Almanac Agent — How to Use It</h1>
+
+  <div class="card">
+    <b>What is the Stock Trader's Almanac?</b>
+    <p style="margin:8px 0 0">Published every year since 1968, it's a data book of historical stock market patterns — what the market has done in each month, each week, and around specific dates over the past 50–75 years. It does <em>not</em> predict the future — it shows you what has historically happened and how often. Your job as the Almanac agent is to read the relevant patterns for the week and turn them into a structured hypothesis, not a certainty. Prof Tan will provide the current Almanac pages for your team to work from — this page teaches you how to actually read them.</p>
+  </div>
+
+  <h2>2026 Context You Need First</h2>
+  <div class="card" style="border-left:4px solid #f97316">
+    <b>2026 is a midterm election year — this changes how you read every pattern.</b>
+    <p style="margin:8px 0 0">Before reading any monthly page, understand the 4-Year Presidential Cycle — the most important standing context in the whole Almanac this year.</p>
+    <div class="cycle-grid">
+      <div class="cycle-card cycle-red">
+        <div class="cycle-label" style="color:#dc2626">Q2–Q3 2026 — The Weak Spot</div>
+        <p style="margin:0;font-size:.88rem">The Almanac calls Q2–Q3 of every midterm year the "Weak Spot." Historical averages across these two quarters: Dow −2.0%, S&amp;P −2.5%, Nasdaq −6.6%. Sprint 2 (late September) sits inside this window.</p>
+      </div>
+      <div class="cycle-card cycle-amber">
+        <div class="cycle-label" style="color:#b45309">Bottom Risk</div>
+        <p style="margin:0;font-size:.88rem">10 of the last 16 bear markets bottomed in a midterm year. Doesn't mean this year will — it means the historical base rate for volatility is elevated right now, not a normal year to read patterns against.</p>
+      </div>
+      <div class="cycle-card cycle-green">
+        <div class="cycle-label" style="color:#15803d">Q4 2026 — Sweet Spot Ahead</div>
+        <p style="margin:0;font-size:.88rem">After midterm weakness, Q4 historically begins the "Sweet Spot" — the best period of the 4-year cycle. Worth knowing where the cycle is heading, even while reading a weaker current quarter.</p>
+      </div>
+    </div>
+    <div class="warn"><b>How this affects your output:</b> when you read any bullish weekly pattern, weigh it against this Q2–Q3 headwind. A bullish week-level pattern means less in a midterm year than it would in a stronger part of the cycle. Always state both the specific pattern <em>and</em> the cycle context — never one without the other.</div>
+  </div>
+
+  <h2>Step-by-Step: How to Write Your Almanac Output</h2>
+
+  <div class="card">
+    <b>Step 1 — Identify the relevant pages</b>
+    <p style="margin:8px 0 0">Each week, look up three things in whatever Almanac pages Prof Tan provides: (1) the Monthly Almanac page for the current month, (2) day-specific notes for the coming week, (3) the Sector Seasonality table. You don't need to read the whole book — just these targeted lookups.</p>
+  </div>
+
+  <div class="card">
+    <b>Step 2 — Record the four key facts</b>
+    <table>
+      <tr><th>Fact to record</th><th>Where to find it</th></tr>
+      <tr><td>Monthly rank and average % change</td><td>Monthly Vital Statistics table, top rows</td></tr>
+      <tr><td>Up/Down record for the month</td><td>Same table, Up/Down row</td></tr>
+      <tr><td>Specific week/day pattern</td><td>Daily calendar page notes for that week</td></tr>
+      <tr><td>Relevant sector seasonalities</td><td>Sector Seasonality table</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <b>Step 3 — Assess pattern strength</b>
+    <p style="margin:8px 0 0">Not all patterns are equal. Use this framework every time:</p>
+    <div class="strength-grid">
+      <div class="strength-card" style="background:#f0fdf4;border-left:3px solid #16a34a"><b style="color:#15803d">STRONG</b><br>Occurs 70%+ of the time across 20+ years.</div>
+      <div class="strength-card" style="background:#fef9ee;border-left:3px solid #f59e0b"><b style="color:#b45309">MODERATE</b><br>Occurs 55–70% of the time. Useful context, not dominant.</div>
+      <div class="strength-card" style="background:#fef2f2;border-left:3px solid #dc2626"><b style="color:#dc2626">WEAK — use with caution</b><br>Under 55%, or recent years conflict with the historical record.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <b>Step 4 — Write the structured output</b>
+    <p style="margin:8px 0 0">This is what goes into your team's report. Use this exact structure every week — fill in real figures once Prof Tan provides the current pages.</p>
+    <div class="output-box" style="margin-top:14px">
+      <span style="color:#12c7b7;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:10px">Almanac Agent Output Template</span>
+      <span class="gold">MONTH:</span> &lt;current month&gt; 2026<br>
+      <span class="gold">CYCLE CONTEXT:</span> Midterm election year. Q2–Q3 is the "Weak Spot" of the 4-Year Cycle.<br><br>
+      <span class="gold">MONTHLY STATS:</span><br>
+      &nbsp;- Rank, Up/Down record, average % change per index<br>
+      &nbsp;- Midterm-year-specific average (if the Almanac lists it separately)<br><br>
+      <span class="gold">SPECIFIC WEEK PATTERN:</span><br>
+      &nbsp;- Named pattern, historical record, pattern strength (Strong/Moderate/Weak)<br>
+      &nbsp;- Note if multiple patterns contradict each other<br><br>
+      <span class="gold">SECTOR SIGNALS:</span><br>
+      &nbsp;- Which sectors are in a seasonal Long or Short window right now<br>
+      &nbsp;- Flag any contradiction between the seasonal pattern and actual current price action<br><br>
+      <span class="gold">ALMANAC SEASONAL BIAS:</span> &lt;bullish / bearish / neutral&gt;, one sentence why<br><br>
+      <span class="gold">PATTERN CONFIDENCE:</span> LOW / MEDIUM / HIGH<br><br>
+      <span class="gold">ALMANAC THESIS:</span> One paragraph combining all of the above into a single hypothesis with a stated confidence level<br><br>
+      <span style="color:rgba(255,255,255,.35);font-size:.72rem">Source: Stock Trader's Almanac 2026, page numbers cited</span>
+    </div>
+  </div>
+
+  <div class="warn">
+    <b>The most important rule for the Almanac Agent:</b> Never write "the Almanac says the market will go up this week." Always write "the seasonal pattern suggests X, with Y confidence, because Z — and this conflicts/aligns with the macro/technical evidence as follows." The Almanac gives you probability context, not certainty. Your job is translating a historical pattern into a structured hypothesis with an honest confidence level.
+  </div>
+
+  <h2>Quick Reference</h2>
+  <table>
+    <tr><th>What you need</th><th>What to read</th></tr>
+    <tr><td>Monthly overview and key bullet points</td><td>Bullet points at the top of the monthly page — copy the 2–3 most relevant into your output</td></tr>
+    <tr><td>Monthly vital statistics table</td><td>Rank, Up/Down count, Avg % Change, Midterm Year Avg — record all indices provided</td></tr>
+    <tr><td>Specific day/week notes</td><td>Bold or italicised notes in the daily calendar entries for that week</td></tr>
+    <tr><td>Sector seasonality</td><td>Any sector whose seasonal window starts or ends in the current month</td></tr>
+    <tr><td>4-Year Cycle context</td><td>Read once at the start of the trimester, reference every week as standing context</td></tr>
+  </table>
+
+</div>
+
+<footer>CP3405 Design Thinking III · TR3 2026 · Almanac Agent</footer>
+</body>
+</html>

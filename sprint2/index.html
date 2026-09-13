@@ -60,9 +60,24 @@ footer{max-width:920px;margin:40px auto 0;padding:20px 22px;border-top:1px solid
   <h2>The Backlog — Four Things, By Hand</h2>
 
   <div class="task">
-    <span class="num">1</span><b>Technical: SPX, NDX, 10-year yield, gold, and relevant sector ETFs</b>
-    <p style="margin:8px 0 0">Track the weekly OHLC (open/high/low/close) for all of these — not just one index. SPX, NDX, the 10-year Treasury yield, gold, and whichever sector ETFs are relevant to what moved this week. This is deliberately more than one instrument: feeling how much manual tracking multiple instruments actually takes is half the point.</p>
-    <div class="dod"><b>DONE MEANS</b> — a written record of weekly OHLC for every instrument listed, with sources noted.</div>
+    <span class="num">1</span><b>Technical: SPX, NDX, 10-year yield, gold, Bitcoin, and all 11 sector ETFs</b>
+    <p style="margin:8px 0 0">Track the weekly OHLC (open/high/low/close) for every one of these — not a subset:</p>
+    <ul style="margin:8px 0;padding-left:20px;color:#374151">
+      <li>SPX (S&amp;P 500) and NDX (Nasdaq 100)</li>
+      <li>10-Year Treasury Yield</li>
+      <li>Gold and Bitcoin</li>
+      <li>All 11 sector ETFs: Technology (XLK), Financials (XLF), Energy (XLE), Health Care (XLV), Consumer Discretionary (XLY), Consumer Staples (XLP), Industrials (XLI), Materials (XLB), Utilities (XLU), Real Estate (XLRE), Communication Services (XLC)</li>
+    </ul>
+    <p style="margin:8px 0 0;font-weight:800;color:#0e2a52">Where to get this data — step by step:</p>
+    <ol style="margin:8px 0;padding-left:20px;color:#374151">
+      <li>Go to <a href="https://finance.yahoo.com" target="_blank">finance.yahoo.com</a> — free, no account needed.</li>
+      <li>Type the ticker into the search bar at the top (e.g. <code>^GSPC</code> for SPX, <code>^NDX</code> for NDX, <code>^TNX</code> for the 10-year yield, <code>GC=F</code> for gold, <code>BTC-USD</code> for Bitcoin, or the sector ETF ticker directly, e.g. <code>XLK</code>).</li>
+      <li>Click the correct result to open that instrument's page.</li>
+      <li>Click the <b>"Historical Data"</b> tab (near the top of the page, next to "Chart").</li>
+      <li>Set the date range to this week, then read off the Open, High, Low, and Close columns for each trading day.</li>
+      <li>Repeat for every ticker in the list above. Sixteen lookups total (5 index/asset tickers + 11 sector ETFs) — this is the actual manual pain the task is designed to make you feel.</li>
+    </ol>
+    <div class="dod"><b>DONE MEANS</b> — a written record of weekly OHLC for all 16 instruments (SPX, NDX, 10-year yield, gold, Bitcoin, all 11 sector ETFs), sourced from Yahoo Finance or an equivalent site you name.</div>
   </div>
 
   <div class="task">

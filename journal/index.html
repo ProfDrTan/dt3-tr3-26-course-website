@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Market Journal · CP3405 DT3 · TR3 2026</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f5f7fb;font-family:Inter,Segoe UI,Arial,sans-serif;color:#102033;line-height:1.6}
+a{color:#0f6fbd;text-decoration:none;font-weight:800}
+.top{background:#071426;color:#fff;border-bottom:4px solid #12c7b7;padding:18px 22px;display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}
+.brand{display:flex;gap:14px;align-items:center;font-weight:900;font-size:1.25rem}
+.nav{display:flex;overflow:auto;background:#132747;border-bottom:1px solid #0f2040}
+.nav a{padding:14px 18px;color:#dbeafe;white-space:nowrap;font-weight:700;font-size:.9rem}
+.nav a:hover{background:#1e3a6e}
+.nav a.active{background:#f5b942;color:#111827}
+.main{max-width:960px;margin:0 auto;padding:36px 22px 70px}
+h1{font-size:2rem;margin:0 0 6px}
+.eyebrow{display:inline-block;background:rgba(18,199,183,.15);border:1px solid #12c7b7;color:#0e7a70;padding:5px 14px;border-radius:999px;font-size:.8rem;font-weight:900;letter-spacing:.06em;margin-bottom:14px}
+.entry{background:#fff;border:1px solid #e6ebf3;border-radius:14px;padding:24px 26px;margin:20px 0;box-shadow:0 2px 6px rgba(16,32,51,.08)}
+.entry-date{font-family:monospace;font-size:.85rem;color:#0e7a70;font-weight:800;margin-bottom:6px}
+.entry-title{font-size:1.3rem;font-weight:800;color:#0e2a52;margin-bottom:14px}
+.tag{display:inline-block;font-size:.7rem;font-weight:900;letter-spacing:.05em;text-transform:uppercase;padding:3px 10px;border-radius:999px;margin-right:6px;margin-bottom:10px}
+.tag-fed{background:#fef3c7;color:#92400e}
+.tag-inflation{background:#fce7f3;color:#9f1239}
+.kv{background:#0b1a31;color:#dbeafe;padding:18px 20px;border-radius:10px;font-family:monospace;font-size:.85rem;line-height:1.9;overflow-x:auto;margin:14px 0}
+.kv .k{color:#f5b942}
+.note{color:#3a4a5e;font-size:.92rem;margin-top:10px}
+.sources{font-size:.78rem;color:#8493a8;margin-top:12px}
+footer{max-width:960px;margin:40px auto 0;padding:20px 22px;border-top:1px solid #e6ebf3;color:#8493a8;font-size:.82rem;text-align:center}
+@media(max-width:700px){.main{padding:24px 16px 50px}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="brand">📓 CP3405 · Design Thinking III</div>
+  <div style="color:#12c7b7;font-family:monospace;font-size:.9rem">TR3 2026</div>
+</div>
+
+<nav class="nav">
+  <a href="../sprint1/index.html">Sprint 1</a>
+  <a href="../sprint2/index.html">Sprint 2</a>
+  <a href="../almanac/index.html">Almanac Agent</a>
+  <a class="active" href="index.html">Market Journal</a>
+  <a href="../github/index.html">GitHub</a>
+</nav>
+
+<div class="main">
+  <span class="eyebrow">Running log — updated as significant events happen</span>
+  <h1>Market Journal</h1>
+  <p style="color:#3a4a5e;font-size:1.05rem">A dated log of significant macro events, each written using the same <code>DRIVER_CATEGORY</code> schema every team uses in Sprint 2's Economic task. New entries get added here as real events happen — this is what "real macro data point" looks like in practice, not a hypothetical.</p>
+
+  <div class="entry">
+    <div class="entry-date">14 SEPTEMBER 2026</div>
+    <div class="entry-title">10-Year Treasury Yield Hits 5% Ahead of FOMC Decision</div>
+    <div><span class="tag tag-fed">FED_POLICY_RATES</span><span class="tag tag-inflation">INFLATION_CPI</span></div>
+    <div class="kv">
+<span class="k">DATE:</span> 2026-09-14
+<span class="k">RELEASE:</span> 10Y_TREASURY_YIELD
+<span class="k">LEVEL:</span> ~5.00% — first time since October 2023
+<span class="k">CONTEXT:</span> 2-year yield also at highest since July 2024; August CPI matched expectations but stayed well above the Fed's 2% target
+<span class="k">DRIVER_CATEGORY:</span> FED_POLICY_RATES | INFLATION_CPI
+<span class="k">FED_IMPLICATION:</span> FOMC meets Tue 15 &ndash; Wed 16 Sep; markets pricing elevated odds of a rate hike given yield trajectory
+<span class="k">RELEVANCE_TO_SPRINT:</span> Meeting falls within Sprint 1's week. By Sprint 2 kickoff (Mon 21 Sep), the Fed's decision will already be known and priced in &mdash; a live anchor point for the week's Economic task, not a hypothetical
+<span class="k">CONFIDENCE:</span> HIGH &mdash; corroborated across CNBC, Bloomberg, Trading Economics
+    </div>
+    <p class="note">Worth an explicit mention opening Sprint 1's practical — this is exactly the kind of event the "three macro data points" task is designed to catch, happening in real time.</p>
+    <p class="sources">Sources: CNBC, Bloomberg, Trading Economics — 14 Sep 2026</p>
+  </div>
+
+</div>
+
+<footer>CP3405 Design Thinking III · TR3 2026 · Market Journal</footer>
+</body>
+</html>

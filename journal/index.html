@@ -69,6 +69,23 @@ footer{max-width:960px;margin:40px auto 0;padding:20px 22px;border-top:1px solid
     <p class="sources">Sources: CNBC, Bloomberg, Trading Economics — 14 Sep 2026</p>
   </div>
 
+  <div class="entry" style="border-left:4px solid #f5b942">
+    <div class="entry-date">TOOL REFERENCE</div>
+    <div class="entry-title">Fed Funds Futures &amp; the CME FedWatch Tool</div>
+    <p style="color:#3a4a5e;margin:10px 0">Before your next macro entry, know this tool — it's the single fastest way to know what the market itself expects the Fed to do, not a guess or a pundit's opinion.</p>
+
+    <p style="color:#3a4a5e;margin:14px 0 6px"><b>What it is:</b> the CME FedWatch Tool derives real-time, market-implied probabilities for upcoming Fed rate decisions from 30-Day Fed Funds futures prices — contracts traders actually buy and sell based on where they think rates are headed.</p>
+
+    <p style="color:#3a4a5e;margin:14px 0 6px"><b>How the math works, roughly:</b> take a futures contract's price and subtract it from 100 — the result is the rate the market is implying for that month. Compare that against the Fed's current target range, and you get a probability split across hike / hold / cut for the next FOMC meeting.</p>
+
+    <p style="color:#3a4a5e;margin:14px 0 6px"><b>Why it's market-moving:</b> this isn't a lagging indicator — it's the market pricing in the future *before* it happens. When FedWatch's probabilities shift sharply (say, from 60% hold to 80% hike), that shift itself often moves stocks, bonds, and the dollar immediately, well before the actual Fed decision. Tracking FedWatch alongside a headline event — like this week's yield/FOMC story above — tells you whether the market's expectations are stable or actively repricing.</p>
+
+    <p style="color:#3a4a5e;margin:14px 0 6px"><b>For your R2 reports:</b> check FedWatch's current probability split before writing your <code style="background:#eef2f8;padding:2px 7px;border-radius:5px;color:#0e2a52">FED_IMPLICATION</code> field — "90% hike odds" is a much stronger, more specific claim than "the Fed may hike."</p>
+
+    <p style="margin-top:16px"><a href="https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html" target="_blank" style="background:#132747;color:#fff;padding:10px 20px;border-radius:999px;text-decoration:none;font-weight:800;display:inline-block">Open the CME FedWatch Tool →</a></p>
+    <p class="sources">Source: CME Group (official, free, no login required)</p>
+  </div>
+
 </div>
 
 <footer>CP3405 Design Thinking III · TR3 2026 · Market Journal</footer>

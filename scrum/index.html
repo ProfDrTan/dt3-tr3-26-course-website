@@ -71,6 +71,8 @@
     .ai-title{font-size:.92rem;font-weight:700;color:var(--white);margin-bottom:.3rem;}
     .ai-scrum{font-size:.78rem;color:var(--teal);margin-bottom:.25rem;}
     .ai-workforce{font-size:.78rem;color:var(--muted);font-style:italic;}
+    .ai-not{font-size:.76rem;color:var(--danger);margin-top:.5rem;padding-top:.5rem;border-top:1px solid rgba(255,255,255,.08);}
+    .ai-not b{color:var(--danger);}
 
     /* ── Callouts ── */
     .callout{border-left:3px solid var(--gold);background:rgba(201,168,76,.07);border-radius:0 8px 8px 0;padding:1rem 1.25rem;margin-bottom:1.25rem;}
@@ -283,38 +285,44 @@
     <div class="ai-card">
       <div class="ai-role">R1</div>
       <div class="ai-title">Product Owner &amp; Scrum Master</div>
-      <div class="ai-scrum">Scrum: owns the sprint goal and DoD, protects cadence, removes blockers</div>
+      <div class="ai-scrum">Scrum: owns the sprint goal and DoD, protects cadence, removes blockers, owns the FigJam board (backlog + DoD on every card, cards actually moving through the week), logs attendance and role rotation at every presentation</div>
       <div class="ai-workforce">→ Product Manager / Team Lead in industry</div>
+      <div class="ai-not"><b>Does NOT own:</b> any analysis content, or deciding what's technically correct</div>
     </div>
     <div class="ai-card">
       <div class="ai-role">R2</div>
       <div class="ai-title">Almanac &amp; Macro</div>
-      <div class="ai-scrum">Scrum: delivers sprint backlog items — historical/seasonality analysis and macro analysis — on time</div>
+      <div class="ai-scrum">Scrum: delivers sprint backlog items — seasonal/calendar pattern analysis and macro thesis synthesis — on time</div>
       <div class="ai-workforce">→ Research Analyst / Macro Strategist</div>
+      <div class="ai-not"><b>Does NOT own:</b> economic data releases (that's R3), or judging whether the final call is right (that's R5)</div>
     </div>
     <div class="ai-card">
       <div class="ai-role">R3</div>
-      <div class="ai-title">Technical</div>
-      <div class="ai-scrum">Scrum: delivers a sprint backlog item (technical analysis) on time</div>
-      <div class="ai-workforce">→ Data Analyst</div>
+      <div class="ai-title">Technical &amp; Economic</div>
+      <div class="ai-scrum">Scrum: delivers sprint backlog items — chart-based technical analysis and macro-economic data points (Fed, inflation, jobs data) — on time</div>
+      <div class="ai-workforce">→ Data Analyst / Economic Analyst</div>
+      <div class="ai-not"><b>Does NOT own:</b> seasonal/calendar analysis (that's R2)</div>
     </div>
     <div class="ai-card">
       <div class="ai-role">R4</div>
       <div class="ai-title">Data &amp; Calibration</div>
-      <div class="ai-scrum">Scrum: owns the infrastructure that feeds the sprint, and generates the retrospective data — did the system improve?</div>
+      <div class="ai-scrum">Scrum: compares prediction vs. actual outcome, and generates the retrospective data — did accuracy improve sprint over sprint?</div>
       <div class="ai-workforce">→ Data Engineer / Product Analyst</div>
+      <div class="ai-not"><b>Does NOT own:</b> generating new analysis — only grades what R2/R3 already produced</div>
     </div>
     <div class="ai-card">
       <div class="ai-role">R5</div>
       <div class="ai-title">Human Score &amp; UI</div>
       <div class="ai-scrum">Scrum: the Product Owner's counterpart — applies human acceptance criteria that AI cannot, and owns how the output is actually presented to a human</div>
       <div class="ai-workforce">→ Senior Analyst / Decision Maker + Product Designer</div>
+      <div class="ai-not"><b>Does NOT own:</b> relitigating R2/R3's raw data — only judges the final synthesized call and its presentation</div>
     </div>
     <div class="ai-card">
       <div class="ai-role">R6</div>
       <div class="ai-title">LLM &amp; GitHub</div>
-      <div class="ai-scrum">Scrum: builds the AI synthesis layer and owns the Definition of Done — nothing is done until the tag is cut</div>
+      <div class="ai-scrum">Scrum: builds the AI synthesis layer, owns the commit/PR, and cuts the release tag against R1's DoD</div>
       <div class="ai-workforce">→ AI/ML Engineer + DevOps</div>
+      <div class="ai-not"><b>Does NOT own:</b> deciding what's in the DoD (that's R1) — R6 executes against it, doesn't write it</div>
     </div>
   </div>
 </section>

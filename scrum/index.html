@@ -147,7 +147,7 @@
       <div class="p-num">01</div>
       <div class="p-title">A sprint goal is a commitment, not a description</div>
       <div class="p-body">Weak: "We will work on the pipeline." Strong: "We will deliver a fully automated end-to-end pipeline that runs without manual intervention and is sealed with that sprint's tag by Sunday midnight." If you can't tell at midnight Sunday whether you met it — it's not a goal.</div>
-      <span class="p-quote">R1 writes this. R2 holds the team to it.</span>
+      <span class="p-quote">R1 writes this — and, as Scrum Master, holds the team to it.</span>
     </div>
 
     <div class="p-card gold">
@@ -161,13 +161,13 @@
       <div class="p-num">03</div>
       <div class="p-title">Agree on timeboxes early — enforce them even if they feel wrong</div>
       <div class="p-body">Define timeboxes for every Scrum event: sprint (one week), daily standup (15 min), sprint review (per-team slot), retrospective (30 min). An incorrect timebox you enforce teaches you more than no timebox at all. Adjust by consensus in the next retrospective — never ad hoc.</div>
-      <span class="p-quote">R2 owns the clock.</span>
+      <span class="p-quote">R1 owns the clock.</span>
     </div>
 
     <div class="p-card gold">
       <div class="p-num">04</div>
       <div class="p-title">A blocker surfaced Wednesday can be resolved. Sunday cannot.</div>
-      <div class="p-body">The daily standup exists precisely for this. If your pipeline broke on Thursday and you didn't say anything until Sunday — that's not a pipeline problem, it's a communication problem. R2 must make it psychologically safe to raise blockers early.</div>
+      <div class="p-body">The daily standup exists precisely for this. If your pipeline broke on Thursday and you didn't say anything until Sunday — that's not a pipeline problem, it's a communication problem. R1 must make it psychologically safe to raise blockers early.</div>
       <span class="p-quote">Hiding a blocker is not Scrum.</span>
     </div>
 
@@ -216,21 +216,21 @@
     <div class="p-card gold">
       <div class="p-num">11</div>
       <div class="p-title">The Scrum Master's value is proportional to how early they surface what is not working</div>
-      <div class="p-body">A dependency that surfaces on Sunday was visible on Wednesday. The SM who discovers a blocker on Sunday night did not fail on Sunday — they failed on Tuesday when they did not check in. The Wednesday Test: by mid-week, R2 must know the status of every role individually. Not from a group chat. Individually. One message, one person, one status.</div>
+      <div class="p-body">A dependency that surfaces on Sunday was visible on Wednesday. The SM who discovers a blocker on Sunday night did not fail on Sunday — they failed on Tuesday when they did not check in. The Wednesday Test: by mid-week, R1 must know the status of every role individually. Not from a group chat. Individually. One message, one person, one status.</div>
       <span class="p-quote">Wednesday discovery = solvable. Sunday discovery = damage control.</span>
     </div>
 
     <div class="p-card">
       <div class="p-num">12</div>
       <div class="p-title">Dependency collapse is a Scrum Master failure — not a team member failure</div>
-      <div class="p-body">When R8 cannot synthesise because R3 did not commit, the team blames R3. The correct diagnosis is that R2 did not know R3 was behind until it was too late to fix it. R2's job is not to do R3's work. It is to know by Wednesday whether R3's work will be done before Thursday — when R8 needs it. The pipeline has a strict execution order. R2 watches the chain, not the deadline.</div>
+      <div class="p-body">When R6 cannot synthesise because R2 did not commit, the team blames R2. The correct diagnosis is that R1 did not know R2 was behind until it was too late to fix it. R1's job is not to do R2's work. It is to know by Wednesday whether R2's work will be done before Thursday — when R6 needs it. The pipeline has a strict execution order. R1 watches the chain, not the deadline.</div>
       <span class="p-quote">The SM does not wait for the standup to find out what people are doing.</span>
     </div>
 
     <div class="p-card gradient">
       <div class="p-num">13</div>
       <div class="p-title">The mid-week check-in is not a group message — it is individual, documented, and acted upon</div>
-      <div class="p-body">Posting "hey how is everyone going?" in the team channel is not a check-in. R2 contacts each role member individually: "R3 — your Almanac output needs to be committed by Wednesday noon. R8 is blocked until it lands. What's your status?" The response — and R2's action if the response reveals a problem — is committed to the repository as a standup note. If it is not documented, it did not happen.</div>
+      <div class="p-body">Posting "hey how is everyone going?" in the team channel is not a check-in. R1 contacts each role member individually: "R2 — your Almanac output needs to be committed by Wednesday noon. R6 is blocked until it lands. What's your status?" The response — and R1's action if the response reveals a problem — is committed to the repository as a standup note. If it is not documented, it did not happen.</div>
       <span class="p-quote">A check-in that produces no documentation helped no one.</span>
     </div>
 
@@ -247,18 +247,18 @@
     <tbody>
       <tr>
         <td><span class="scrum-term">Sprint Planning</span><br><small>Monday · in class</small></td>
-        <td><span class="project-term">R1 writes sprint goal. R2 assigns roles. DoD checklist written. DECISION.md committed.</span></td>
+        <td><span class="project-term">R1 writes the sprint goal, assigns roles, and holds the team to the DoD checklist. DECISION.md committed.</span></td>
         <td><div class="ai-angle">The sprint goal defines what the AI pipeline must produce by Sunday. Writing it forces clarity about what "automated" actually means for this team this week.</div></td>
       </tr>
       <tr>
         <td><span class="scrum-term">Daily Scrum</span><br><small>15 min · every day</small></td>
-        <td><span class="project-term">Three questions. Blockers surfaced immediately. R2 chases by Wednesday.</span></td>
+        <td><span class="project-term">Three questions. Blockers surfaced immediately. R1 chases by Wednesday.</span></td>
         <td><div class="ai-angle">Pipeline failures, API key issues, GitHub Actions errors — these are Wednesday blockers, not Sunday surprises. The daily standup is what catches them early.</div></td>
       </tr>
       <tr>
         <td><span class="scrum-term">Sprint Execution</span><br><small>Mon–Sat</small></td>
-        <td><span class="project-term">Agents commit independently (R3–R6). LLM API calls run (R8). Automated fetch fires Saturday morning SGT after Friday US market close (R9).</span></td>
-        <td><div class="ai-angle">The best teams have AI doing the execution. Humans do the judgment — Wild Card (R7), calibration (R10), pipeline monitoring (R9). The sprint cadence keeps this ordered.</div></td>
+        <td><span class="project-term">Agents commit independently (R2–R4). LLM API calls run (R6). Automated fetch fires Saturday morning SGT after Friday US market close (R6).</span></td>
+        <td><div class="ai-angle">The best teams have AI doing the execution. Humans do the judgment — Human Score (R5), calibration (R4), pipeline monitoring (R6). The sprint cadence keeps this ordered.</div></td>
       </tr>
       <tr>
         <td><span class="scrum-term">Sprint Review</span><br><small>Monday presentation</small></td>
@@ -282,66 +282,43 @@
   <div class="ai-scrum-grid">
     <div class="ai-card">
       <div class="ai-role">R1</div>
-      <div class="ai-title">Product Owner</div>
-      <div class="ai-scrum">Scrum: owns the sprint goal and DoD</div>
-      <div class="ai-workforce">→ Product Manager in industry</div>
+      <div class="ai-title">Product Owner &amp; Scrum Master</div>
+      <div class="ai-scrum">Scrum: owns the sprint goal and DoD, protects cadence, removes blockers</div>
+      <div class="ai-workforce">→ Product Manager / Team Lead in industry</div>
     </div>
     <div class="ai-card">
       <div class="ai-role">R2</div>
-      <div class="ai-title">Scrum Master</div>
-      <div class="ai-scrum">Scrum: protects cadence, removes blockers</div>
-      <div class="ai-workforce">→ Team Lead / Agile Coach</div>
+      <div class="ai-title">Almanac &amp; Macro</div>
+      <div class="ai-scrum">Scrum: delivers sprint backlog items — historical/seasonality analysis and macro analysis — on time</div>
+      <div class="ai-workforce">→ Research Analyst / Macro Strategist</div>
     </div>
     <div class="ai-card">
       <div class="ai-role">R3</div>
-      <div class="ai-title">Almanac Agent</div>
-      <div class="ai-scrum">Scrum: delivers a sprint backlog item (historical analysis) on time</div>
-      <div class="ai-workforce">→ Research Analyst</div>
-    </div>
-    <div class="ai-card">
-      <div class="ai-role">R4</div>
-      <div class="ai-title">Macro Agent</div>
-      <div class="ai-scrum">Scrum: delivers a sprint backlog item (macro analysis) on time</div>
-      <div class="ai-workforce">→ Macro / Strategy Analyst</div>
-    </div>
-    <div class="ai-card">
-      <div class="ai-role">R5</div>
-      <div class="ai-title">Technical Agent</div>
+      <div class="ai-title">Technical</div>
       <div class="ai-scrum">Scrum: delivers a sprint backlog item (technical analysis) on time</div>
       <div class="ai-workforce">→ Data Analyst</div>
     </div>
     <div class="ai-card">
-      <div class="ai-role">R6</div>
-      <div class="ai-title">Data Collector</div>
-      <div class="ai-scrum">Scrum: owns the infrastructure that feeds the sprint</div>
-      <div class="ai-workforce">→ Data Engineer</div>
+      <div class="ai-role">R4</div>
+      <div class="ai-title">Data &amp; Calibration</div>
+      <div class="ai-scrum">Scrum: owns the infrastructure that feeds the sprint, and generates the retrospective data — did the system improve?</div>
+      <div class="ai-workforce">→ Data Engineer / Product Analyst</div>
     </div>
     <div class="ai-card">
-      <div class="ai-role">R7</div>
-      <div class="ai-title">Human Score Lead</div>
+      <div class="ai-role">R5</div>
+      <div class="ai-title">Human Score</div>
       <div class="ai-scrum">Scrum: the Product Owner's counterpart — applies human acceptance criteria that AI cannot</div>
       <div class="ai-workforce">→ Senior Analyst / Decision Maker</div>
     </div>
     <div class="ai-card">
-      <div class="ai-role">R8</div>
-      <div class="ai-title">LLM Operator</div>
-      <div class="ai-scrum">Scrum: builds the AI synthesis layer — the highest-value technical backlog item</div>
-      <div class="ai-workforce">→ AI / ML Engineer</div>
-    </div>
-    <div class="ai-card">
-      <div class="ai-role">R9</div>
-      <div class="ai-title">GitHub Lead</div>
-      <div class="ai-scrum">Scrum: owns the Definition of Done — nothing is done until the tag is cut</div>
-      <div class="ai-workforce">→ DevOps / Platform Engineer</div>
-    </div>
-    <div class="ai-card">
-      <div class="ai-role">R10</div>
-      <div class="ai-title">Calibration Lead</div>
-      <div class="ai-scrum">Scrum: generates the retrospective data — did the system improve?</div>
-      <div class="ai-workforce">→ Product Analyst / KPI Owner</div>
+      <div class="ai-role">R6</div>
+      <div class="ai-title">LLM, GitHub &amp; UI</div>
+      <div class="ai-scrum">Scrum: builds the AI synthesis layer and owns the Definition of Done — nothing is done until the tag is cut</div>
+      <div class="ai-workforce">→ AI/ML Engineer + DevOps</div>
     </div>
   </div>
 </section>
+
 
 <!-- MANTRAS -->
 <section id="mantras">

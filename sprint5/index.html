@@ -1,647 +1,239 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sprint 5 — CP3405 DT3 TR2 2026</title>
-  <style>
-    /* ── Palette ── */
-    :root {
-      --navy:    #0a1628;
-      --navy-2:  #0d1f3c;
-      --navy-3:  #112244;
-      --gold:    #c9a84c;
-      --gold-lt: #e2c97e;
-      --teal:    #2dd4bf;
-      --teal-dk: #1fa89a;
-      --white:   #f0f4fa;
-      --muted:   #8fa3bf;
-      --danger:  #e05c5c;
-      --success: #3dcc8a;
-      --warn:    #f0a500;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      background: var(--navy);
-      color: var(--white);
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      font-size: 16px;
-      line-height: 1.65;
-    }
-
-    /* ── Header ── */
-    header {
-      background: linear-gradient(135deg, #070e1c 0%, var(--navy-3) 60%, #0b2040 100%);
-      border-bottom: 2px solid var(--gold);
-      padding: 2.5rem 2rem 2rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    header::before {
-      content: '';
-      position: absolute;
-      top: -60px; left: 50%;
-      transform: translateX(-50%);
-      width: 600px; height: 200px;
-      background: radial-gradient(ellipse, rgba(201,168,76,.12) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .eyebrow {
-      font-size: .75rem;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--teal);
-      margin-bottom: .5rem;
-    }
-    header h1 {
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 700;
-      color: var(--gold);
-      letter-spacing: -.01em;
-      line-height: 1.15;
-    }
-    header h1 span { color: var(--white); font-weight: 300; }
-    .header-meta {
-      margin-top: 1rem;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: .5rem .75rem;
-    }
-    .badge {
-      display: inline-block;
-      padding: .25rem .75rem;
-      border-radius: 99px;
-      font-size: .78rem;
-      font-weight: 600;
-      letter-spacing: .05em;
-    }
-    .badge-gold   { background: rgba(201,168,76,.18); color: var(--gold); border: 1px solid rgba(201,168,76,.4); }
-    .badge-teal   { background: rgba(45,212,191,.15); color: var(--teal); border: 1px solid rgba(45,212,191,.35); }
-    .badge-white  { background: rgba(240,244,250,.08); color: var(--white); border: 1px solid rgba(240,244,250,.2); }
-
-    /* ── Nav ── */
-    nav {
-      background: var(--navy-2);
-      border-bottom: 1px solid rgba(201,168,76,.2);
-      padding: .75rem 2rem;
-      display: flex;
-      gap: 1.25rem;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-    nav a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: .85rem;
-      transition: color .2s;
-    }
-    nav a:hover { color: var(--gold); }
-    nav a.active { color: var(--gold); font-weight: 600; }
-    .nav-sep { color: rgba(255,255,255,.15); }
-
-    /* ── Layout ── */
-    main {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 2.5rem 1.5rem 4rem;
-    }
-
-    /* ── Countdown strip ── */
-    .countdown-strip {
-      background: linear-gradient(90deg, rgba(201,168,76,.1) 0%, rgba(45,212,191,.08) 100%);
-      border: 1px solid rgba(201,168,76,.3);
-      border-radius: 10px;
-      padding: 1.1rem 1.5rem;
-      margin-bottom: 2.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: .75rem 2rem;
-      align-items: center;
-    }
-    .countdown-strip .label { color: var(--muted); font-size: .82rem; text-transform: uppercase; letter-spacing: .1em; }
-    .countdown-strip .value { color: var(--gold); font-size: 1.05rem; font-weight: 700; }
-    .cd-item { display: flex; flex-direction: column; }
-
-    /* ── Section ── */
-    section { margin-bottom: 2.75rem; }
-    .section-title {
-      font-size: 1.05rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .1em;
-      color: var(--teal);
-      border-bottom: 1px solid rgba(45,212,191,.25);
-      padding-bottom: .5rem;
-      margin-bottom: 1.25rem;
-    }
-
-    /* ── Prose ── */
-    p { color: rgba(240,244,250,.82); margin-bottom: 1rem; }
-    strong { color: var(--white); }
-
-    /* ── Callout boxes ── */
-    .callout {
-      border-left: 3px solid var(--gold);
-      background: rgba(201,168,76,.07);
-      border-radius: 0 8px 8px 0;
-      padding: 1rem 1.25rem;
-      margin-bottom: 1.25rem;
-    }
-    .callout.teal  { border-color: var(--teal);  background: rgba(45,212,191,.07); }
-    .callout.danger{ border-color: var(--danger); background: rgba(224,92,92,.07); }
-    .callout .callout-title {
-      font-size: .8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .1em;
-      margin-bottom: .4rem;
-    }
-    .callout .callout-title.gold   { color: var(--gold); }
-    .callout .callout-title.teal   { color: var(--teal); }
-    .callout .callout-title.danger { color: var(--danger); }
-    .callout p { margin-bottom: 0; font-size: .92rem; }
-
-    /* ── Tier cards ── */
-    .tier-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-    }
-    .tier-card {
-      background: var(--navy-2);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 10px;
-      padding: 1.1rem 1.25rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .tier-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-    }
-    .tier-card.l1::before  { background: var(--muted); }
-    .tier-card.l2::before  { background: var(--teal); }
-    .tier-card.l3::before  { background: var(--gold); }
-    .tier-card.l4::before  { background: linear-gradient(90deg, var(--gold), var(--teal)); }
-    .tier-label {
-      font-size: .75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .12em;
-      margin-bottom: .4rem;
-    }
-    .tier-card.l1 .tier-label  { color: var(--muted); }
-    .tier-card.l2 .tier-label  { color: var(--teal); }
-    .tier-card.l3 .tier-label  { color: var(--gold); }
-    .tier-card.l4 .tier-label  { background: linear-gradient(90deg, var(--gold), var(--teal)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .tier-title { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: .35rem; }
-    .tier-desc  { font-size: .84rem; color: var(--muted); line-height: 1.5; }
-    .tier-badge {
-      display: inline-block;
-      margin-top: .6rem;
-      font-size: .72rem;
-      padding: .15rem .55rem;
-      border-radius: 99px;
-      font-weight: 600;
-    }
-    .tier-badge.baseline { background: rgba(143,163,191,.15); color: var(--muted); }
-    .tier-badge.target   { background: rgba(45,212,191,.15); color: var(--teal); }
-    .tier-badge.stretch  { background: rgba(201,168,76,.15); color: var(--gold); }
-    .tier-badge.elite    { background: linear-gradient(90deg, rgba(201,168,76,.15), rgba(45,212,191,.15)); color: var(--gold-lt); }
-
-    /* ── Deliverables table ── */
-    .del-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: .9rem;
-    }
-    .del-table th {
-      background: var(--navy-3);
-      color: var(--gold);
-      font-size: .75rem;
-      text-transform: uppercase;
-      letter-spacing: .1em;
-      padding: .65rem 1rem;
-      text-align: left;
-      border-bottom: 1px solid rgba(201,168,76,.3);
-    }
-    .del-table td {
-      padding: .75rem 1rem;
-      border-bottom: 1px solid rgba(255,255,255,.07);
-      color: rgba(240,244,250,.8);
-      vertical-align: top;
-    }
-    .del-table tr:last-child td { border-bottom: none; }
-    .del-table tr:hover td { background: rgba(255,255,255,.03); }
-    .del-table .role-chip {
-      display: inline-block;
-      background: rgba(45,212,191,.1);
-      color: var(--teal);
-      border-radius: 4px;
-      padding: .1rem .45rem;
-      font-size: .78rem;
-      font-weight: 600;
-    }
-    .del-table .req { color: var(--danger); font-weight: 700; font-size: .8rem; }
-    .del-table .opt { color: var(--muted);  font-weight: 600; font-size: .8rem; }
-
-    /* ── Role focus ── */
-    .role-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-      gap: .75rem;
-    }
-    .role-card {
-      background: var(--navy-2);
-      border: 1px solid rgba(255,255,255,.09);
-      border-radius: 8px;
-      padding: .85rem 1rem;
-    }
-    .role-id { font-size: .7rem; color: var(--teal); font-weight: 700; letter-spacing: .08em; margin-bottom: .25rem; }
-    .role-name { font-size: .88rem; font-weight: 600; color: var(--white); margin-bottom: .3rem; }
-    .role-focus { font-size: .78rem; color: var(--muted); line-height: 1.45; }
-    .role-card.spotlight { border-color: rgba(201,168,76,.4); background: rgba(201,168,76,.06); }
-    .role-card.spotlight .role-id { color: var(--gold); }
-
-    /* ── Timeline ── */
-    .timeline { position: relative; padding-left: 1.5rem; }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: .45rem; top: 6px; bottom: 6px;
-      width: 2px;
-      background: linear-gradient(180deg, var(--teal) 0%, var(--gold) 100%);
-      border-radius: 2px;
-    }
-    .tl-item { position: relative; margin-bottom: 1.25rem; }
-    .tl-item::before {
-      content: '';
-      position: absolute;
-      left: -1.06rem;
-      top: .35rem;
-      width: 9px; height: 9px;
-      background: var(--navy);
-      border: 2px solid var(--teal);
-      border-radius: 50%;
-    }
-    .tl-item.deadline::before { border-color: var(--gold); background: var(--gold); }
-    .tl-date { font-size: .78rem; color: var(--teal); font-weight: 700; letter-spacing: .06em; margin-bottom: .15rem; }
-    .tl-item.deadline .tl-date { color: var(--gold); }
-    .tl-event { font-size: .92rem; color: var(--white); font-weight: 600; }
-    .tl-detail { font-size: .82rem; color: var(--muted); margin-top: .1rem; }
-
-    /* ── Five Things ── */
-    .five-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1rem;
-    }
-    .five-card {
-      background: var(--navy-2);
-      border: 1px solid rgba(255,255,255,.09);
-      border-radius: 10px;
-      padding: 1rem 1.25rem;
-    }
-    .five-card .num { font-size: 1.6rem; font-weight: 800; color: rgba(201,168,76,.25); line-height: 1; margin-bottom: .35rem; }
-    .five-card .five-title { font-size: .95rem; font-weight: 700; color: var(--white); margin-bottom: .35rem; }
-    .five-card .five-body  { font-size: .84rem; color: var(--muted); line-height: 1.55; }
-
-    /* ── A1 reminder ── */
-    .a1-bar {
-      background: rgba(240,165,0,.1);
-      border: 1px solid rgba(240,165,0,.35);
-      border-radius: 10px;
-      padding: 1rem 1.5rem;
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-    }
-    .a1-icon { font-size: 1.6rem; flex-shrink: 0; }
-    .a1-title { font-size: .95rem; font-weight: 700; color: var(--warn); margin-bottom: .2rem; }
-    .a1-body  { font-size: .85rem; color: rgba(240,244,250,.75); }
-
-    /* ── Footer ── */
-    footer {
-      border-top: 1px solid rgba(201,168,76,.15);
-      padding: 1.5rem 2rem;
-      text-align: center;
-      font-size: .8rem;
-      color: var(--muted);
-    }
-
-    @media (max-width: 600px) {
-      .countdown-strip { flex-direction: column; gap: .6rem; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sprint 5 · Four Markets, Catalysts First · CP3405 DT3 · TR3 2026</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f5f7fb;font-family:Inter,Segoe UI,Arial,sans-serif;color:#102033;line-height:1.6}
+a{color:#0f6fbd;text-decoration:none;font-weight:800}
+.preview{background:#f5b942;color:#111827;text-align:center;padding:8px 12px;font-weight:800;font-size:.85rem}
+.top{background:#071426;color:#fff;border-bottom:4px solid #12c7b7;padding:18px 22px;display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}
+.brand{display:flex;gap:14px;align-items:center;font-weight:900;font-size:1.25rem}
+.badge{background:#12c7b7;color:#071426;padding:8px 12px;border-radius:8px;font-family:monospace}
+.nav{display:flex;overflow:auto;background:#132747;border-bottom:1px solid #0f2040}
+.nav a{padding:14px 18px;color:#dbeafe;white-space:nowrap;font-weight:700;font-size:.9rem;transition:background .2s}
+.nav a:hover{background:#1e3a6e}
+.nav a.active{background:#f5b942;color:#111827}
+.nav a.sys{border-left:3px solid #12c7b7}
+.main{max-width:920px;margin:0 auto;padding:36px 22px 70px}
+h1{font-size:2rem;margin:0 0 6px}
+h2{color:#0e2a52;margin-top:40px;border-bottom:2px solid #e8edf5;padding-bottom:8px}
+h3{color:#0e2a52;margin:20px 0 6px;font-size:1.02rem}
+.eyebrow{display:inline-block;background:rgba(18,199,183,.15);border:1px solid #12c7b7;color:#0e7a70;padding:5px 14px;border-radius:999px;font-size:.8rem;font-weight:900;letter-spacing:.03em;margin-bottom:12px}
+.card{background:#fff;border:1px solid #e6ebf3;border-radius:12px;padding:18px 20px;margin:14px 0;box-shadow:0 1px 3px rgba(16,32,51,.06)}
+.card b{color:#0e2a52}
+.card.key{border-left:5px solid #f5b942;background:linear-gradient(135deg,#fffbeb,#fff)}
+.card.red{border-left:4px solid #dc2626}
+.task{background:#fff;border:1px solid #e6ebf3;border-left:5px solid #12c7b7;border-radius:0 12px 12px 0;padding:16px 20px;margin:12px 0}
+.task .num{display:inline-block;min-width:34px;height:26px;padding:0 6px;border-radius:13px;background:#132747;color:#f5b942;font-weight:900;font-size:.8rem;text-align:center;line-height:26px;margin-right:8px}
+.dod{margin-top:8px;padding:8px 12px;background:#f0faf9;border-radius:8px;font-size:.88em;color:#0e5a52}
+.dod b{color:#0e7a70;font-size:.78em;letter-spacing:.05em}
+code{background:#eef2f8;padding:2px 7px;border-radius:5px;font-family:monospace;font-size:.92em;color:#0e2a52}
+pre{background:#0f1c33;color:#dbeafe;border-radius:10px;padding:14px 16px;overflow-x:auto;font-size:.82rem;line-height:1.5;margin:10px 0}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem;background:#fff}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid #e6ebf3;vertical-align:top}
+th{background:#eef2f8;color:#0e2a52;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
+.tablewrap{overflow-x:auto}
+ul,ol{margin:8px 0 8px 22px}
+li{margin-bottom:6px}
+footer{max-width:920px;margin:40px auto 0;padding:20px 22px;border-top:1px solid #e6ebf3;color:#8493a8;font-size:.82rem;text-align:center}
+@media(max-width:700px){.main{padding:24px 16px 50px}}
+</style>
 </head>
-<body>
+<body data-sprint-monday="2026-10-05" data-sprint-number="5">
+<div class="top"><div class="brand"><span class="badge" data-tag>vW5</span> CP3405 · Design Thinking III</div><div style="color:#12c7b7;font-family:monospace;font-size:.9rem">TR3 2026</div></div>
+<nav class="nav"><a href="../index.html">Home</a><a class="active" href="index.html">Sprint 5 — Four Markets</a><a href="../sprint4/index.html">Sprint 4</a><a href="../sprint3/index.html">Sprint 3</a><a href="../archive/index.html">Archive (Sprint 1–2)</a><a href="../github/index.html">GitHub</a><a href="../almanac/index.html">Almanac Agent</a><a class="sys" href="../scrum/index.html">Scrum Reference</a></nav>
+<div class="main">
+<span class="eyebrow">Starts Monday 5 Oct — dashboard and catalyst calendar Tuesday 6 Oct 23:59 — prediction locks Wednesday 7 Oct 23:59 SGT — everything else due Saturday 10 Oct 23:59 SGT — presented Monday 12 Oct</span>
+<h1>Sprint 5 <span style="color:#8493a8;font-weight:700">— vW5</span> — Four Markets, Catalysts First</h1>
+<p style="color:#3a4a5e;font-size:1.05rem">Same rhythm as Sprint 4, with two additions: a fourth market, the US 10-year Treasury yield, and a catalyst calendar so the week's big economic releases are part of your thinking, not an afterthought. Every other change on this page comes straight from what happened in Sprint 4.</p>
 
-<!-- ── HEADER ── -->
-<header>
-  <p class="eyebrow">CP3405 Design Thinking 3 · TR2 2026 · Course Week 5</p>
-  <h1>Sprint 5 <span>— Integration & Intelligence Sprint</span></h1>
-  <div class="header-meta">
-    <span class="badge badge-gold">vW25 · Due Sun 21 June 2026 · 23:59 SGT</span>
-    <span class="badge badge-teal">Presentation · Mon 22 June 2026</span>
-    <span class="badge badge-white">Sprints 1–8 · TR2 2026</span>
-  </div>
-</header>
+<h2>The Sprint Goal</h2>
+<div class="card"><b>Before Wednesday night, list the week's market-moving releases, lock a four-market prediction that takes them into account, and confirm it. By Saturday night, measure how far off your Sprint 4 call was and decide one change. Keep every file in its required place on <code>main</code>, so your dashboard shows the whole week.</b></div>
 
-<!-- ── NAV ── -->
-<nav>
-  <a href="/">Home</a><span class="nav-sep">·</span>
-  <a href="/sprint4/">Sprint 4</a><span class="nav-sep">·</span>
-  <a href="/sprint5/" class="active">Sprint 5</a><span class="nav-sep">·</span>
-  <a href="/roadmap/">Roadmap</a><span class="nav-sep">·</span>
-  <a href="/roles/">Roles</a><span class="nav-sep">·</span>
-  <a href="/system/">System</a><span class="nav-sep">·</span>
-  <a href="/leaderboard/">Leaderboard</a>
-</nav>
+<h2>What Changed From Sprint 4, and Why</h2>
+<div class="tablewrap"><table>
+<tr><th>Change</th><th>Why (what happened in Sprint 4)</th></tr>
+<tr><td><b>A fourth market:</b> the 10-year Treasury yield, owned by R6</td><td>Yields drive all three other markets. Now you call them directly.</td></tr>
+<tr><td><b>A catalyst calendar</b> (<code>catalysts/vW5.json</code>), owned by R2, due Tuesday</td><td>The US jobs report came out on Friday 2 October, the very day you were predicting. Most teams gave it one sentence or nothing.</td></tr>
+<tr><td><b>Every required file sits exactly where the <a href="#layout">folder diagram</a> shows.</b> Files anywhere else don't count.</td><td>Several teams did the work but filed it inside <code>evidence/</code> folders, so their dashboards couldn't find it.</td></tr>
+<tr><td><b>Only <code>main</code> counts.</b> Work on a branch isn't done until it's merged.</td><td>Work was left on branches that were never merged.</td></tr>
+<tr><td><b>The dashboard shows "X / 9 files loaded".</b> Hand-typed values count as missing.</td><td>Some panels had numbers typed into the page that didn't match the committed files.</td></tr>
+<tr><td><b>No prediction without <code>"r1_confirms": true</code>.</b></td><td>Calls were filed that R1 never confirmed.</td></tr>
+<tr><td><b>The Wednesday check-in must have real content.</b> An empty file is a missing file.</td><td>A check-in file existed at noon but was empty.</td></tr>
+<tr><td><b>Cut the <code>vW5</code> tag once, before Saturday 23:59, and never move it.</b></td><td>A release tag was moved after the deadline.</td></tr>
+<tr><td><b>Every FigJam Done card links to its file on <code>main</code></b>, not just a Discord message.</td><td>Done cards claimed files were on <code>main</code> when they weren't.</td></tr>
+<tr><td><b>Blockers are raised by Wednesday noon.</b></td><td>Access problems were still unsolved on Sunday night.</td></tr>
+<tr><td><b>One deadline per item, stated once,</b> in the <a href="#timeline">timeline</a>.</td><td>Last sprint's page gave some items two different deadlines.</td></tr>
+</table></div>
 
-<!-- ── MAIN ── -->
-<main>
+<h2>Prediction Challenge — Four Markets</h2>
+<div class="card key"><b>Deadline: Wednesday 7 Oct, 23:59 Singapore time.</b> Judged by when GitHub received your push to <code>main</code>. Anything committed after that is not a prediction: if you file it late, label it late. Never present a late file as your locked call.</div>
+<div class="tablewrap"><table>
+<tr><th>Market</th><th>You predict</th><th>Where to read it</th><th>Owner</th></tr>
+<tr><td>S&amp;P 500 (<code>^GSPC</code>)</td><td>The closing level on Friday 9 Oct</td><td><a href="https://finance.yahoo.com/quote/%5EGSPC/history" target="_blank">Yahoo Finance · ^GSPC history</a></td><td>R2</td></tr>
+<tr><td>Nasdaq-100 (<code>^NDX</code>)</td><td>The closing level on Friday 9 Oct</td><td><a href="https://finance.yahoo.com/quote/%5ENDX/history" target="_blank">Yahoo Finance · ^NDX history</a></td><td>R3</td></tr>
+<tr><td>Gold futures, December 2026 (<code>GCZ26.CMX</code>)</td><td>Direction only: <b>UP</b> or <b>DOWN</b>. Will Friday 9 Oct's close be above or below Friday 2 Oct's close?</td><td><a href="https://finance.yahoo.com/quote/GCZ26.CMX/" target="_blank">Yahoo Finance · GCZ26.CMX</a> (then Historical Data)</td><td>R4</td></tr>
+<tr><td><b>New:</b> US 10-year Treasury yield (<code>^TNX</code>)</td><td>The closing yield on Friday 9 Oct, in percent to two decimals, e.g. <code>4.27</code></td><td><a href="https://finance.yahoo.com/quote/%5ETNX/history" target="_blank">Yahoo Finance · ^TNX history</a></td><td>R6</td></tr>
+</table></div>
+<h3>How to read the close</h3>
+<div class="card">
+<p style="margin:0 0 8px"><b>The close is the close of Friday's New York session,</b> which lands early Saturday morning in Singapore. Check Saturday morning or later.</p>
+<ol style="margin-top:0"><li>Open the market's Historical Data page on Yahoo Finance, set to <b>Daily</b>.</li><li>Find the row for the date.</li><li>Read the <b>Close</b> column, not Adj Close.</li></ol>
 
-  <!-- Countdown strip -->
-  <div class="countdown-strip">
-    <div class="cd-item"><span class="label">Sprint</span><span class="value">5 of 8</span></div>
-    <div class="cd-item"><span class="label">Release Tag</span><span class="value">vW25</span></div>
-    <div class="cd-item"><span class="label">Tag Deadline</span><span class="value">Sun 21 June · 23:59 SGT</span></div>
-    <div class="cd-item"><span class="label">Presentation</span><span class="value">Mon 22 June 2026</span></div>
-    <div class="cd-item"><span class="label">A1 Deadline</span><span class="value">Sun 28 June · 23:59 SGT 📓</span></div>
-  </div>
+<p style="margin:0"><b>Gold:</b> use <code>GCZ26.CMX</code> for both Fridays. An identical close counts as no result.</p>
+</div>
 
-  <!-- What is Sprint 5 -->
-  <section>
-    <p class="section-title">What Sprint 5 Is About</p>
-    <p>
-      Sprint 4 was your <strong>Software Development Sprint</strong> — you built the pipeline that collects data, runs it through LLMs, and seals a prediction. If you achieved that, well done. Sprint 5 raises the bar: this is the <strong>Integration and Intelligence Sprint</strong>, where your pipeline stops being a collection of scripts and starts behaving like a coherent, self-contained system.
-    </p>
-    <p>
-      The single question Sprint 5 asks is this: <strong>can your system run end-to-end with minimal human intervention?</strong> The Scrum team's job this week is to close the gaps — between agents, between scripts, between the human score and the final prediction file — so that by Sunday night, the only human decision is the Wild Card override.
-    </p>
+<h3>How to read the 10-year yield (<code>^TNX</code>)</h3>
+<div class="card">
+<p style="margin:0 0 8px"><b>What it is:</b> <code>^TNX</code> is Cboe's index of the yield on the US 10-year Treasury note, the interest rate the US government pays to borrow for ten years. You are predicting that <b>yield</b>, a percentage, not the price of a bond and not a futures contract. Yields and bond prices move in opposite directions: when bonds sell off, the yield goes up.</p>
+<ol style="margin-top:0">
+<li>Open <a href="https://finance.yahoo.com/quote/%5ETNX/history" target="_blank">Yahoo Finance · ^TNX history</a>. The page title must read <b>CBOE Interest Rate 10 Year T No (^TNX)</b>.</li>
+<li>Set it to <b>Daily</b> and find the row for Friday 9 Oct.</li>
+<li>Read the <b>Close</b> column. Yahoo shows four decimals, for example <code>4.6640</code>. <b>Round to two decimals</b> (<code>4.66</code>), which means 4.66%.</li>
+<li>Do the same for Friday 2 Oct, so you know the starting point your call moves from.</li>
+</ol>
+<p style="margin:0 0 8px"><b>When the close lands:</b> Yahoo stamps the ^TNX close at about 2:00 pm Chicago time, which is about <b>03:00 Saturday in Singapore</b>. Check Saturday morning or later. Don't use the live number you see during Friday's session.</p>
+<p style="margin:0 0 4px"><b>Five traps that will give you the wrong number:</b></p>
+<ul style="margin-top:0">
+<li><b>Ten times too big.</b> Some sites show the same index multiplied by ten: <code>46.64</code> instead of <code>4.66</code>. If your number is above 20, you're on the wrong scale.</li>
+<li><b>A different series.</b> FRED's 10-year series (DGS10) and the US Treasury's own daily rate are calculated differently and published a day later, so they can differ by a few basis points. Don't use them for your call or your actual.</li>
+<li><b>A different feed.</b> CNBC's US10Y and broker screens use other price sources. Use Yahoo ^TNX only, for both your call and the actual, so every team is scored against the same number.</li>
+<li><b>A futures price.</b> Ten-year Treasury futures (ZN) trade around 110, which is a price, not a yield. Not what you're predicting.</li>
+<li><b>The wrong direction.</b> "Bonds rally" means yields fall. Read the sentence twice before you turn news into a call.</li>
+</ul>
+<p style="margin:0 0 8px"><b>How it's scored:</b> the miss in basis points. One basis point is 0.01 percentage points, so 4.27 versus 4.31 is a 4 basis-point miss.</p>
+<p style="margin:0"><b>Example (invented numbers):</b> Friday 2 Oct close 4.27. R6 calls 4.31 because a stronger-than-expected inflation release is the week's main catalyst. Friday 9 Oct close 4.35. The miss is 4 basis points, and the direction (up) was right.</p>
+</div>
+<h2 id="catalysts">New: The Catalyst Calendar (<code>catalysts/vW5.json</code>)</h2>
+<div class="card key"><b>Owner: R2. Due Tuesday 6 Oct, 23:59.</b> List every major US economic release between Wednesday's lock and Friday's close: for example jobs, inflation, Fed meetings, Fed minutes and major speeches. For each one, record what the market expects and what a surprise would do to each of your four calls.</div>
+<pre>{
+  "sprint": "vW5",
+  "updated_at": "2026-10-06T21:00:00+08:00",
+  "events": [
+    {
+      "event": "Name of the release",
+      "when_sgt": "2026-10-08T20:30:00+08:00",
+      "consensus": "What the market expects, with the number",
+      "source": "https://link-to-where-you-found-the-consensus",
+      "affects": ["spx", "ndx", "gold", "tnx"],
+      "if_stronger": "One line: what it does to each affected call",
+      "if_weaker": "One line: what it does to each affected call"
+    }
+  ]
+}</pre>
+<ul>
+<li><b>Use real releases, not examples.</b> Check an official calendar (the Bureau of Labor Statistics, the Federal Reserve, the Bureau of Economic Analysis) and give the link in <code>source</code>.</li>
+<li><b>If there is no major release that week, say so</b> in the file, with the calendar you checked. An empty week is a finding, not a missing file.</li>
+<li><b>Every call's one-sentence reason must name at least one catalyst from this file.</b></li>
+</ul>
 
-    <div class="callout teal">
-      <p class="callout-title teal">Sprint 5 in One Sentence</p>
-      <p>Connect what you built in Sprint 4 into one coherent pipeline — from Friday market close to Sunday's sealed prediction — and make it visible in a dashboard or structured output your whole team can read.</p>
-    </div>
-  </section>
+<h2>Your Entry: <code>predictions/vW5.json</code></h2>
+<pre>{
+  "sprint": "vW5",
+  "team": "team-N",
+  "updated_at": "2026-10-07T22:00:00+08:00",
+  "team_call": { "spx_close": 0.00, "ndx_close": 0.00, "gold_direction": "UP", "tnx_close": 0.00 },
+  "why": {
+    "spx": "One sentence, naming a catalyst.",
+    "ndx": "One sentence, naming a catalyst.",
+    "gold": "One sentence, naming a catalyst.",
+    "tnx": "One sentence, naming a catalyst."
+  },
+  "leads": { "spx": "github-username (R2)", "ndx": "github-username (R3)", "gold": "github-username (R4)", "tnx": "github-username (R6)" },
+  "r1_confirms": true
+}</pre>
+<ul>
+<li><code>team_call</code> is your final call. R1 files it after R5's Human Score.</li>
+<li><code>gold_direction</code> must read exactly <code>"UP"</code> or <code>"DOWN"</code>. <code>tnx_close</code> is a percent with two decimals.</li>
+<li><b>R1 checks all four sentences are there, then sets <code>r1_confirms</code> to true.</b> Without it, there is no entry.</li>
+</ul>
 
-  <!-- Capability Tiers -->
-  <section>
-    <p class="section-title">Capability Tiers — Where Should Your Team Be?</p>
-    <div class="tier-grid">
-      <div class="tier-card l1">
-        <p class="tier-label">Level 1</p>
-        <p class="tier-title">Manual</p>
-        <p class="tier-desc">Data collected by hand. Predictions typed. No scripts. No automation.</p>
-        <span class="tier-badge baseline">Sprint 1–3 Baseline</span>
-      </div>
-      <div class="tier-card l2">
-        <p class="tier-label">Level 2</p>
-        <p class="tier-title">Structured</p>
-        <p class="tier-desc">Scripts fetch data. Output saved to GitHub. Some automation in place but still manually triggered.</p>
-        <span class="tier-badge target">Sprint 4 → 5 Floor</span>
-      </div>
-      <div class="tier-card l3">
-        <p class="tier-label">Level 3</p>
-        <p class="tier-title">Automated Pipeline</p>
-        <p class="tier-desc">GitHub Actions runs fetch automatically. LLM API calls scripted. Delta scoring runs after actuals are known. Prediction file structured and sealed by tag.</p>
-        <span class="tier-badge stretch">Sprint 5 Target</span>
-      </div>
-      <div class="tier-card l4">
-        <p class="tier-label">Level 4</p>
-        <p class="tier-title">Intelligent System</p>
-        <p class="tier-desc">Full pipeline plus a live dashboard or structured HTML report your team can read. Prescriptive output, not just data. Human Score integrated into output automatically.</p>
-        <span class="tier-badge elite">Sprint 5–6 Stretch</span>
-      </div>
-    </div>
+<h2 id="delta">Delta and Prescription: Your Sprint 4 Call</h2>
+<div class="card key"><b>This sprint's delta measures your Sprint 4 call against the Friday 2 Oct close.</b> You already have the closes in your <code>actuals/vW4.json</code>. Do the delta for all three Sprint 4 markets: how far off you were on the S&amp;P 500 and Nasdaq-100, and whether your gold direction was right. There's no yield delta this sprint, because there was no Sprint 4 yield call. If your team had no locked Sprint 4 call, say that in <code>delta/vW5.json</code> and write the prescription about how you'll lock on time. Don't invent a call after the fact.</div>
+<p>Delta and prescription work as in Sprint 4: the delta is how far off you were, whether the direction was right, and which agent pulled you furthest off. The prescription is one specific change for next sprint.</p>
 
-    <div class="callout" style="margin-top:1.25rem;">
-      <p class="callout-title gold">Sprint 5 Expectation</p>
-      <p>Teams that completed a working <code>fetch_market_data.py</code> and GitHub Actions trigger in Sprint 4 should be reaching Level 3 this sprint. Teams still at Level 1 need to close that gap this week — the window is narrowing as A1 approaches.</p>
-    </div>
-  </section>
+<h2 id="layout">Where Every File Goes</h2>
+<div class="card red"><b>Every required file sits at exactly this path, starting from the top level of your repo.</b> Not inside <code>evidence/</code>, not inside a sprint or role folder. <code>evidence/</code> is only for supporting material; your dashboard never reads it. A file anywhere else counts as missing.</div>
+<pre>your-team-repo/
+├── catalysts/vW5.json          R2 · Tue 23:59
+├── checkin/wednesday.md        R1 · Wed 12:00
+├── data/
+│   ├── roles.json              R1 · Tue 23:59
+│   ├── github_activity.json    R6 · Tue 23:59, then daily
+│   └── figjam_status.json      R1 · Tue 23:59, then daily
+├── predictions/vW5.json        R1 · Wed 23:59
+├── llm-synthesis/vW5.json      R6 · Wed 23:59
+├── human-score/vW5.json        R5 · Wed 23:59
+├── actuals/vW5.json            R4 · Sat 23:59
+├── delta/vW5.json              R4 · Sat 23:59
+├── prescriptions/vW5.json      R4 + R1 · Sat 23:59
+├── instruments.json            R3 + R6 · Sat 23:59 (add ^TNX)
+├── ui/index.html               R5 · Tue 23:59, then daily
+└── evidence/                   supporting material only</pre>
+<p><b>Tuesday housekeeping:</b> if any Sprint 4 file is in the wrong place, move it to its required path by Tuesday night, so your dashboard starts the week complete.</p>
 
-  <!-- Sprint 5 Deliverables -->
-  <section>
-    <p class="section-title">Sprint 5 Deliverables — What Goes into vW25</p>
-    <p>Your <code>vW25</code> release tag must contain the following. Seal it by <strong>Sunday 21 June 23:59 SGT</strong>. Late tags cannot receive a delta score.</p>
+<h2>The Backlog — All Six Roles</h2>
+<div class="task"><span class="num">R1</span><b>Product Owner &amp; Scrum Master: confirm the entry, surface blockers early</b>
+<p style="margin:8px 0 0">File <code>predictions/vW5.json</code>, check all four sentences are there, and set <code>r1_confirms</code> to true. Commit <code>checkin/wednesday.md</code> by Wednesday 12:00 using the <a href="../assets/checkin-wednesday-template.md">check-in template</a>: each role's real progress and blockers, in their own words. If anyone can't edit GitHub or FigJam, or isn't responding, post it in Discord and tell Prof Tan <b>by Wednesday noon</b>. Add this sprint's row to <code>data/roles.json</code> and update <code>data/figjam_status.json</code> daily. Every Done card links to its file on <code>main</code>. With R4, write the prescription.</p>
+<div class="dod"><b>DONE MEANS</b> — a confirmed entry by Wednesday 23:59, a check-in with real content by Wednesday 12:00, blockers raised by Wednesday noon, and every Done card linked to its file on <code>main</code>.</div></div>
+<div class="task"><span class="num">R2</span><b>Almanac &amp; Macro: build the catalyst calendar, own the S&amp;P 500 call</b>
+<p style="margin:8px 0 0">Build <code>catalysts/vW5.json</code> by Tuesday 23:59 (see <a href="#catalysts">above</a>). Almanac and macro outputs for all four markets, committed before the LLMs are queried. You own the S&amp;P 500 call and its sentence.</p>
+<div class="dod"><b>DONE MEANS</b> — a catalyst calendar of real releases with consensus and sources, outputs for all four markets, and an S&amp;P 500 sentence that names a catalyst.</div></div>
+<div class="task"><span class="num">R3</span><b>Technical: back the calls, own the Nasdaq-100 call</b>
+<p style="margin:8px 0 0">Technical outputs for all four markets, committed before the LLMs are queried. You own the Nasdaq-100 call and its sentence. With R6, add <code>^TNX</code> to <code>instruments.json</code>.</p>
+<div class="dod"><b>DONE MEANS</b> — technical outputs for all four markets, a Nasdaq-100 sentence that names a catalyst, and <code>instruments.json</code> including <code>^TNX</code>.</div></div>
+<div class="task"><span class="num">R4</span><b>Data &amp; Calibration: own the gold call, measure the Sprint 4 miss</b>
+<p style="margin:8px 0 0">You own the gold call and its sentence. Record the Friday 9 Oct closes for all four markets, with source URLs, in <code>actuals/vW5.json</code>. Produce <code>delta/vW5.json</code> for your Sprint 4 call with a committed script (see <a href="#delta">above</a>), and with R1 write <code>prescriptions/vW5.json</code>.</p>
+<div class="dod"><b>DONE MEANS</b> — a gold sentence that names a catalyst, four actual closes with sources, a script-produced delta, and one specific prescription.</div></div>
+<div class="task"><span class="num">R5</span><b>Human Score &amp; UI: judge the calls, keep the dashboard complete</b>
+<p style="margin:8px 0 0">Human Score on all four markets in <code>human-score/vW5.json</code> before the Wednesday lock: confirm, adjust or override each call, with the reason. Keep <code>ui/index.html</code> live all week with all nine panels reading committed files, and the "X / 9 files loaded" line at the top.</p>
+<div class="dod"><b>DONE MEANS</b> — Human Scores for all four markets before Wednesday 23:59, and a dashboard showing 9 / 9 files loaded by Saturday 23:59, with no hand-typed values.</div></div>
+<div class="task"><span class="num">R6</span><b>LLM, GitHub &amp; 10-Year Yield: own the yield call, ship the release</b>
+<p style="margin:8px 0 0">You own the 10-year yield call and its sentence. Query ChatGPT, Gemini and DeepSeek with identical prompts on all four markets, and commit <code>llm-synthesis/vW5.json</code> before the Wednesday lock. Refresh <code>data/github_activity.json</code> every day. Cut the <code>vW5</code> release tag once, before Saturday 23:59, on the commit that contains everything, and never move it. Where two people share R6, one can take the yield call and the other the LLM and GitHub work.</p>
+<div class="dod"><b>DONE MEANS</b> — a yield sentence that names a catalyst, synthesis for four markets before Wednesday 23:59, a GitHub activity file refreshed daily, and a <code>vW5</code> tag cut once, on time.</div></div>
 
-    <table class="del-table">
-      <thead>
-        <tr>
-          <th>Deliverable</th>
-          <th>Owner</th>
-          <th>Level</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Prediction file</strong><br><code>prediction_W25.json</code></td>
-          <td><span class="role-chip">R7</span> <span class="role-chip">R2</span></td>
-          <td><span class="req">REQ</span></td>
-          <td>SPX, NDX, IWM directional prediction + confidence + Human Score Wild Card. Structured JSON or Markdown. Sealed inside vW25 tag.</td>
-        </tr>
-        <tr>
-          <td><strong>Agent outputs</strong><br>Almanac · Macro · Technical</td>
-          <td><span class="role-chip">R3</span> <span class="role-chip">R4</span> <span class="role-chip">R5</span></td>
-          <td><span class="req">REQ</span></td>
-          <td>Each agent writes independently before LLM synthesis. All three must be present and committed before the tag is cut.</td>
-        </tr>
-        <tr>
-          <td><strong>LLM synthesis</strong><br>ChatGPT · Gemini · DeepSeek</td>
-          <td><span class="role-chip">R8</span></td>
-          <td><span class="req">REQ</span></td>
-          <td>Identical prompt sent to all three mandatory LLMs. Responses saved and committed. Comparison table showing where LLMs agree and diverge.</td>
-        </tr>
-        <tr>
-          <td><strong>Automated fetch log</strong></td>
-          <td><span class="role-chip">R9</span></td>
-          <td><span class="req">REQ L3</span></td>
-          <td>Evidence that data was fetched automatically (GitHub Actions run log, auto-committed data file with timestamp, or equivalent). Teams at Level 2 must show manual fetch with a commit timestamp before Friday midnight SGT.</td>
-        </tr>
-        <tr>
-          <td><strong>Pipeline diagram or README update</strong></td>
-          <td><span class="role-chip">R1</span> <span class="role-chip">R9</span></td>
-          <td><span class="req">REQ</span></td>
-          <td>A diagram (FigJam, draw.io, or Mermaid in README) showing end-to-end data flow from market close → prediction seal. R1 signs off the README update.</td>
-        </tr>
-        <tr>
-          <td><strong>Delta score report — vW24</strong></td>
-          <td><span class="role-chip">R10</span> <span class="role-chip">R6</span></td>
-          <td><span class="req">REQ</span></td>
-          <td>R10 calculates direction accuracy and error % for last week's vW24 prediction vs Friday's actual close. Committed as <code>delta_W24.md</code> or equivalent. R6 provides actuals data.</td>
-        </tr>
-        <tr>
-          <td><strong>Dashboard or structured report</strong></td>
-          <td><span class="role-chip">R9</span> <span class="role-chip">R1</span></td>
-          <td><span class="opt">STRETCH L4</span></td>
-          <td>A simple HTML page, Streamlit app, or GitHub Pages view showing the current week's prediction, agent summaries, and LLM comparison in a readable format. Not required to be live — a screenshot in the repo counts.</td>
-        </tr>
-        <tr>
-          <td><strong>Sprint Retrospective notes</strong></td>
-          <td><span class="role-chip">R2</span></td>
-          <td><span class="opt">SCRUM</span></td>
-          <td>R2 Scrum Master documents what the team completed, what was blocked, and what changes in the next sprint. Goes into the Weekly Workbook and FigJam board.</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
+<h2>Your Dashboard</h2>
+<div class="card key"><b>Same rules as Sprint 4, plus one line at the top: "X / 9 files loaded".</b> Each panel reads its committed file at the path in the <a href="#layout">folder diagram</a>. If a panel is empty, move the file. Never type the answer into the page.</div>
+<div class="tablewrap"><table>
+<tr><th>Panel</th><th>Attribute</th><th>Reads</th></tr>
+<tr><td>Roles</td><td><code>data-panel="roles"</code></td><td><code>data/roles.json</code></td></tr>
+<tr><td>GitHub Activity</td><td><code>data-panel="github"</code></td><td><code>data/github_activity.json</code></td></tr>
+<tr><td>FigJam Activity</td><td><code>data-panel="figjam"</code></td><td><code>data/figjam_status.json</code></td></tr>
+<tr><td><b>New:</b> Catalysts</td><td><code>data-panel="catalysts"</code></td><td><code>catalysts/vW5.json</code></td></tr>
+<tr><td>Predictions (four markets)</td><td><code>data-panel="predictions"</code></td><td><code>predictions/vW5.json</code></td></tr>
+<tr><td>LLM Synthesis</td><td><code>data-panel="llm-synthesis"</code></td><td><code>llm-synthesis/vW5.json</code></td></tr>
+<tr><td>Human Score</td><td><code>data-panel="human-score"</code></td><td><code>human-score/vW5.json</code></td></tr>
+<tr><td>Delta</td><td><code>data-panel="delta"</code></td><td><code>delta/vW5.json</code></td></tr>
+<tr><td>Prescription</td><td><code>data-panel="prescription"</code></td><td><code>prescriptions/vW5.json</code></td></tr>
+</table></div>
 
-  <!-- Role Focus This Sprint -->
-  <section>
-    <p class="section-title">Role Focus — Sprint 5 Priorities</p>
-    <div class="role-grid">
-      <div class="role-card spotlight">
-        <p class="role-id">R1 · Product Owner</p>
-        <p class="role-name">System Coherence</p>
-        <p class="role-focus">Define what "done" means for the integrated pipeline. Sign off the README. Ensure all agent outputs connect to the prediction file.</p>
-      </div>
-      <div class="role-card spotlight">
-        <p class="role-id">R2 · Scrum Master</p>
-        <p class="role-name">Integration Unblocking</p>
-        <p class="role-focus">Chase every role daily. Run a mid-week check by Wednesday. Retrospective is mandatory this sprint — A1 workbook needs it.</p>
-      </div>
-      <div class="role-card">
-        <p class="role-id">R3 · Almanac Agent</p>
-        <p class="role-name">Seasonal Context</p>
-        <p class="role-focus">Historical patterns for the week of 16–20 June. Document sources. Output must be committed before R8 runs LLMs.</p>
-      </div>
-      <div class="role-card">
-        <p class="role-id">R4 · Macro Agent</p>
-        <p class="role-name">Fed + Data Watch</p>
-        <p class="role-focus">Macro events for w/c 16 June: Fed speakers, CPI revisions, any major data releases. Structured Markdown output.</p>
-      </div>
-      <div class="role-card">
-        <p class="role-id">R5 · Technical Agent</p>
-        <p class="role-name">Trend + Momentum</p>
-        <p class="role-focus">SPX/NDX/IWM technical read from Friday 13 June close. Key levels, trend direction, momentum signal.</p>
-      </div>
-      <div class="role-card">
-        <p class="role-id">R6 · Data / Actuals</p>
-        <p class="role-name">vW24 Actuals</p>
-        <p class="role-focus">Pull confirmed Friday 13 June closes. Feed to R10 for delta scoring. Also prepare data structure for current week's collection.</p>
-      </div>
-      <div class="role-card spotlight">
-        <p class="role-id">R7 · Human Score</p>
-        <p class="role-name">Wild Card Override</p>
-        <p class="role-focus">Review all three LLM outputs + three agent outputs. Apply override if consensus is wrong. Write Wild Card insight — this is the primary marks differentiator.</p>
-      </div>
-      <div class="role-card">
-        <p class="role-id">R8 · LLM Operator</p>
-        <p class="role-name">Synthesis + Comparison</p>
-        <p class="role-focus">Send identical prompt to ChatGPT, Gemini, DeepSeek. Save all responses. Build comparison table. Claude optional if access available.</p>
-      </div>
-      <div class="role-card spotlight">
-        <p class="role-id">R9 · GitHub Lead</p>
-        <p class="role-name">Pipeline Owner</p>
-        <p class="role-focus">Get GitHub Actions fetch running automatically if not yet done. Ensure all branches merged before Sunday. Cut the vW25 tag.</p>
-      </div>
-      <div class="role-card">
-        <p class="role-id">R10 · Calibration</p>
-        <p class="role-name">Delta Score vW24</p>
-        <p class="role-focus">Calculate how accurate last week's prediction was. Direction correct? Error %? Commit delta_W24.md with retrospective notes.</p>
-      </div>
-    </div>
-  </section>
+<h2 id="timeline">Timeline — One Deadline Per Item</h2>
+<div class="tablewrap"><table>
+<tr><th>When (Singapore time)</th><th>What</th></tr>
+<tr><td>Mon 5 Oct</td><td>Sprint 5 starts</td></tr>
+<tr><td><b>Tue 6 Oct 23:59</b></td><td>Roles, GitHub and FigJam files; dashboard live with the "X / 9" line; catalyst calendar; Sprint 4 files moved to their required paths</td></tr>
+<tr><td><b>Wed 7 Oct 12:00</b></td><td>Wednesday check-in, with real content. Blockers raised in Discord and with Prof Tan</td></tr>
+<tr><td><b>Wed 7 Oct 23:59</b></td><td>Prediction locked and R1-confirmed; LLM synthesis; Human Score</td></tr>
+<tr><td>Fri 9 Oct</td><td>The target Friday. The US close lands early Saturday morning Singapore time</td></tr>
+<tr><td><b>Sat 10 Oct 23:59</b></td><td>Actuals, delta, prescription, <code>instruments.json</code>, <code>vW5</code> tag. Dashboard at 9 / 9</td></tr>
+<tr><td>Sun 11 Oct</td><td>Nothing is due. Your work is reviewed ahead of Monday</td></tr>
+<tr><td>Mon 12 Oct</td><td>Presentations</td></tr>
+</table></div>
 
-  <!-- Five Things guardrails -->
-  <section>
-    <p class="section-title">Five Things That Will Sink Your Sprint</p>
-    <div class="five-grid">
-      <div class="five-card">
-        <p class="num">01</p>
-        <p class="five-title">Waiting until Sunday to merge</p>
-        <p class="five-body">If all branches land Sunday afternoon, there is no time to fix merge conflicts. R2 must chase commits by Thursday. R9 merges by Saturday.</p>
-      </div>
-      <div class="five-card">
-        <p class="num">02</p>
-        <p class="five-title">Agent outputs after LLM synthesis</p>
-        <p class="five-body">R8 cannot run LLM synthesis until R3, R4, and R5 have committed their outputs. The dependency is strict. R2 enforces the order.</p>
-      </div>
-      <div class="five-card">
-        <p class="num">03</p>
-        <p class="five-title">No delta score for vW24</p>
-        <p class="five-body">R10 must commit <code>delta_W24.md</code> this sprint. A prediction sealed last week with no retrospective score is an incomplete Scrum cycle.</p>
-      </div>
-      <div class="five-card">
-        <p class="num">04</p>
-        <p class="five-title">Wild Card with no reasoning</p>
-        <p class="five-body">R7's Human Score is the primary differentiator. "I agree with the LLMs" is not a Wild Card. Write a specific, sourced, non-obvious insight.</p>
-      </div>
-      <div class="five-card">
-        <p class="num">05</p>
-        <p class="five-title">Missing the vW25 tag</p>
-        <p class="five-body">A tag not cut by Sunday 23:59 SGT cannot receive a delta score next sprint. The tag is the immutable seal. There are no extensions.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Timeline -->
-  <section>
-    <p class="section-title">Sprint 5 Timeline</p>
-    <div class="timeline">
-      <div class="tl-item">
-        <p class="tl-date">Monday 15 June 2026</p>
-        <p class="tl-event">Sprint 5 Kickoff — after Sprint 4 presentations</p>
-        <p class="tl-detail">Teams receive Sprint 5 brief. R1 and R2 plan the week's backlog.</p>
-      </div>
-      <div class="tl-item">
-        <p class="tl-date">Mon–Wed 15–17 June</p>
-        <p class="tl-event">Agent work week — R3, R4, R5 research and write</p>
-        <p class="tl-detail">Almanac, Macro, and Technical agents commit initial outputs. R9 ensures pipeline is running.</p>
-      </div>
-      <div class="tl-item">
-        <p class="tl-date">Thursday 18 June</p>
-        <p class="tl-event">R8 LLM synthesis — runs all three mandatory LLMs</p>
-        <p class="tl-detail">Identical prompt sent to ChatGPT, Gemini, DeepSeek. Comparison table committed. R10 begins delta_W24 calculation.</p>
-      </div>
-      <div class="tl-item">
-        <p class="tl-date">Friday 20 June — US market close</p>
-        <p class="tl-event">R6 collects actuals · Automated fetch runs</p>
-        <p class="tl-detail">Friday close data for SPX, NDX, IWM collected. GitHub Actions pipeline should trigger automatically at 22:00 SGT.</p>
-      </div>
-      <div class="tl-item">
-        <p class="tl-date">Saturday 21 June</p>
-        <p class="tl-event">R7 Human Score + Wild Card — final review</p>
-        <p class="tl-detail">R7 reads all outputs, applies override if warranted, writes Wild Card insight. R2 chases any missing role submissions.</p>
-      </div>
-      <div class="tl-item deadline">
-        <p class="tl-date">Sunday 21 June 2026 · 23:59 SGT ⚑</p>
-        <p class="tl-event">vW25 Release Tag Deadline</p>
-        <p class="tl-detail">R9 cuts the vW25 tag. All prediction files, agent outputs, LLM synthesis, and delta score must be committed before the tag is created. No extensions.</p>
-      </div>
-      <div class="tl-item">
-        <p class="tl-date">Monday 22 June 2026</p>
-        <p class="tl-event">Sprint 5 Presentations · Sprint 6 Kickoff</p>
-        <p class="tl-detail">Every role (R1–R10) speaks. Demo of the integrated pipeline. R10 presents delta score for vW25 prediction.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- A1 Reminder -->
-  <section>
-    <div class="a1-bar">
-      <div class="a1-icon">📓</div>
-      <div>
-        <p class="a1-title">Assessment 1 — Weekly Workbook — Due Sunday 28 June 2026 · 23:59 SGT</p>
-        <p class="a1-body">Sprint 5 is the last sprint before the A1 deadline. Your Weekly Workbook covers Weeks 1–5 and must include: Knowledge Checks, Application Tasks, AI Conversation Reflections, and a Micro Reflection (~200 words) for every week. Sprint 5 activities — your pipeline diagram, delta score, agent outputs, and retrospective notes — all feed directly into the workbook. Do not leave the workbook until after Sprint 5 ends.</p>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<footer>
-  CP3405 Design Thinking 3 · TR2 2026 · Sprint 5 · vW25 Due Sunday 21 June 2026
-</footer>
-
-</body>
-</html>
+<h2>Monday 12 October</h2>
+<div class="card key"><b>Practical A:</b> Team 1, then Team 2, then Team 3.<br><b>Practical B:</b> Team 4, in the Practical B session.</div>
+<p>Each team's presentation runs in this order:</p>
+<ol>
+<li><b>Live progress block, 4 minutes,</b> the real thing on screen, not screenshots:
+<ul><li><b>R5, 2 minutes:</b> open <code>ui/index.html</code>, show the "X / 9 files loaded" line, and walk through the panels.</li>
+<li><b>R6, 1 minute:</b> GitHub: this week's commits, merges into <code>main</code>, and the <code>vW5</code> tag.</li>
+<li><b>R1, 1 minute:</b> FigJam Done cards, each linked to its file on <code>main</code>.</li></ul></li>
+<li><b>Slides, R1 to R6,</b> using the <a href="../assets/sprint5-presentation-template.pptx">Sprint 5 presentation template</a>.</li>
+<li><b>Oral defense of all four calls.</b> Any team member can be asked about any call.</li>
+</ol>
+</div>
+<p style="text-align:center;color:#8493a8;font-size:.85rem;padding:20px">CP3405 Design Thinking III · TR3 2026 · Sprint 5 — Four Markets, Catalysts First</p>
+</body></html>

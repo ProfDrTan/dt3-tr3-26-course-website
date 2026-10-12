@@ -3,469 +3,195 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sprint 6 — Automation & Accuracy Sprint · CP3405 DT3 TR2 2026</title>
+<title>Sprint 6 · Gold, Three Timeframes · CP3405 DT3 · TR3 2026</title>
 <style>
-    :root {
-      --navy:#0a1628;--navy-2:#0d1f3c;--navy-3:#112244;
-      --gold:#c9a84c;--gold-lt:#e2c97e;--teal:#2dd4bf;--teal-dk:#1fa89a;
-      --white:#f0f4fa;--muted:#8fa3bf;--danger:#e05c5c;--success:#3dcc8a;--warn:#f0a500;
-    }
-    *{box-sizing:border-box;margin:0;padding:0;}
-    body{background:var(--navy);color:var(--white);font-family:'Segoe UI',system-ui,sans-serif;font-size:16px;line-height:1.65;}
-    header{background:linear-gradient(135deg,#070e1c 0%,var(--navy-3) 60%,#0b2040 100%);border-bottom:2px solid var(--gold);padding:2.5rem 2rem 2rem;text-align:center;position:relative;overflow:hidden;}
-    header::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:600px;height:200px;background:radial-gradient(ellipse,rgba(201,168,76,.12) 0%,transparent 70%);pointer-events:none;}
-    .eyebrow{font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:.5rem;}
-    header h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;color:var(--gold);letter-spacing:-.01em;line-height:1.15;}
-    header h1 span{color:var(--white);font-weight:300;}
-    .header-meta{margin-top:1rem;display:flex;justify-content:center;flex-wrap:wrap;gap:.5rem .75rem;}
-    .badge{display:inline-block;padding:.25rem .75rem;border-radius:99px;font-size:.78rem;font-weight:600;letter-spacing:.05em;}
-    .badge-gold{background:rgba(201,168,76,.18);color:var(--gold);border:1px solid rgba(201,168,76,.4);}
-    .badge-teal{background:rgba(45,212,191,.15);color:var(--teal);border:1px solid rgba(45,212,191,.35);}
-    .badge-white{background:rgba(240,244,250,.08);color:var(--white);border:1px solid rgba(240,244,250,.2);}
-    nav{background:var(--navy-2);border-bottom:1px solid rgba(201,168,76,.2);padding:.75rem 2rem;display:flex;gap:1.25rem;flex-wrap:wrap;align-items:center;}
-    nav a{color:var(--muted);text-decoration:none;font-size:.85rem;}
-    nav a:hover{color:var(--gold);}
-    nav a.active{color:var(--gold);font-weight:600;}
-    .nav-sep{color:rgba(255,255,255,.15);}
-    main{max-width:960px;margin:0 auto;padding:2.5rem 1.5rem 4rem;}
-    .countdown-strip{background:linear-gradient(90deg,rgba(201,168,76,.1) 0%,rgba(45,212,191,.08) 100%);border:1px solid rgba(201,168,76,.3);border-radius:10px;padding:1.1rem 1.5rem;margin-bottom:2.5rem;display:flex;flex-wrap:wrap;gap:.75rem 2rem;align-items:center;}
-    .cd-item{display:flex;flex-direction:column;}
-    .countdown-strip .label{color:var(--muted);font-size:.82rem;text-transform:uppercase;letter-spacing:.1em;}
-    .countdown-strip .value{color:var(--gold);font-size:1.05rem;font-weight:700;}
-    .countdown-strip .value.teal{color:var(--teal);}
-    section{margin-bottom:2.75rem;}
-    .section-title{font-size:1.05rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--teal);border-bottom:1px solid rgba(45,212,191,.25);padding-bottom:.5rem;margin-bottom:1.25rem;}
-    p{color:rgba(240,244,250,.82);margin-bottom:1rem;}
-    strong{color:var(--white);}
-    code{background:rgba(45,212,191,.12);color:var(--teal);padding:.1rem .4rem;border-radius:4px;font-size:.88em;}
-    .callout{border-left:3px solid var(--gold);background:rgba(201,168,76,.07);border-radius:0 8px 8px 0;padding:1rem 1.25rem;margin-bottom:1.25rem;}
-    .callout.teal{border-color:var(--teal);background:rgba(45,212,191,.07);}
-    .callout.success{border-color:var(--success);background:rgba(61,204,138,.07);}
-    .callout.soft{border-color:var(--muted);background:rgba(143,163,191,.05);}
-    .callout .callout-title{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem;}
-    .callout .callout-title.gold{color:var(--gold);}
-    .callout .callout-title.teal{color:var(--teal);}
-    .callout .callout-title.success{color:var(--success);}
-    .callout .callout-title.muted{color:var(--muted);}
-    .callout p{margin-bottom:0;font-size:.92rem;}
-    .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;}
-    .card{background:var(--navy-2);border:1px solid rgba(255,255,255,.09);border-radius:10px;padding:1.1rem 1.25rem;}
-    .card .big{font-size:2rem;font-weight:800;color:rgba(45,212,191,.25);line-height:1;margin-bottom:.4rem;}
-    .wf-table{width:100%;border-collapse:collapse;font-size:.9rem;}
-    .wf-table th{background:var(--navy-3);color:var(--gold);font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;padding:.65rem 1rem;text-align:left;border-bottom:1px solid rgba(201,168,76,.3);}
-    .wf-table td{padding:.75rem 1rem;border-bottom:1px solid rgba(255,255,255,.07);color:rgba(240,244,250,.8);vertical-align:top;}
-    .wf-table tr:last-child td{border-bottom:none;}
-    .wf-table tr:hover td{background:rgba(255,255,255,.03);}
-    .wf-table .day{color:var(--teal);font-weight:700;white-space:nowrap;}
-    .wf-table .scrum-tag{display:inline-block;background:rgba(45,212,191,.1);color:var(--teal);border-radius:4px;padding:.1rem .45rem;font-size:.72rem;font-weight:700;margin-bottom:.3rem;}
-    .wf-table .hl td{background:rgba(201,168,76,.05);border-left:3px solid var(--gold);}
-    .role-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:.75rem;}
-    .role-card{background:var(--navy-2);border:1px solid rgba(255,255,255,.09);border-radius:8px;padding:.85rem 1rem;}
-    .role-card.spotlight{border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06);}
-    .role-id{font-size:.7rem;color:var(--teal);font-weight:700;letter-spacing:.08em;margin-bottom:.25rem;}
-    .role-card.spotlight .role-id{color:var(--gold);}
-    .role-name{font-size:.88rem;font-weight:600;color:var(--white);margin-bottom:.25rem;}
-    .role-real{font-size:.73rem;color:var(--gold);font-style:italic;margin-bottom:.3rem;}
-    .role-focus{font-size:.78rem;color:var(--muted);line-height:1.45;}
-    .scrum-principle{display:inline-block;background:rgba(201,168,76,.1);color:var(--gold-lt);border-radius:4px;padding:.1rem .45rem;font-size:.7rem;font-weight:600;margin-top:.4rem;}
-    pre{white-space:pre-wrap;background:#071426;color:#e2e8f0;border-radius:14px;padding:18px;overflow:auto;font-size:.88rem;line-height:1.7;border:1px solid rgba(45,212,191,.15);}
-    .timeline{position:relative;padding-left:1.5rem;}
-    .timeline::before{content:'';position:absolute;left:.45rem;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,var(--teal) 0%,var(--gold) 100%);border-radius:2px;}
-    .tl-item{position:relative;margin-bottom:1.25rem;}
-    .tl-item::before{content:'';position:absolute;left:-1.06rem;top:.35rem;width:9px;height:9px;background:var(--navy);border:2px solid var(--teal);border-radius:50%;}
-    .tl-item.deadline::before{border-color:var(--gold);background:var(--gold);}
-    .tl-date{font-size:.78rem;color:var(--teal);font-weight:700;letter-spacing:.06em;margin-bottom:.15rem;}
-    .tl-item.deadline .tl-date{color:var(--gold);}
-    .tl-event{font-size:.92rem;color:var(--white);font-weight:600;}
-    .tl-detail{font-size:.82rem;color:var(--muted);margin-top:.1rem;}
-    .del-table{width:100%;border-collapse:collapse;font-size:.9rem;}
-    .del-table th{background:var(--navy-3);color:var(--gold);font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;padding:.65rem 1rem;text-align:left;border-bottom:1px solid rgba(201,168,76,.3);}
-    .del-table td{padding:.75rem 1rem;border-bottom:1px solid rgba(255,255,255,.07);color:rgba(240,244,250,.8);vertical-align:top;}
-    .del-table tr:last-child td{border-bottom:none;}
-    footer{border-top:1px solid rgba(201,168,76,.15);padding:1.5rem 2rem;text-align:center;font-size:.8rem;color:var(--muted);}
-    @media(max-width:600px){.countdown-strip{flex-direction:column;gap:.6rem;}.grid3{grid-template-columns:1fr;}}
+*{box-sizing:border-box}
+body{margin:0;background:#f5f7fb;font-family:Inter,Segoe UI,Arial,sans-serif;color:#102033;line-height:1.6}
+a{color:#0f6fbd;text-decoration:none;font-weight:800}
+.preview{background:#f5b942;color:#111827;text-align:center;padding:8px 12px;font-weight:800;font-size:.85rem}
+.top{background:#071426;color:#fff;border-bottom:4px solid #12c7b7;padding:18px 22px;display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}
+.brand{display:flex;gap:14px;align-items:center;font-weight:900;font-size:1.25rem}
+.badge{background:#12c7b7;color:#071426;padding:8px 12px;border-radius:8px;font-family:monospace}
+.nav{display:flex;overflow:auto;background:#132747;border-bottom:1px solid #0f2040}
+.nav a{padding:14px 18px;color:#dbeafe;white-space:nowrap;font-weight:700;font-size:.9rem;transition:background .2s}
+.nav a:hover{background:#1e3a6e}
+.nav a.active{background:#f5b942;color:#111827}
+.nav a.sys{border-left:3px solid #12c7b7}
+.main{max-width:920px;margin:0 auto;padding:36px 22px 70px}
+h1{font-size:2rem;margin:0 0 6px}
+h2{color:#0e2a52;margin-top:40px;border-bottom:2px solid #e8edf5;padding-bottom:8px}
+h3{color:#0e2a52;margin:20px 0 6px;font-size:1.02rem}
+.eyebrow{display:inline-block;background:rgba(18,199,183,.15);border:1px solid #12c7b7;color:#0e7a70;padding:5px 14px;border-radius:999px;font-size:.8rem;font-weight:900;letter-spacing:.03em;margin-bottom:12px}
+.card{background:#fff;border:1px solid #e6ebf3;border-radius:12px;padding:18px 20px;margin:14px 0;box-shadow:0 1px 3px rgba(16,32,51,.06)}
+.card b{color:#0e2a52}
+.card.key{border-left:5px solid #f5b942;background:linear-gradient(135deg,#fffbeb,#fff)}
+.card.red{border-left:4px solid #dc2626}
+.task{background:#fff;border:1px solid #e6ebf3;border-left:5px solid #12c7b7;border-radius:0 12px 12px 0;padding:16px 20px;margin:12px 0}
+.task .num{display:inline-block;min-width:34px;height:26px;padding:0 6px;border-radius:13px;background:#132747;color:#f5b942;font-weight:900;font-size:.8rem;text-align:center;line-height:26px;margin-right:8px}
+.dod{margin-top:8px;padding:8px 12px;background:#f0faf9;border-radius:8px;font-size:.88em;color:#0e5a52}
+.dod b{color:#0e7a70;font-size:.78em;letter-spacing:.05em}
+code{background:#eef2f8;padding:2px 7px;border-radius:5px;font-family:monospace;font-size:.92em;color:#0e2a52}
+pre{background:#0f1c33;color:#dbeafe;border-radius:10px;padding:14px 16px;overflow-x:auto;font-size:.82rem;line-height:1.5;margin:10px 0}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem;background:#fff}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid #e6ebf3;vertical-align:top}
+th{background:#eef2f8;color:#0e2a52;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
+.tablewrap{overflow-x:auto}
+ul,ol{margin:8px 0 8px 22px}
+li{margin-bottom:6px}
+footer{max-width:920px;margin:40px auto 0;padding:20px 22px;border-top:1px solid #e6ebf3;color:#8493a8;font-size:.82rem;text-align:center}
+@media(max-width:700px){.main{padding:24px 16px 50px}}
 </style>
 </head>
-<body>
+<body data-sprint-monday="2026-10-12" data-sprint-number="6">
+<div class="top"><div class="brand"><span class="badge" data-tag>vW6</span> CP3405 · Design Thinking III</div><div style="color:#12c7b7;font-family:monospace;font-size:.9rem">TR3 2026</div></div>
+<nav class="nav"><a href="../index.html">Home</a><a class="active" href="index.html">Sprint 6 — Gold, Three Timeframes</a><a href="../sprint5/index.html">Sprint 5</a><a href="../sprint4/index.html">Sprint 4</a><a href="../sprint3/index.html">Sprint 3</a><a href="../archive/index.html">Archive (Sprint 1–2)</a><a href="../github/index.html">GitHub</a><a href="../almanac/index.html">Almanac Agent</a><a class="sys" href="../scrum/index.html">Scrum Reference</a></nav>
+<div class="main">
+<span class="eyebrow">Starts Monday 12 Oct — engine passes its self-test Wednesday 14 Oct 12:00 — prediction locks Wednesday 14 Oct 23:59 SGT — everything else due Saturday 17 Oct 23:59 SGT — presented Monday 19 Oct</span>
+<h1>Sprint 6 <span style="color:#8493a8;font-weight:700">— vW6</span> — Gold, Three Timeframes</h1>
+<p style="color:#3a4a5e;font-size:1.05rem">This sprint you build something real: your own version of <a href="https://www.investing.com/commodities/gold-technical">Investing.com's gold technical page</a>. Your code reads gold prices, runs the same moving averages and indicators that page shows, and rates gold on the hourly, daily and weekly charts. On Monday, Prof Tan will open Investing.com on his phone while you show your dashboard, and compare the two line by line. Your numbers should match, and where they don't, you should be able to say why.</p>
 
-<header>
-  <p class="eyebrow">CP3405 Design Thinking 3 · TR2 2026 · Course Week 6</p>
-  <h1>Sprint 6 <span>— Automation &amp; Accuracy Sprint</span></h1>
-  <div class="header-meta">
-    <span class="badge badge-gold">vW28 · Due Sun 12 July 2026 · 23:59 SGT</span>
-    <span class="badge badge-teal">Presentation · Mon 13 July 2026</span>
-    <span class="badge badge-white">Scrum · Agile · AI Tools · TR2 2026</span>
-  </div>
-</header>
+<h2>The Sprint Goal</h2>
+<div class="card key">By Wednesday noon, your gold engine passes its self-test. By Wednesday night, lock your four weekly calls, with your engine's gold call beside the team's. By Saturday night, replay your engine over recent weeks to see how often it would have been right, and measure your Sprint 5 miss.</div>
 
-<nav>
-  <a href="/">Home</a><span class="nav-sep">·</span>
-  <a href="/sprint7/">Sprint 7</a><span class="nav-sep">·</span>
-  <a href="/sprint6/" class="active">Sprint 6</a><span class="nav-sep">·</span>
-  <a href="/sprint5/">Sprint 5</a><span class="nav-sep">·</span>
-  <a href="/scrum/">Scrum Reference</a><span class="nav-sep">·</span>
-  <a href="/roadmap/">Roadmap</a><span class="nav-sep">·</span>
-  <a href="/system/">System</a>
-</nav>
+<h2>What Changed From Sprint 5, and Why</h2>
+<div class="tablewrap"><table>
+<tr><th>Change</th><th>Why</th></tr>
+<tr><td><b>New: a gold technical engine</b>, built by R3 and R6, with a starter file and a self-test</td><td>A weekly call gives you one scored result per market. An engine rates gold on three timeframes and can be checked against a professional tool, live.</td></tr>
+<tr><td><b>Gold is now a closing price, not a direction</b></td><td>A direction is only right or wrong. A price shows how far off you were, the same as your other three calls.</td></tr>
+<tr><td><b>Your engine's gold call sits beside your team's</b></td><td>Your judgment should add something the engine can't. Now you can see whether it does.</td></tr>
+<tr><td><b>New: a replay</b> of your engine over recent bars, owned by R4</td><td>It gives you dozens of scored predictions this week instead of waiting months for enough weekly results.</td></tr>
+<tr><td><b>Levels are numbers.</b> <code>spx_close</code>, <code>ndx_close</code>, <code>gold_close</code> and <code>tnx_close</code> must be numbers</td><td>A Nasdaq-100 call was filed as "UP". A word can't be scored against a closing level.</td></tr>
+<tr><td><b>Dashboards are never hosted.</b> No GitHub Pages, no Netlify, no deployment workflows</td><td>Dashboards were put on public hosting, which exposes your calls to anyone with the link. Your dashboard is opened from your repo.</td></tr>
+<tr><td><b>Every team member posts their own Wednesday check-in in Discord</b>, and R1 compiles them</td><td>In some teams most members never posted all week.</td></tr>
+<tr><td><b>A FigJam card with only a title is not a card</b></td><td>Some boards had title-only cards, and one board hadn't moved since Sprint 3.</td></tr>
+<tr><td><b>A late call stays late.</b> It's recorded and labelled, never counted as locked</td><td>Calls were committed after the lock and marked as drafts.</td></tr>
+</table></div>
 
-<main>
+<h2>New: Your Gold Technical Engine</h2>
+<p>Open the Investing.com page above. For each timeframe it shows one rating, from Strong Sell to Strong Buy, worked out from a table of moving averages and a table of indicators, each voting Buy or Sell. It also shows pivot points. You will build the same thing for gold futures, December 2026 (Yahoo symbol <code>GCZ26.CMX</code>), on three timeframes: <b>hourly, daily and weekly</b>. Those are tabs on the Investing.com page too.</p>
+<div class="card key"><b>Start from the starter kit: <a href="../assets/sprint6/sprint6-starter.zip">sprint6-starter.zip</a>.</b> Put its contents in an <code>engine/</code> folder in your repo. The download and file handling are written for you. You write the 14 functions marked TODO: the maths and the voting rules, each explained in the file. Then run <code>python engine/test_engine.py</code>. It checks your numbers and votes against the course reference engine on frozen gold data, and tells you exactly which line is wrong. Commit its output to <code>checks/engine-test.txt</code>.</div>
+<h3>The 12 moving-average votes</h3>
+<p>For each length n = 5, 10, 20, 50, 100 and 200 bars, a simple moving average (SMA, the plain average of the last n closes) and an exponential moving average (EMA, which gives recent closes more weight). Each votes <b>Buy</b> if the latest close is above it and <b>Sell</b> if below. These are the same 12 rows as Investing.com's Moving Averages table.</p>
+<h3>The 6 indicator votes</h3>
+<div class="tablewrap"><table>
+<tr><th>Indicator</th><th>What it measures</th><th>Buy</th><th>Sell</th><th>Neutral</th></tr>
+<tr><td>RSI(14)</td><td>Size of up-moves against down-moves over 14 bars, 0 to 100</td><td>above 50</td><td>below 50</td><td>above 70 or below 30</td></tr>
+<tr><td>STOCH(9,6)</td><td>Where the close sits in its 9-bar range</td><td>%K above %D, and %K below 80</td><td>%K below %D, and %K above 20</td><td>otherwise</td></tr>
+<tr><td>MACD(12,26,9)</td><td>Short-term trend against longer-term trend</td><td>MACD line above signal line</td><td>below</td><td>equal</td></tr>
+<tr><td>CCI(14)</td><td>Distance of the typical price from its 14-bar average</td><td>above 0</td><td>below 0</td><td>above +200 or below −200</td></tr>
+<tr><td>Williams %R(14)</td><td>Where the close sits in its 14-bar range, −100 to 0</td><td>above −50</td><td>below −50</td><td>above −20 or below −80</td></tr>
+<tr><td>ROC(12)</td><td>Percentage change from 12 bars ago</td><td>above 0</td><td>below 0</td><td>exactly 0</td></tr>
+</table></div>
+<p>All six appear on Investing.com's Technical Indicators table, so every row you show can be compared. The exact formula for each is in the starter file.</p>
+<h3>Votes, rating, prediction and pivots</h3>
+<div class="card">
+<b>Score: S = (B − D) ÷ 18</b><br>
+<span style="font-size:.9em;color:#3a4a5e">where B is the number of Buy votes, D the number of Sell votes, and 18 the total. S runs from −1 (all Sell) to +1 (all Buy).</span><br><br>
+<b>Rating:</b> S of 0.5 or more is Strong Buy · 0.1 up to 0.5 is Buy · between −0.1 and 0.1 is Neutral · −0.5 up to −0.1 is Sell · −0.5 or less is Strong Sell.<br><br>
+<b>Predicted next close: P = C + 0.1 × S × ATR</b><br>
+<span style="font-size:.9em;color:#3a4a5e">where C is the latest close, S the score, and ATR (average true range) the typical size of one bar's move over the last 14 bars. A Strong Buy predicts a small rise, Neutral predicts no change. The 0.1 was set by testing: a larger step overshoots.</span><br><br>
+<b>Pivot points: P = (H + L + C) ÷ 3 · R1 = 2P − L · S1 = 2P − H</b><br>
+<span style="font-size:.9em;color:#3a4a5e">where H, L and C are the high, low and close of the last completed bar on that timeframe. P is the pivot, R1 the first resistance above it and S1 the first support below it.</span>
+</div>
+<h3>Comparing with Investing.com</h3>
+<p>Your engine writes <code>signals/latest.json</code>, with the time of the bar it used in UTC (the same as GMT, which Investing.com uses). Compare at the same bar time and on the same timeframe tab. Your moving averages should agree with Investing.com's to within about 0.2%. Indicators can differ a little more, because Investing.com's price feed can differ from Yahoo's by a few dollars and fast indicators react to that. The summary rating may differ, because Investing.com counts more indicators than these six. Be ready to explain any difference, row by row.</p>
 
-<div class="countdown-strip">
-  <div class="cd-item"><span class="label">Sprint</span><span class="value">6 · W6</span></div>
-  <div class="cd-item"><span class="label">Tag Required</span><span class="value">vW28</span></div>
-  <div class="cd-item"><span class="label">Deadline</span><span class="value">Sun 12 Jul · 23:59 SGT</span></div>
-  <div class="cd-item"><span class="label">Presentation</span><span class="value teal">Mon 13 Jul</span></div>
-  </div>
+<h2>The Weekly Calls</h2>
+<p><b>Deadline: Wednesday 14 Oct, 23:59 Singapore time.</b> Same four markets, same owners, read the same way as in <a href="../sprint5/index.html">Sprint 5</a>, with one change: <b>gold is now the closing price</b> of GCZ26.CMX on Friday 16 Oct, in US dollars per ounce, from the Close column of Yahoo's daily Historical Data, not Adj Close and not the spot price. Every reason names a catalyst from <code>catalysts/vW6.json</code>.</p>
+<p>In <code>predictions/vW6.json</code>, <code>gold_direction</code> becomes <code>gold_close</code>, and a new line holds your engine's weekly-chart gold prediction at the moment you lock:</p>
+<pre>"team_call":   { "spx_close": 0.00, "ndx_close": 0.00, "gold_close": 0.00, "tnx_close": 0.00 },
+"engine_call": { "gold_close": 0.00 },</pre>
+<p>If your team's gold call differs from the engine's, the gold reason says why.</p>
 
-<!-- WHAT THIS IS ABOUT -->
-<section id="real-point">
-  <div class="section-title">What Sprint 6 Is Really About</div>
+<h2>New: The Replay (R4)</h2>
+<p>Run your engine as if it were running at each of the last 35 hourly bars, the last 20 daily bars and the last 10 weekly bars, using only the bars up to that point. Compare each prediction with the close that actually came next. Save every row in <code>replay/vW6.csv</code> (bar time, timeframe, close, score, rating, predicted, actual, miss, no-change miss) and a summary for each timeframe in <code>replay/vW6.json</code>.</p>
+<div class="card">
+<b>Miss = |P − A| ÷ A × 100</b><br>
+<span style="font-size:.9em;color:#3a4a5e">where P is the predicted close, A the actual close, and |…| the size of the miss, whether above or below.</span><br><br>
+<b>"No change" miss:</b> the same formula with P = C, the last close. This is the simplest possible forecast. Report both: an engine that can't beat "no change" isn't adding anything, and you should say so.<br><br>
+<b>Direction right:</b> the share of Buy and Strong Buy ratings followed by a higher close, plus Sell and Strong Sell ratings followed by a lower close, out of all non-Neutral ratings.
+</div>
 
-  <div class="callout teal">
-    <div class="callout-title teal">The market is the data source. Scrum is the lesson.</div>
-    <p>This project uses market data as the backlog item your pipeline delivers every week. <strong>The goal is to practise running a real Scrum cycle</strong> — sprint planning, daily cadence, sprint review, and retrospective — with a system that grows more automated each sprint. The data domain is the training environment. The professional habits are what you take with you.</p>
-  </div>
+<h2>Delta and Prescription: Your Sprint 5 Call</h2>
+<p>Measure your Sprint 5 call against the Friday 9 Oct closes in <code>actuals/vW5.json</code>, for all four markets. The yield is scored in basis points (one basis point is 0.01 percentage points). Your Sprint 5 gold call was a direction, so its delta is right or wrong. If your Sprint 5 call was committed after the lock, measure it and label it late. If you had none, say so. The prescription is one specific change for next sprint.</p>
 
-  <p>Every role in this sprint maps directly to a skill the workforce is asking for right now:</p>
+<h2>Where Every File Goes</h2>
+<pre>your-team-repo/
+├── engine/
+│   ├── tech_summary.py          R3 + R6 · self-test passing Wed 12:00
+│   ├── test_engine.py           from the starter kit, unchanged
+│   └── starter/                 from the starter kit, unchanged
+├── checks/engine-test.txt       R3 · Wed 12:00
+├── signals/latest.json          engine · each time you run it
+├── catalysts/vW6.json           R2 · Tue 23:59
+├── checkin/wednesday.md         R1 · Wed 12:00
+├── data/
+│   ├── roles.json               R1 · Tue 23:59
+│   ├── github_activity.json     R6 · Tue 23:59, then daily
+│   └── figjam_status.json       R1 · Tue 23:59, then daily
+├── predictions/vW6.json         R1 · Wed 23:59
+├── llm-synthesis/vW6.json       R6 · Wed 23:59
+├── human-score/vW6.json         R5 · Wed 23:59
+├── replay/vW6.csv               R4 · Sat 23:59
+├── replay/vW6.json              R4 · Sat 23:59
+├── actuals/vW6.json             R4 · Sat 23:59
+├── delta/vW6.json               R4 · Sat 23:59
+├── prescriptions/vW6.json       R4 + R1 · Sat 23:59
+├── instruments.json             R3 + R6 · keep current
+├── ui/index.html                R5 · Tue 23:59, then daily
+└── evidence/                    supporting material only</pre>
+<p>A file anywhere else counts as missing. Fix any Sprint 5 file with the wrong path or name by Tuesday night.</p>
 
-  <div class="grid3" style="margin-bottom:1rem">
-    <div class="card">
-      <div class="big">🔧</div>
-      <strong>R8 — LLM API calls</strong><br>
-      <span style="font-size:.85rem;color:var(--muted)">Calling an AI model programmatically and processing the response is what AI/ML engineers do every day. Not using a chat window — building the pipe that connects your system to the model.</span>
-    </div>
-    <div class="card">
-      <div class="big">⚙️</div>
-      <strong>R9 — GitHub Actions</strong><br>
-      <span style="font-size:.85rem;color:var(--muted)">Scheduled automation and CI/CD pipelines are the backbone of every software team. R9 owns the infrastructure that runs without a human triggering it — that's DevOps in practice.</span>
-    </div>
-    <div class="card">
-      <div class="big">📊</div>
-      <strong>R10 — Calibration</strong><br>
-      <span style="font-size:.85rem;color:var(--muted)">Measuring whether the system's output matched reality, tracking accuracy over time, and feeding that back into the next sprint — this is what product managers and analysts do with KPIs.</span>
-    </div>
-  </div>
+<h2>The Backlog — All Six Roles</h2>
+<div class="task"><span class="num">R1</span><b>Product Owner &amp; Scrum Master: lock the calls, keep the board real</b>
+<p style="margin:8px 0 0">File <code>predictions/vW6.json</code> with the team's four calls and the engine's gold call, and set <code>r1_confirms</code> to true. By Wednesday 12:00, compile <code>checkin/wednesday.md</code> from every team member's own Discord check-in, with a link to each post. Anyone who hasn't posted by noon is raised in Discord and with Prof Tan the same day. Keep your team's Sprint 6 section of the shared FigJam board current. With R4, write the prescription.</p>
+<div class="dod"><b>DONE MEANS</b> — a confirmed entry with all four team calls and the engine's gold call by Wednesday 23:59, a check-in linking every member's Discord post by 12:00, and every Done card linked to its file on <code>main</code>.</div></div>
+<div class="task"><span class="num">R2</span><b>Almanac &amp; Macro: catalysts and the S&amp;P 500 call</b>
+<p style="margin:8px 0 0">Build <code>catalysts/vW6.json</code> by Tuesday 23:59, as in Sprint 5. You own the S&amp;P 500 weekly call.</p>
+<div class="dod"><b>DONE MEANS</b> — a catalyst calendar of real releases with sources, and an S&amp;P 500 call that names a catalyst.</div></div>
+<div class="task"><span class="num">R3</span><b>Technical: engine part 1, and the Nasdaq-100 call</b>
+<p style="margin:8px 0 0">In the starter file, write <code>sma</code>, <code>ema</code>, <code>ma_votes</code>, <code>score_and_rating</code>, <code>predict</code> and <code>pivots</code>. Get the whole self-test passing with R6 by Wednesday 12:00 and commit its output. Be ready to explain any moving-average vote. You own the Nasdaq-100 weekly call.</p>
+<div class="dod"><b>DONE MEANS</b> — your functions written, the self-test showing ALL CHECKS PASSED in <code>checks/engine-test.txt</code>, and a Nasdaq-100 call that names a catalyst.</div></div>
+<div class="task"><span class="num">R4</span><b>Data &amp; Calibration: the gold call, the replay, the Sprint 5 miss</b>
+<p style="margin:8px 0 0">You own the gold weekly call, as a price. Write the replay and commit <code>replay/vW6.csv</code> and <code>replay/vW6.json</code>. Record the Friday 16 Oct closes for all four markets, with sources, in <code>actuals/vW6.json</code>. Produce <code>delta/vW6.json</code> for your Sprint 5 call, and with R1 write <code>prescriptions/vW6.json</code>.</p>
+<div class="dod"><b>DONE MEANS</b> — a gold price call that names a catalyst, a replay of 65 scored predictions with the no-change comparison, four actual closes with sources, and one specific prescription.</div></div>
+<div class="task"><span class="num">R5</span><b>Human Score &amp; UI: judge the calls, build the gold technical panel</b>
+<p style="margin:8px 0 0">Human Score on all four weekly calls in <code>human-score/vW6.json</code> before the Wednesday lock, including whether you agree with the engine on gold. Add the Gold Technical panel to <code>ui/index.html</code> (see below), keep all ten panels reading committed files, and show "X / 10 files loaded" at the top. Your dashboard is opened from the repo. It is never hosted.</p>
+<div class="dod"><b>DONE MEANS</b> — Human Scores for all four calls before Wednesday 23:59, and a dashboard at 10 / 10 by Saturday 23:59, with no hand-typed values.</div></div>
+<div class="task"><span class="num">R6</span><b>LLM, GitHub &amp; 10-Year Yield: engine part 2, the yield call, the release</b>
+<p style="margin:8px 0 0">In the starter file, write <code>rsi</code>, <code>macd</code>, <code>stochastic</code>, <code>cci</code>, <code>williams_r</code>, <code>roc</code>, <code>atr</code> and <code>indicator_votes</code>, with R3, by Wednesday 12:00. You own the 10-year yield weekly call. Query ChatGPT, Gemini and DeepSeek with identical prompts on all four markets and commit <code>llm-synthesis/vW6.json</code> before the lock. Refresh <code>data/github_activity.json</code> daily. Cut the <code>vW6</code> tag once, before Saturday 23:59, and never move it.</p>
+<div class="dod"><b>DONE MEANS</b> — your functions written and passing the self-test, a yield call that names a catalyst, LLM synthesis before the lock, and a <code>vW6</code> tag cut once, on time.</div></div>
 
-  <div class="callout success">
-    <div class="callout-title success">Sprint 6 goal in one sentence</div>
-    <p>Run a complete Scrum cycle — planning through retrospective — with a pipeline that collects data, runs your agents, calls at least two AI models via API, and delivers a prediction file <strong>automatically, without manual intervention — automatically after the US market closes Friday.</strong></p>
-  </div>
-</section>
+<h2>Your Dashboard</h2>
+<p>The nine Sprint 5 panels, now reading <code>vW6</code> files, plus one new panel. The line at the top reads "X / 10 files loaded".</p>
+<div class="tablewrap"><table>
+<tr><th>Panel</th><th>Attribute</th><th>Reads</th></tr>
+<tr><td>New: Gold Technical</td><td><code>data-panel="gold-technical"</code></td><td><code>signals/latest.json</code></td></tr>
+</table></div>
+<p>Lay it out like Investing.com's page so the two can be compared at a glance: tabs for Hourly, Daily and Weekly; for the selected tab, the rating and score, the bar time in GMT, the Moving Averages table (12 rows, value and Buy/Sell), the Technical Indicators table (6 rows, value and Buy/Sell), and the pivot points. The Replay panel's numbers can go in the same panel or in the Delta panel.</p>
 
-<!-- SCRUM HEALTH THIS SPRINT -->
-<section id="scrum-health">
-  <div class="section-title">Scrum Health — What Good Looks Like This Sprint</div>
-  <p>Each sprint your team should be getting better at Scrum, not just better at the pipeline. Here is what healthy Scrum looks like for Sprint 6 specifically.</p>
+<h2>Timeline — One Deadline Per Item</h2>
+<div class="tablewrap"><table>
+<tr><th>When (Singapore time)</th><th>What</th></tr>
+<tr><td>Mon 12 Oct</td><td>Sprint 6 starts. Download the starter kit</td></tr>
+<tr><td><b>Tue 13 Oct 23:59</b></td><td>Catalyst calendar, roles, GitHub and FigJam files. Dashboard current with the "X / 10" line. Sprint 5 files fixed</td></tr>
+<tr><td><b>Wed 14 Oct 12:00</b></td><td>Engine self-test passing, output in <code>checks/engine-test.txt</code>. Every member's own Discord check-in. <code>checkin/wednesday.md</code>. Blockers raised</td></tr>
+<tr><td><b>Wed 14 Oct 23:59</b></td><td>Prediction locks, with the engine's gold call. LLM synthesis, Human Score</td></tr>
+<tr><td><b>Sat 17 Oct 23:59</b></td><td>Replay, actuals, delta, prescription, <code>vW6</code> tag. Dashboard at 10 / 10</td></tr>
+<tr><td>Sun 18 Oct</td><td>Nothing is due. Your work is reviewed ahead of Monday</td></tr>
+<tr><td>Mon 19 Oct</td><td>Presentations</td></tr>
+</table></div>
 
-  <div class="callout">
-    <div class="callout-title gold">Sprint Planning — Monday 6 July · In class</div>
-    <p><strong>R1 (Product Owner)</strong> writes the sprint goal — one sentence, measurable. <strong>R2 (Scrum Master)</strong> facilitates role assignments and timebox agreements. Every member commits to a Definition of Done checklist item. <em>Scrum principle: agree on timeboxes early. A timebox that feels wrong is still better than no timebox — you learn from enforcing it.</em></p>
-  </div>
-
-  <div class="callout">
-    <div class="callout-title gold">Daily Cadence — Mon to Sat</div>
-    <p>Keep your daily check-ins to <strong>15 minutes maximum</strong>. Three questions only: what did I do, what will I do, what is blocking me. Blockers get raised immediately — not held until Sunday. <em>Scrum principle: a blocker surfaced on Wednesday can be resolved. A blocker surfaced on Sunday cannot.</em></p>
-  </div>
-
-  <div class="callout">
-    <div class="callout-title gold">Definition of Done — Write it down</div>
-    <p>A strong DoD makes "done" unambiguous. Weak DoD: "pipeline seems to work." Strong DoD: automated fetch ran and committed data · all agent outputs committed before LLM synthesis · two LLM API calls logged as files · calibration framework ready · <code>vW28</code> tag cut before Sunday midnight. <em>Scrum principle: user stories — or in your case, pipeline tasks — are never "mostly done." They are done or they are not.</em></p>
-  </div>
-
-  <div class="callout">
-    <div class="callout-title gold">Sprint Review — Monday 13 July</div>
-    <p>Come prepared. <strong>Never create the demo on the spot.</strong> Every role has a speaking point. Show the GitHub Actions run log — not a screenshot of code that runs "on your machine." The Product Owner presents what was achieved against the sprint goal. <em>Scrum principle: well-structured demos build stakeholder confidence. Your class is your stakeholder.</em></p>
-  </div>
-
-  <div class="callout">
-    <div class="callout-title gold">Retrospective — Commit it to the repo</div>
-    <p>Retrospective is a <strong>separate event from the Sprint Review</strong>. Every team member speaks. The goal is not to solve every problem live — it is to identify them and plan when to address them. One concrete change for Sprint 7, written in the repo. <em>Scrum principle: small consistent improvements turn Scrum from a process into a culture of excellence.</em></p>
-  </div>
-</section>
-
-<!-- WHAT TO SUBMIT -->
-<section id="must-submit">
-  <div class="section-title">Definition of Done — vW28</div>
-  <p>These three things must be true before the tag is cut. This is your sprint's DoD.</p>
-  <div class="grid3">
-    <div class="card">
-      <div class="big">1</div>
-      <strong>Pipeline ran automatically</strong><br>
-      <span style="font-size:.85rem;color:var(--muted)">GitHub Actions triggered automatically after the US market closes Friday (Saturday morning SGT ~4am). The run log is the evidence. The run log is the evidence. Show it on Monday 13 July.</span>
-    </div>
-    <div class="card">
-      <div class="big">2</div>
-      <strong>Release tag <code>vW28</code></strong><br>
-      <span style="font-size:.85rem;color:var(--muted)">Exact format: lowercase <code>v</code>, capital <code>W</code>, two digits. The tag is the immutable record that your sprint was completed before the deadline — the same principle as a Git commit hash.</span>
-    </div>
-    <div class="card">
-      <div class="big">3</div>
-      <strong>Discord submission posted</strong><br>
-      <span style="font-size:.85rem;color:var(--muted)">Use the template below. This is your Sprint Review artefact — the public record that your team delivered this sprint.</span>
-    </div>
-  </div>
-</section>
-
-<!-- THREE NEW THINGS -->
-<section id="whats-new">
-  <div class="section-title">Three New Requirements in Sprint 6</div>
-  <p>Everything from Sprint 5 carries forward. These three things are added.</p>
-
-  <div class="callout teal">
-    <div class="callout-title teal">1 · Sector coverage expands to all 11 S&amp;P sectors</div>
-    <p>Your pipeline adds all 11 S&amp;P 500 sector ETFs to its fetch: XLK · XLV · XLF · XLY · XLC · XLI · XLP · XLE · XLB · XLRE · XLU. R6 adds the tickers to the data collector. The pipeline fetches them. The domain knowledge is optional — the automation is not.</p>
-  </div>
-
-  <div class="callout teal">
-    <div class="callout-title teal">2 · At least 2 LLMs called via API — not via chat interface</div>
-    <p>The difference between calling an LLM via API and using a chat window is the difference between building a water system and carrying buckets. Both get water to the tap — but only one scales. R8's job this sprint is to build the pipe. Responses are saved automatically as files in the repo and the comparison table is generated from those files.</p>
-  </div>
-
-  <div class="callout teal">
-    <div class="callout-title teal">3 · Calibration — score vW28 against Friday 11 July actuals</div>
-    <p>R10 scores the vW28 prediction against Friday 11 July actuals after the automated fetch runs Saturday morning SGT. This is your <strong>retrospective data</strong> — did the system's output match reality, and is it improving sprint over sprint? Cumulative accuracy table W3–W6 builds the longer-term picture.</p>
-  </div>
-</section>
-
-<!-- WEEKLY WORKFLOW -->
-<section id="workflow">
-  <div class="section-title">Sprint Cadence — The Scrum Cycle</div>
-  <p>This is your week. R2 owns the cadence. Every role feeds into it in sequence — the order matters.</p>
-  <table class="wf-table">
-    <thead>
-      <tr><th>When</th><th>What happens</th><th>Evidence in repo</th></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="day">Mon 6 Jul</td>
-        <td>
-          <span class="scrum-tag">SPRINT PLANNING</span><br>
-          R1 writes the sprint goal. R2 assigns roles and agrees timeboxes. DoD checklist written. DECISION.md committed. <em>The sprint goal is a public commitment — it goes in the repo today.</em>
-        </td>
-        <td>Sprint goal on Discord. DECISION.md committed.</td>
-      </tr>
-      <tr>
-        <td class="day">Mon–Wed</td>
-        <td>
-          <span class="scrum-tag">SPRINT EXECUTION</span><br>
-          R3 (Almanac), R4 (Macro), R5 (Technical) commit agent outputs independently. R8 wires LLM API calls. R6 confirms Friday fetch is scheduled. Daily check-ins: 15 minutes, stand up, three questions only.
-        </td>
-        <td>Agent files committed by Wednesday. No waiting until Sunday.</td>
-      </tr>
-      <tr>
-        <td class="day">Thursday</td>
-        <td>
-          <span class="scrum-tag">AI SYNTHESIS</span><br>
-          R8 runs API calls to at least 2 LLMs. Responses saved as files. Comparison table built from those files. R10 begins scoring vW25 against actuals.
-        </td>
-        <td>LLM response files in repo. Calibration framework committed.</td>
-      </tr>
-      <tr class="hl">
-        <td class="day">Sat morning SGT<br><small>~4am (US Fri close)</small></td>
-        <td>
-          <span class="scrum-tag" style="background:rgba(201,168,76,.15);color:var(--gold)">AUTOMATED FETCH</span><br>
-          GitHub Actions triggers at the scheduled time. Collects all instrument closes. No one touches a keyboard. <em>If the fetch fails, R9 is responsible for diagnosing it — this is a production system.</em>
-        </td>
-        <td>Auto-commit by <code>github-actions[bot]</code> with timestamp.</td>
-      </tr>
-      <tr>
-        <td class="day">Saturday</td>
-        <td>
-          <span class="scrum-tag">HUMAN REVIEW</span><br>
-          R7 applies Human Score Wild Card — a specific, sourced insight the models missed. R9 merges all branches. R2 confirms every role has submitted. <em>Merge conflicts discovered Sunday cannot be fixed in time.</em>
-        </td>
-        <td>Wild Card committed with reasoning. All branches merged.</td>
-      </tr>
-      <tr class="hl">
-        <td class="day">Sun · 23:59 SGT</td>
-        <td>
-          <span class="scrum-tag" style="background:rgba(201,168,76,.15);color:var(--gold)">SPRINT SEALED</span><br>
-          R10 commits calibration notes from prior sprints if applicable. R9 cuts <code>vW28</code> tag. Discord submission posted. Sprint is done. <em>A sprint that is "mostly done" is not done.</em>
-        </td>
-        <td>vW28 tag on GitHub. Discord post complete.</td>
-      </tr>
-    </tbody>
-  </table>
-</section>
-
-<!-- ROLES -->
-<section id="roles">
-  <div class="section-title">Your Role Is a Real Workforce Skill</div>
-  <p>The role you play in this sprint is practising something employers look for. The Scrum framework is the structure that makes the team more than the sum of its parts.</p>
-  <div class="role-grid">
-    <div class="role-card spotlight">
-      <div class="role-id">R1 · Product Owner</div>
-      <div class="role-real">→ Product Manager in industry</div>
-      <div class="role-name">Sprint Goal &amp; DoD</div>
-      <div class="role-focus">Own the sprint goal. Write the DoD as a checklist. Sign off the README. Present outcome on Mon 13 Jul.</div>
-      <div><span class="scrum-principle">DoD guides every Scrum event</span></div>
-    </div>
-    <div class="role-card spotlight">
-      <div class="role-id">R2 · Scrum Master</div>
-      <div class="role-real">→ Team Lead / Agile Coach</div>
-      <div class="role-name">Cadence Owner</div>
-      <div class="role-focus">Keep the 15-minute daily cadence. Chase role submissions. Surface blockers early. Run the retrospective. Protect the team from scope creep.</div>
-      <div><span class="scrum-principle">Blockers surfaced early get solved</span></div>
-    </div>
-    <div class="role-card">
-      <div class="role-id">R3 · Almanac Agent</div>
-      <div class="role-real">→ Research Analyst</div>
-      <div class="role-name">Historical Context</div>
-      <div class="role-focus">Historical patterns for w/c 7 Jul. Commit before Thursday — R8 cannot synthesise without you.</div>
-    </div>
-    <div class="role-card">
-      <div class="role-id">R4 · Macro Agent</div>
-      <div class="role-real">→ Macro Analyst</div>
-      <div class="role-name">Market Environment</div>
-      <div class="role-focus">Key macro events w/c 7 Jul. Structured Markdown. Commit before Thursday.</div>
-    </div>
-    <div class="role-card">
-      <div class="role-id">R5 · Technical Agent</div>
-      <div class="role-real">→ Data Analyst</div>
-      <div class="role-name">Signal Analysis</div>
-      <div class="role-focus">Technical read from Friday 4 July close (the last US market close before sprint opens). Key levels, trend direction. Commit before Thursday.</div>
-    </div>
-    <div class="role-card">
-      <div class="role-id">R6 · Data Collector</div>
-      <div class="role-real">→ Data Engineer</div>
-      <div class="role-name">Automated Fetch</div>
-      <div class="role-focus">Add all 11 sector tickers to the fetch. Confirm Friday cron is scheduled. Verify the pipeline runs without you.</div>
-    </div>
-    <div class="role-card spotlight">
-      <div class="role-id">R7 · Human Score</div>
-      <div class="role-real">→ Senior Analyst</div>
-      <div class="role-name">Wild Card Override</div>
-      <div class="role-focus">Apply judgment the models cannot. Review all outputs. If you have a sourced, non-obvious insight, apply the Wild Card. This is the primary marks differentiator.</div>
-      <div><span class="scrum-principle">Human judgment remains the edge</span></div>
-    </div>
-    <div class="role-card spotlight">
-      <div class="role-id">R8 · LLM Operator</div>
-      <div class="role-real">→ AI/ML Engineer</div>
-      <div class="role-name">API Integration</div>
-      <div class="role-focus">Call at least 2 LLMs via API — not chat interface. Save responses as files. Build comparison table from those files. Highest-value new skill this sprint.</div>
-      <div><span class="scrum-principle">Build the pipe, not carry the bucket</span></div>
-    </div>
-    <div class="role-card spotlight">
-      <div class="role-id">R9 · GitHub Lead</div>
-      <div class="role-real">→ DevOps Engineer</div>
-      <div class="role-name">Pipeline Owner</div>
-      <div class="role-focus">Own the Friday cron. Merge all branches by Saturday. Cut vW28 tag before midnight Sunday. Show the Actions log on Monday.</div>
-      <div><span class="scrum-principle">Infrastructure that runs without you</span></div>
-    </div>
-    <div class="role-card spotlight">
-      <div class="role-id">R10 · Calibration</div>
-      <div class="role-real">→ Product Analyst</div>
-      <div class="role-name">Accuracy Tracking</div>
-      <div class="role-focus">Score the vW28 prediction against Friday 11 July actuals after the sprint closes. Build cumulative accuracy table W3–W6. Is the system improving sprint over sprint?</div>
-      <div><span class="scrum-principle">Retrospective data drives improvement</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- TIMELINE -->
-<section id="timeline">
-  <div class="section-title">Sprint 6 Timeline</div>
-  <div class="timeline">
-    <div class="tl-item"><div class="tl-date">MON 6 JUL — SPRINT PLANNING</div><div class="tl-event">Pipeline Audit Day + Sprint 6 kickoff in class</div><div class="tl-detail">Sprint goal written. Roles confirmed. DoD committed. DECISION.md updated today.</div></div>
-    <div class="tl-item"><div class="tl-date">MON–WED 6–8 JUL — EXECUTION</div><div class="tl-event">Agent work + API wiring</div><div class="tl-detail">R3, R4, R5 outputs committed independently. R8 wires LLM API calls. R6 confirms Friday fetch.</div></div>
-    <div class="tl-item"><div class="tl-date">THU 10 JUL — SYNTHESIS</div><div class="tl-event">LLM API calls run · calibration prep</div><div class="tl-detail">R8 calls APIs, saves responses, builds comparison table. R10 prepares calibration framework.</div></div>
-    <div class="tl-item deadline"><div class="tl-date">SAT MORNING 12 JUL ~4AM SGT — AUTOMATED FETCH</div><div class="tl-event">⚡ Pipeline runs without you</div><div class="tl-detail">GitHub Actions cron fires after Friday US market close. Collects closes for all instruments. Auto-committed by github-actions[bot].</div></div>
-    <div class="tl-item"><div class="tl-date">SAT 12 JUL — HUMAN REVIEW</div><div class="tl-event">Wild Card · branch merge</div><div class="tl-detail">R7 applies Human Score. R9 merges all branches. R2 confirms every role is done.</div></div>
-    <div class="tl-item deadline"><div class="tl-date">SUN 12 JUL · 23:59 SGT — SPRINT SEALED</div><div class="tl-event">🏁 vW28 cut · Sprint done</div><div class="tl-detail">vW28 tag cut. Discord template posted. Delta scoring happens after Friday 11 Jul actuals collected.</div></div>
-    <div class="tl-item"><div class="tl-date">MON 13 JUL — SPRINT REVIEW &amp; RETROSPECTIVE</div><div class="tl-event">Presentation in class</div><div class="tl-detail">Show pipeline live or GitHub Actions log.</div></div>
-  </div>
-</section>
-
-<!-- ACTUALS -->
-<section id="actuals">
-  <div class="section-title">Actuals — R10 Reference</div>
-  <p>Friday 11 July 2026 closes — auto-fetched by R6/R9 during the sprint. R10 uses these to score the vW28 prediction after Monday 13 July presentation.</p>
-  <table class="del-table">
-    <thead><tr><th>Instrument</th><th>Fri 11 Jul Close (auto-fetched)</th><th>Week Direction</th><th>Change</th></tr></thead>
-    <tbody>
-      <tr><td><strong>SPX</strong></td><td>Available after Sat 12 Jul ~4am SGT</td><td>—</td><td>—</td></tr>
-      <tr><td><strong>NDX</strong></td><td>Auto-fetched by R6/R9</td><td>—</td><td>—</td></tr>
-      <tr><td><strong>IWM</strong></td><td>Auto-fetched by R6/R9</td><td>—</td><td>—</td></tr>
-      <tr><td>All 11 sectors</td><td>Auto-fetched by R6/R9</td><td>—</td><td>—</td></tr>
-    </tbody>
-  </table>
-</section>
-
-<!-- DISCORD TEMPLATE -->
-<section id="discord">
-  <div class="section-title">Discord Submission Template — Sprint 6 · vW28</div>
-  <p>Post this in your team channel before Sunday 12 July 23:59 SGT. This is your Sprint Review artefact.</p>
-<pre>TEAM: Team __ / Practical __
-SPRINT: 6 · vW28
-GITHUB REPO:
-RELEASE LINK: (URL of the vW28 tag)
-
-━━━ SPRINT GOAL ━━━
-Our Sprint 6 goal was:
-Did we meet it: Y / Partial / N
-What we would do differently (retrospective):
-
-━━━ PREDICTION ━━━
-File committed (prediction_W28.json or .md): Y/N
-SPX direction + confidence:
-NDX direction + confidence:
-IWM direction + confidence:
-Sectors covered (all 11 — XLK XLV XLF XLY XLC XLI XLP XLE XLB XLRE XLU): Y/N
-Human Score Wild Card applied: Y/N
-Wild Card reasoning (must be sourced and specific):
-
-━━━ PIPELINE ━━━
-Automated fetch ran after Friday US market close (Sat morning SGT): Y/N
-GitHub Actions run URL (the successful Friday run):
-All branches merged before tag: Y/N
-
-━━━ AGENT OUTPUTS (committed before LLM synthesis) ━━━
-Almanac R3: Y/N  |  Macro R4: Y/N  |  Technical R5: Y/N
-
-━━━ AI SYNTHESIS ━━━
-LLM 1 called via API (name + model):
-LLM 2 called via API (name + model):
-Responses saved as files in repo: Y/N
-Comparison table committed: Y/N
-
-━━━ CALIBRATION (R10) ━━━
-delta_W28.md committed after actuals available (post Mon 13 Jul): Y/N
-Calibration framework ready: Y/N
-Cumulative accuracy table W3–W6 committed: Y/N
-
-━━━ SCRUM HEALTH ━━━
-DoD checklist fully met: Y/N
-Retrospective committed to repo: Y/N
-Every role (R1–R10) ready to present Mon 13 Jul: Y/N
-One thing the team does differently in Sprint 7:</pre>
-</section>
-
-<!-- PROCESS NOTES -->
-<section id="process">
-  <div class="section-title">Process Notes</div>
-
-  <div class="callout soft">
-    <div class="callout-title muted">On the tag</div>
-    <p>The tag <code>vW28</code> is your sprint's immutable record — proof the work was sealed before the deadline. Put it as an explicit item on your DoD checklist. If your team has had tag format issues before, that checklist item is the fix.</p>
-  </div>
-
-  <div class="callout soft">
-    <div class="callout-title muted">On API calls vs chat interface</div>
-    <p>The difference between R8 calling an LLM via API versus using ChatGPT's web interface is the difference between building a water system and carrying buckets. Both move water. Only one scales to production. This sprint, R8 builds the pipe.</p>
-  </div>
-
-  <div class="callout soft">
-    <div class="callout-title muted">On mid-sprint changes</div>
-    <p>If something breaks or a new idea emerges mid-sprint, log it in the backlog. Don't drop the sprint goal to chase it. Reflect on interruptions in the retrospective and decide as a team how to handle them going forward.</p>
-  </div>
-
-  <div class="callout teal">
-    <div class="callout-title teal">On the data domain</div>
-    <p>The pipeline collects market data. Your agents summarise it. Your LLMs synthesise it. Your Human Score lead applies judgment. <strong>Running this workflow in a repeatable, automated, improving cycle is the transferable skill.</strong> The data domain is where you practise it.</p>
-  </div>
-</section>
-
-</main>
-<footer>CP3405 Design Thinking 3 · TR2 2026 · Sprint 6 · vW28 Due Sunday 12 July 2026 · 23:59 SGT · Presentation Monday 13 July 2026</footer>
-</body>
-</html>
+<h2>Monday 19 October</h2>
+<div class="card key"><b>Practical A:</b> Team 1, then Team 2, then Team 3.<br><b>Practical B:</b> Team 4, in the Practical B session.</div>
+<ol>
+<li><b>Live progress block, 4 minutes,</b> the real thing on screen, not screenshots:
+<ul><li><b>R5, 2 minutes:</b> run <code>python engine/tech_summary.py</code>, open <code>ui/index.html</code> from your repo, show "X / 10 files loaded", and walk through the Gold Technical panel while Prof Tan checks the same timeframe on Investing.com.</li>
+<li><b>R6, 1 minute:</b> GitHub: this week's merges into <code>main</code>, the self-test output, and the <code>vW6</code> tag.</li>
+<li><b>R1, 1 minute:</b> FigJam Done cards, each linked to its file on <code>main</code>.</li></ul></li>
+<li><b>Slides, R1 to R6,</b> using the <a href="../assets/sprint5-presentation-template.pptx">Sprint 5 presentation template</a>. R4's slide shows the replay: how often the engine was right, and whether it beat "no change".</li>
+<li><b>Oral defense of all four calls and of the engine.</b> Any team member can be asked to explain any vote, or why a number differs from Investing.com.</li>
+</ol>
+</div>
+<p style="text-align:center;color:#8493a8;font-size:.85rem;padding:20px">CP3405 Design Thinking III · TR3 2026 · Sprint 6 — Gold, Three Timeframes</p>
+</body></html>

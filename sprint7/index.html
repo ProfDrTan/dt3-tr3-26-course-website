@@ -2,563 +2,163 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sprint 7 — The Scrum Master Sprint · CP3405 DT3 TR2 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sprint 7 · Unlock the Paywall · CP3405 DT3 · TR3 2026</title>
 <style>
-    :root {
-      --navy:#0a1628;--navy-2:#0d1f3c;--navy-3:#112244;
-      --gold:#c9a84c;--gold-lt:#e2c97e;--teal:#2dd4bf;--teal-dk:#1fa89a;
-      --white:#f0f4fa;--muted:#8fa3bf;--danger:#e05c5c;--success:#3dcc8a;--warn:#f0a500;
-    }
-    *{box-sizing:border-box;margin:0;padding:0;}
-    body{background:var(--navy);color:var(--white);font-family:'Segoe UI',system-ui,sans-serif;font-size:16px;line-height:1.65;}
-    header{background:linear-gradient(135deg,#070e1c 0%,var(--navy-3) 60%,#0b2040 100%);border-bottom:2px solid var(--gold);padding:2.5rem 2rem 2rem;text-align:center;position:relative;overflow:hidden;}
-    header::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:600px;height:200px;background:radial-gradient(ellipse,rgba(201,168,76,.12) 0%,transparent 70%);pointer-events:none;}
-    .eyebrow{font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:.5rem;}
-    header h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;color:var(--gold);letter-spacing:-.01em;line-height:1.15;}
-    header h1 span{color:var(--white);font-weight:300;}
-    .header-meta{margin-top:1rem;display:flex;justify-content:center;flex-wrap:wrap;gap:.5rem .75rem;}
-    .badge{display:inline-block;padding:.25rem .75rem;border-radius:99px;font-size:.78rem;font-weight:600;letter-spacing:.05em;}
-    .badge-gold{background:rgba(201,168,76,.18);color:var(--gold);border:1px solid rgba(201,168,76,.4);}
-    .badge-teal{background:rgba(45,212,191,.15);color:var(--teal);border:1px solid rgba(45,212,191,.35);}
-    .badge-white{background:rgba(240,244,250,.08);color:var(--white);border:1px solid rgba(240,244,250,.2);}
-    .badge-danger{background:rgba(224,92,92,.15);color:var(--danger);border:1px solid rgba(224,92,92,.35);}
-    nav{background:var(--navy-2);border-bottom:1px solid rgba(201,168,76,.2);padding:.75rem 2rem;display:flex;gap:1.25rem;flex-wrap:wrap;align-items:center;}
-    nav a{color:var(--muted);text-decoration:none;font-size:.85rem;}
-    nav a:hover{color:var(--gold);}
-    nav a.active{color:var(--gold);font-weight:600;}
-    .nav-sep{color:rgba(255,255,255,.15);}
-    main{max-width:960px;margin:0 auto;padding:2.5rem 1.5rem 4rem;}
-    .countdown-strip{background:linear-gradient(90deg,rgba(201,168,76,.1) 0%,rgba(45,212,191,.08) 100%);border:1px solid rgba(201,168,76,.3);border-radius:10px;padding:1.1rem 1.5rem;margin-bottom:2.5rem;display:flex;flex-wrap:wrap;gap:.75rem 2rem;align-items:center;}
-    .cd-item{display:flex;flex-direction:column;}
-    .countdown-strip .label{color:var(--muted);font-size:.82rem;text-transform:uppercase;letter-spacing:.1em;}
-    .countdown-strip .value{color:var(--gold);font-size:1.05rem;font-weight:700;}
-    .countdown-strip .value.teal{color:var(--teal);}
-    section{margin-bottom:2.75rem;}
-    .section-title{font-size:1.05rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--teal);border-bottom:1px solid rgba(45,212,191,.25);padding-bottom:.5rem;margin-bottom:1.25rem;}
-    p{color:rgba(240,244,250,.82);margin-bottom:1rem;}
-    strong{color:var(--white);}
-    code{background:rgba(45,212,191,.12);color:var(--teal);padding:.1rem .4rem;border-radius:4px;font-size:.88em;}
-    .callout{border-left:3px solid var(--gold);background:rgba(201,168,76,.07);border-radius:0 8px 8px 0;padding:1rem 1.25rem;margin-bottom:1.25rem;}
-    .callout.teal{border-color:var(--teal);background:rgba(45,212,191,.07);}
-    .callout.danger{border-color:var(--danger);background:rgba(224,92,92,.07);}
-    .callout.success{border-color:var(--success);background:rgba(61,204,138,.07);}
-    .callout.soft{border-color:var(--muted);background:rgba(143,163,191,.05);}
-    .callout .callout-title{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem;}
-    .callout .callout-title.gold{color:var(--gold);}
-    .callout .callout-title.teal{color:var(--teal);}
-    .callout .callout-title.danger{color:var(--danger);}
-    .callout .callout-title.success{color:var(--success);}
-    .callout p{margin-bottom:0;font-size:.92rem;}
-    .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;}
-    .card{background:var(--navy-2);border:1px solid rgba(255,255,255,.09);border-radius:10px;padding:1.1rem 1.25rem;}
-    .card .big{font-size:2rem;font-weight:800;color:rgba(45,212,191,.25);line-height:1;margin-bottom:.4rem;}
-    .wf-table{width:100%;border-collapse:collapse;font-size:.9rem;}
-    .wf-table th{background:var(--navy-3);color:var(--gold);font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;padding:.65rem 1rem;text-align:left;border-bottom:1px solid rgba(201,168,76,.3);}
-    .wf-table td{padding:.75rem 1rem;border-bottom:1px solid rgba(255,255,255,.07);color:rgba(240,244,250,.8);vertical-align:top;}
-    .wf-table tr:last-child td{border-bottom:none;}
-    .wf-table tr:hover td{background:rgba(255,255,255,.03);}
-    .wf-table .day{color:var(--teal);font-weight:700;white-space:nowrap;}
-    .wf-table .scrum-tag{display:inline-block;background:rgba(45,212,191,.1);color:var(--teal);border-radius:4px;padding:.1rem .45rem;font-size:.72rem;font-weight:700;margin-bottom:.3rem;}
-    .wf-table .hl td{background:rgba(201,168,76,.05);border-left:3px solid var(--gold);}
-
-    /* SM spotlight */
-    .sm-spotlight{background:linear-gradient(135deg,rgba(224,92,92,.08),rgba(201,168,76,.05));border:2px solid rgba(224,92,92,.3);border-radius:14px;padding:2rem;margin-bottom:2rem;}
-    .sm-spotlight h2{color:var(--danger);font-size:1.3rem;font-weight:700;margin-bottom:.75rem;}
-    .sm-spotlight p{color:rgba(240,234,214,.85);margin-bottom:.9rem;}
-    .sm-spotlight .quote{font-size:1.05rem;font-style:italic;color:var(--white);border-left:3px solid var(--danger);padding-left:1rem;margin:1.25rem 0;line-height:1.7;}
-
-    /* R2 obligations */
-    .obligation-list{display:flex;flex-direction:column;gap:.75rem;margin-top:1rem;}
-    .ob{display:flex;gap:1rem;align-items:flex-start;background:var(--navy-2);border-radius:8px;padding:.9rem 1.1rem;border:1px solid rgba(255,255,255,.07);}
-    .ob-day{color:var(--teal);font-weight:700;font-size:.82rem;white-space:nowrap;min-width:60px;padding-top:.1rem;}
-    .ob-text{font-size:.88rem;color:rgba(240,244,250,.8);line-height:1.55;}
-    .ob-text strong{color:var(--white);}
-    .ob.critical{border-color:rgba(201,168,76,.3);}
-    .ob.critical .ob-day{color:var(--gold);}
-
-    /* Evidence required box */
-    .evidence-box{background:var(--navy-3);border:1px solid rgba(45,212,191,.2);border-radius:8px;padding:1rem 1.25rem;margin-top:.75rem;font-size:.82rem;color:var(--muted);}
-    .evidence-box strong{color:var(--teal);}
-
-    .role-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:.75rem;}
-    .role-card{background:var(--navy-2);border:1px solid rgba(255,255,255,.09);border-radius:8px;padding:.85rem 1rem;}
-    .role-card.spotlight{border-color:rgba(224,92,92,.4);background:rgba(224,92,92,.06);}
-    .role-card.gold-spot{border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06);}
-    .role-id{font-size:.7rem;color:var(--teal);font-weight:700;letter-spacing:.08em;margin-bottom:.25rem;}
-    .role-card.spotlight .role-id{color:var(--danger);}
-    .role-card.gold-spot .role-id{color:var(--gold);}
-    .role-name{font-size:.88rem;font-weight:600;color:var(--white);margin-bottom:.3rem;}
-    .role-real{font-size:.73rem;color:var(--gold);font-style:italic;margin-bottom:.3rem;}
-    .role-focus{font-size:.78rem;color:var(--muted);line-height:1.45;}
-    .scrum-principle{display:inline-block;background:rgba(201,168,76,.1);color:var(--gold-lt);border-radius:4px;padding:.1rem .45rem;font-size:.7rem;font-weight:600;margin-top:.4rem;}
-
-    .timeline{position:relative;padding-left:1.5rem;}
-    .timeline::before{content:'';position:absolute;left:.45rem;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,var(--teal) 0%,var(--gold) 100%);border-radius:2px;}
-    .tl-item{position:relative;margin-bottom:1.25rem;}
-    .tl-item::before{content:'';position:absolute;left:-1.06rem;top:.35rem;width:9px;height:9px;background:var(--navy);border:2px solid var(--teal);border-radius:50%;}
-    .tl-item.deadline::before{border-color:var(--gold);background:var(--gold);}
-    .tl-item.critical::before{border-color:var(--danger);background:var(--danger);}
-    .tl-date{font-size:.78rem;color:var(--teal);font-weight:700;letter-spacing:.06em;margin-bottom:.15rem;}
-    .tl-item.deadline .tl-date{color:var(--gold);}
-    .tl-item.critical .tl-date{color:var(--danger);}
-    .tl-event{font-size:.92rem;color:var(--white);font-weight:600;}
-    .tl-detail{font-size:.82rem;color:var(--muted);margin-top:.1rem;}
-
-    pre{white-space:pre-wrap;background:#071426;color:#e2e8f0;border-radius:14px;padding:18px;overflow:auto;font-size:.88rem;line-height:1.7;border:1px solid rgba(45,212,191,.15);}
-    footer{border-top:1px solid rgba(201,168,76,.15);padding:1.5rem 2rem;text-align:center;font-size:.8rem;color:var(--muted);}
-    @media(max-width:600px){.countdown-strip{flex-direction:column;gap:.6rem;}.grid3{grid-template-columns:1fr;}}
+*{box-sizing:border-box}
+body{margin:0;background:#f5f7fb;font-family:Inter,Segoe UI,Arial,sans-serif;color:#102033;line-height:1.6}
+a{color:#0f6fbd;text-decoration:none;font-weight:800}
+.preview{background:#f5b942;color:#111827;text-align:center;padding:8px 12px;font-weight:800;font-size:.85rem}
+.top{background:#071426;color:#fff;border-bottom:4px solid #12c7b7;padding:18px 22px;display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}
+.brand{display:flex;gap:14px;align-items:center;font-weight:900;font-size:1.25rem}
+.badge{background:#12c7b7;color:#071426;padding:8px 12px;border-radius:8px;font-family:monospace}
+.nav{display:flex;overflow:auto;background:#132747;border-bottom:1px solid #0f2040}
+.nav a{padding:14px 18px;color:#dbeafe;white-space:nowrap;font-weight:700;font-size:.9rem;transition:background .2s}
+.nav a:hover{background:#1e3a6e}
+.nav a.active{background:#f5b942;color:#111827}
+.nav a.sys{border-left:3px solid #12c7b7}
+.main{max-width:920px;margin:0 auto;padding:36px 22px 70px}
+h1{font-size:2rem;margin:0 0 6px}
+h2{color:#0e2a52;margin-top:40px;border-bottom:2px solid #e8edf5;padding-bottom:8px}
+h3{color:#0e2a52;margin:20px 0 6px;font-size:1.02rem}
+.eyebrow{display:inline-block;background:rgba(18,199,183,.15);border:1px solid #12c7b7;color:#0e7a70;padding:5px 14px;border-radius:999px;font-size:.8rem;font-weight:900;letter-spacing:.03em;margin-bottom:12px}
+.card{background:#fff;border:1px solid #e6ebf3;border-radius:12px;padding:18px 20px;margin:14px 0;box-shadow:0 1px 3px rgba(16,32,51,.06)}
+.card b{color:#0e2a52}
+.card.key{border-left:5px solid #f5b942;background:linear-gradient(135deg,#fffbeb,#fff)}
+.card.red{border-left:4px solid #dc2626}
+.task{background:#fff;border:1px solid #e6ebf3;border-left:5px solid #12c7b7;border-radius:0 12px 12px 0;padding:16px 20px;margin:12px 0}
+.task .num{display:inline-block;min-width:34px;height:26px;padding:0 6px;border-radius:13px;background:#132747;color:#f5b942;font-weight:900;font-size:.8rem;text-align:center;line-height:26px;margin-right:8px}
+.dod{margin-top:8px;padding:8px 12px;background:#f0faf9;border-radius:8px;font-size:.88em;color:#0e5a52}
+.dod b{color:#0e7a70;font-size:.78em;letter-spacing:.05em}
+code{background:#eef2f8;padding:2px 7px;border-radius:5px;font-family:monospace;font-size:.92em;color:#0e2a52}
+pre{background:#0f1c33;color:#dbeafe;border-radius:10px;padding:14px 16px;overflow-x:auto;font-size:.82rem;line-height:1.5;margin:10px 0}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem;background:#fff}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid #e6ebf3;vertical-align:top}
+th{background:#eef2f8;color:#0e2a52;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
+.tablewrap{overflow-x:auto}
+ul,ol{margin:8px 0 8px 22px}
+li{margin-bottom:6px}
+footer{max-width:920px;margin:40px auto 0;padding:20px 22px;border-top:1px solid #e6ebf3;color:#8493a8;font-size:.82rem;text-align:center}
+@media(max-width:700px){.main{padding:24px 16px 50px}}
 </style>
 </head>
-<body>
-<div style="background:#374151;color:#e5e7eb;text-align:center;padding:10px 16px;font-size:.82rem;font-weight:700;letter-spacing:.05em;">
-  📦 SPRINT 7 — ARCHIVED · Sprint 8 is now active → <a href="/sprint8/" style="color:#f5b942;text-decoration:none;">View Sprint 8 →</a>
+<body data-sprint-monday="2026-10-19" data-sprint-number="7">
+<div class="top"><div class="brand"><span class="badge" data-tag>vW7</span> CP3405 · Design Thinking III</div><div style="color:#12c7b7;font-family:monospace;font-size:.9rem">TR3 2026</div></div>
+<nav class="nav"><a href="../index.html">Home</a><a class="active" href="index.html">Sprint 7 — Unlock the Paywall</a><a href="../sprint6/index.html">Sprint 6</a><a href="../sprint5/index.html">Sprint 5</a><a href="../sprint4/index.html">Sprint 4</a><a href="../sprint3/index.html">Sprint 3</a><a href="../archive/index.html">Archive (Sprint 1–2)</a><a href="../github/index.html">GitHub</a><a href="../almanac/index.html">Almanac Agent</a><a class="sys" href="../scrum/index.html">Scrum Reference</a></nav>
+<div class="main">
+<span class="eyebrow">Starts Monday 19 Oct — dashboard checkpoint Wednesday 21 Oct 12:00 — prediction locks Wednesday 21 Oct 23:59 SGT — everything else due Saturday 24 Oct 23:59 SGT — presented live Monday 26 Oct</span>
+<h1>Sprint 7 <span style="color:#8493a8;font-weight:700">— vW7</span> — Unlock the Paywall</h1>
+<p style="color:#3a4a5e;font-size:1.05rem;margin-top:0">Build Investing.com’s gold technical page yourselves, including the 1, 5 and 15-minute views that Investing.com locks behind a subscription.</p>
+
+<div class="card key"><b>This sprint has one deliverable: <code>ui/index.html</code>, a working copy of Investing.com’s gold technical page.</b> Same layout, same three gauges, same tables, for seven timeframes. Every number on it must show how it was calculated. It is a study week, so nothing else new is asked of you: lock your weekly calls as in Sprint 6, and spend the rest of the week on this page.</div>
+
+<div class="card red"><b>Why this sprint exists.</b> In Sprint 6, dashboards were not shown, numbers could not be checked against Investing.com, and the formulas behind them could not be found. This sprint fixes that. <b>If it cannot be checked during your presentation, it scores zero.</b> The five rules below are pass or fail.</div>
+
+<h2>1. What you are copying</h2>
+<p>Open <a href="https://www.investing.com/commodities/gold-technical">Investing.com’s gold technical page</a> on your phone. This is what it looks like. The orange “P” and “Unlock” on 1, 5 and 15 Min mean those views are paid. On your page they must work.</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+<img alt="Investing.com gold technical page: timeframe tiles and Summary gauge" src="data:image/jpeg;base64,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uCeQg/A/41PgUYoAam/+MqfoMU+iigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigDifiAuqafbxanYa7e2vm3MFubePZsAZsFhlc559aZqHi4+ErltFMx1W5t4ftM09/dxwMVJOEX5fmbjpgfWul1/QoPEFjHaTyyRLHcRzho8ZJRsgc9qp6v4Tj1LVDqdrqV1p11JCIJngCHzEByOGBwRk4I5pgUW8cS300MOgaO+pSNZJeyh5hFsRvuqMg5Y88frVC78U63beKr37Np01zFHpMV0bGWVYvJOWLEnB+bAxgZrY1DwXFdXKXdnq1/YXP2YWs00LqWnjH97cD83+0MGp4vCdpDfXF2tzcM0+nrYEO24hBn5snktz1NAGW3ju5up7SLSdFN413pY1BA9wI9o3YKnI/l1P51Xi8bWtzqOnaqy3cNrLo8948fnfIuxhkFMfM3BAORWxpfg2z0q5tJ4rqdza6b/AGeobGCm7duPHX9Kr2Xw/wBMtI7SJ5554rawlsdj4xIkjZYnA6/SgCbR/Emq36ia78Oy2ttNbG5glW4RwwxkK3TaxBz6e9Yc/wAQJ72y1ayWCG1vItMmu4JbW8S4CFR0YgYDDg9xWxaeB4obaa1utZ1K8tmtGs4opZQFijIx/CBubHAJzUEPw8tlVvP1W7nJ06TT1ykahYmx0CqORjr370AQ+ItY1G0+GVnqVvdvHePHaFphjJLFN355NGo+P7qwl1Z10Mz2mkXKxXM4uApCkLyFI5PPT9a2tR8L22peF4dAkuJUghWJRIuNx8sgjtjnbVa68FWd3Z65avdTqutyrLMRtzGRjheP9nvQBleJfGWofZtet9GsHZNMtv318JlUxSMm4bUI+bA5NQweMBpcuoXd79ruDb6ZZSbPOBWSSQYAVMYUknk5rV1PwDZajPfSJqN9aJqMIjuoYHUJKVXarEEdcenWnS+AtMuFvEnmuJEvLSC1YZAKCL7rKcfezzQBNH4h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cTxxL2LsBmpQQwBHIPIqtb6bZ2r+ZFAvmHrI3zOf+BHmrVABWF40sBqPhO/i25aOPzU+q8/yBrdqOeIT28kTciRCp/EUmrqxM480XHuYvgm+OoeErCVjl0Tym+qnH8gK3q4r4XSH+wLq2b/lhdMPzA/+vXa0ou6RnQlzUovyCiiiqNgooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAMnRPD0Ghz380M0khvpvNcPj5TzwMfWtaiikkkrIuc5TlzSd2FFFFMgKKKKACobpZntJlt2CTNGwjY9mxwfzqaigDh/COia/FcXQ1ae7hgb+Hz8mR89QeSBj0xXX22n2loS0Fuiuer4yx+rHk1Zopt3AKKKKQBRRRQAUUUUAY/h/w5b+Hkult55ZRcy+Y3mY4PtitiiiklYmMVFWQUUUUygooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAoqOSUJwOTURlc/wAVArlmiq3mP/eNHmP/AHjQLmLNFVvMf+8aPMf+8aA5izRVbzH/ALxo8x/7xoDmLNFVvMf+8aPMf+8aA5izRVXzH/vGnrMw+9yKB3J6KQEEZHSloGFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABSE4Un0paawypHtQBWJycmorq4W0tJrlwxSFGdgoySAM8VJUdwsz20q27qkxQhGdcqG7ZHcUjJ7GPp+vXtzHHdXGmBLKaIyLPBN52wAZw4A4JHpnniiz8XaXcaZBfTu1qJmZAjox+Yc4BA549Pp1qpp2i6gms2142n2mmCJW+0tayki5JGB8gAAGeeeaTTtC1K3TRoJ44dmmXEjF1kzvRgcMBjg5PSouzlUqv9L09PM138Q6TFcJbyXqrIwXgqcLu+6GOMKT6HFNn8R6Ra3L2094scscgjcFWwpOMZOMAcjnpWVe6HqjpqmnwR272uqT+cbh5MNFnGRtxyRjjmn3egXktj4hgQRltQdDAWbqAqjn05Bp3ZTnV1sv61NS98QaVp07QXV4sciJvddpO0dskDjPb1pNZ1f8As3RTqMESz5MexWYqCGIAOccda5jXZG0067arNZudQhVikkhWVW2bdqrj5844weK3dY0u61DwlHYQRq0+yHKSNtHylSQT+BpXeoe0nLmS3Qtv4geK5vLfVreK2NpAJ3lglMqbCcegIPtir1zrNhZkiefaRAbgjYx/dg4LcD3rAXw3e3A1FVtbXSobqzMIt4JC6u+ch24AGOnFWINPv31Jb7WYbWC1j05raUJNuGMgkkkDjGfpRdgp1LWsbgv7U3cVqJQZpojMigE5Qd89utWK5fwVaytDNfzyeaFAtLaT+9DGThh9T/Kuoqk7q5rTk5R5mTQNyV/GpqggHzE+gqeqN1sFFFFAwooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAhkiOdy/lUWMVbpKCWipRVvA9KMD0oDlKlFW8D0owPSgOUplFZgxVSR0JHIpat4HpRgelAcpUoIDAggEHqDVvA9KMD0oDlKgAAAAAA6AU5UZjwKs4HpS0ByjUUIuBTqKKCgooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooqC4vLW0aNbm5hhMp2oJJAu8+gz1oAnoqCa8tbeWOGe5hiklOI0dwpc+wPWp6ACiioLW8tb1He1uI51jkaNzGwYK46qcdxQBPRRRQAUVC93bR3KWr3ESzyDKRFwHYeoHU9KmoAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACvPfifpbazqfh/T4+JZTdeUfRxEGU/mBXoVQy2ltPPDPNbxySwEmJ2QFoyRg4PbIoA8ffUJvFOu6J4hnBCQahZWKAjGJMF5v/HsD8K1l8VawSurf2x/pB1n7CdG2JgR79uMY3bsfNnNeiLpGmqiIun2wSObz0URLhZP744+979aP7H0z+0f7R/s+1+2f8/Hkr5n/AH1jNMDhY9a1o6yvhI38325dXLNPgbjZBfMHbuDtzVO01jWJ7uytLbUntftev3tu7pGn3AuRxjBI9T365r0oWFmL434tYftZTyzPsG/b6buuKjTSdNjdHSwtleOVpkYRKCrt95hx1Pc0AeeN4j1uKwXS59ZaMjX306TU2jQOsQXcM8bQx6ZxXQeCNSvb3U/EFvc6odSis7pIoJcKBt2c/dGOvX3rX1fw7DqOnS2tq0NkZpvOlItY5FlbvvVhhs+vXjrTPDfhqPw9Hdt9oNzcXkgkmk8tY14UKqqi8KAB0oA8z13VJrrxDqPim3sb2b+y76JLW4jizCsMWRKC2eN241v6p4j1aHUL/RLS/kafV5raXSZ8DKQy/fxx0Xafzrv4tNsYLJrKKzgjtXDBoVjARs9cjpzTV0rTklt5UsbdZLVNkDiJcxL0wpxwPpQB51f+JPEZ1jVDa3hi/s28W3iglmt44XTj/WbyHJfJwR7Yq+msajHe+KdSu9cuILLSJ3SOBIFkAzGMcHk4JyBkc9a7OfRdKur5L+4021luo8bJ3hUuuOnJGalGnWQFwBZwAXRzOPLH704x83rxxzQB5nF4t1/TRrUYuZ7owaSLyH7WYXdHLBd37rgDBztOcYqZfEOq6bqqJb+IG1tF0Oa92FUwZQARnaOnoOuK7xfD2mW1tLFp9nb2DyQtCJbeBAyqefTB55weKytB8FR6Rqq6jPeLcyxwNBEkVqluiBiCxKr1Y4HNAjndB17xE7CR9TiljudMkuC95cW+IpAuVdVjO4R54II4q/4I1u+n1c6dqmoXc9zJZi42SeTJE3OC8ckfRTn7pFdbaaJpOnySyWemWlu8wxI0UKqXHocDmlsNG0vS2kbT9OtrQyffMMSoW+uBSGXagvBbmzmF0QsGw+YScYXvzU9IQCMEZFAGfojXTWP+klym4+Q0oxI0fYuPX/J5rRoooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKQkDqcUALRSbl9R+dLQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRSEhQSSAB1JrEuNXub+drTR13Y4e4P3V+lJtIuEHLY0r3UrTT1zcTBT2UcsfwqpZarcajcERWTx2+04mf17UWOgW1u3nXBN1cHkvJyM+wrUpK73Kfs0rLXzKn2W4k/wBbcEey0o06L+Jnb8at0VRkVf7Og/2vzpv2DbzHM61cooAqbbuBHbd52FJVe5NV4daiL+VdRtbSf7Q4rTqKe2huU2TRq49+1Ilp9GSKwZQykEHoRS1jvZ3emMZbFzLD1aFufyq9Y6hDfJlDtcfeQ9RRcSlrZ7lqiiimWFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABSEgDJOAKWud1XXopfEEPhqKCSd50JuHibBgHUE/1+o9amUlHc0p0pVHaPTX5IWeefxBdNaWrmOyjP72Ufx+wrbtbWGzgWGBAiL+vuaS0tIrK2S3hXCqPxJ9TU9CXV7hOd/djsFFFFUZhRRRQAUUUUAFFFFABWZf6axf7XZny7hecD+KtOigUopqzKenX63sRyNsqcOlXKw/EE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" style="width:260px;max-width:100%;border-radius:10px;border:1px solid #e6ebf3">
+<img alt="Investing.com gold technical page: Technical Indicators and Moving Averages gauges" src="data:image/jpeg;base64,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2h+258jV21LPl9csx2df9rr7dKgvfBD3InZL6ItLqbX4jnt/MibKBdjruG7GMg+tAEn/AAndq1pbTQ6fdzS3F29n9nTYWWVVJIznBHHUHHNWJvF9vaQ6q15ZzW8umQxzPExUtIHGVC4OM7sr9aqaf4INjJaP9vV/s+pSX2FtwgO9NuwAHAA61Dr2jSa14407y7a4S3t0BvpmTEUqqweNAf4jv646c0AddBI0sEcjxmNnUMUbqpI6GpKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigApk0qQQvNIcJGpZjjoByafVXUo3l0u7jjUs7wOqgdyVOKAHR39tKlu8coZbr/AFRAPzcE/hwDU+R69KwDp95BfWiQIfIbdJu/54yGNgfwJIP1zVWDS7pbSZVgnEwgCupRFWRwwPUH5jweT60AdNLPFBs82QLvYIue5PQU/I9RXO3NtJeXMl1Jp8jRi4hcJIgLFQCGIH40+SweOxlYWIeSa8dpSU3ts3sVO3I3duPfOKANwzxi4WAt+8dC6jHUAgH+YqSsLR7S5hntjNC6KkdwvzADaDIpUYHA4HQVu0AFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUVHNPDbRmSeVIkH8TsAP1p0ciSxrJG6ujDIZTkH8aAHUVGZ4VfY0qB8gbSwzk9PzwakoAKKKKACiiigAooooAKKKKACiiigAooooAKKKhuLu2tFDXM8cKscAyMFyfxoAmopkckc0ayROrowyGU5B/Gn0AFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQBmayIgLaWSR4WjkJSUR70U4I+YehB/+vWVLNctb25wLS2PmktGJI1dtw2theRkZIB/XiuoooA5pUnN5C026R99qWfYVydr5OO1dLRRQAUUhOBk1iXuuSzzG00pBLJ/FN/Cv0pNpFwg5vQ1Lu+tbFN9xMqeg7n6CqVlrf9o3flQW0iw4P75hxmqdto0Yk8+8c3U56luR+XetiKBhtOAoHQVKcmaONOKtuyIx3Tk759vstJ9jB+9K5/Gru0E5pdo9KswKP2JP77/nR9mkX/V3Dj61ewPSk2j0oArxNcpvMrB1Vc8Dk1WttetZm8uYNbyeknT860GTKEA9apXVlFcLtniDejdx+NJ3IlzdC+CCMg5Bpa58R32kHfbOZ7YdY26itax1CC/i3xNhh95D1WhMIzvo9y1WPrrmK50+TzlhCyvmRo94X5D2rYoplnOWFy1oLZ5TIsDNcAusbBZGLAq23tn5sU2OW+FtZRebNu1GBE3EnMbDlj7EqT+K10tRG2hN0LkpmVV2qxJ4HsOlAEnSloooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigApOlLXP6t4gs11238PMJXe4QmZov+WYxxn09f/wBdTKSitTSnTlUdorz+Qy+vZtZuWsbJylsn+tmH8XsK0LKxjt4hDAm1R1Pc+5p9pp0dpCkMHMfXd3PuavKoRcCko9WXOokuWOwiRqg46+tPooqzAKKKKACiiigApMZ60tFAELw45X8qyLywkil+22J2TLyVHRq3ailjz8y9e4pNESgmV9N1GPUINwG2ReHT0P8AhV2sLUns9ASbWpzKAifNFEMlia09O1C31XT4b61fdFMu5fUeoPuOlCfQUZa8r3LVFFFM0CiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKZNNHbxNLM6pGgyzMcAU+qmposlhIrQyTDKkrEcOMEHI9x1/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" style="width:260px;max-width:100%;border-radius:10px;border:1px solid #e6ebf3">
 </div>
+<p style="font-size:.85rem;color:#8493a8;text-align:center">Screenshots taken by Prof Tan, 19 Oct 2026, 15:39 SGT.</p>
 
-<div style="background:#374151;color:#e5e7eb;text-align:center;padding:10px 16px;font-size:.82rem;font-weight:700;letter-spacing:.05em;">
-  📦 SPRINT 7 — ARCHIVED · Sprint 8 is now active → <a href="/sprint8/" style="color:#f5b942;text-decoration:none;">View Sprint 8 →</a>
+<h2>2. Exactly what your page must show, top to bottom</h2>
+<div class="tablewrap"><table>
+<tr><th>#</th><th>Part</th><th>Exactly what it shows</th></tr>
+<tr><td>1</td><td>Price line</td><td>“Gold”, the last close, and the change and % change from the previous daily close, in green if up and red if down.</td></tr>
+<tr><td>2</td><td>Timeframe tiles</td><td>One row of seven tiles: <b>1 Min, 5 Min, 15 Min, 30 Min, Hourly, 4 Hours, Daily</b>. Each tile shows its timeframe’s Summary rating in colour. Clicking a tile selects it (blue outline) and updates everything below. No lock icons.</td></tr>
+<tr><td>3</td><td>Bar time</td><td>Under the tiles: “Bar time: YYYY-MM-DD HH:MM SGT” for the last bar of the selected timeframe, and its close. Without this, nobody can check your numbers.</td></tr>
+<tr><td>4</td><td>Summary gauge</td><td>Half-circle gauge with five coloured bands, a needle, the labels Strong Sell, Sell, Neutral, Buy, Strong Buy around it, and a filled pill with the rating underneath. Below it: the Buy, Neutral and Sell counts and the score.</td></tr>
+<tr><td>5</td><td>Technical Indicators</td><td>The heading “Technical Indicators ›”, a gauge, a pale pill and the counts. Tapping the heading opens a table: <b>Name · Value · Action</b>, one row for each of the 12 indicators in section 4. Tapping a row opens its working (rule 1).</td></tr>
+<tr><td>6</td><td>Moving Averages</td><td>The heading “Moving Averages ›”, a gauge, a pale pill and the counts. Tapping it opens a table: <b>Period · Simple (value and Buy/Sell) · Exponential (value and Buy/Sell)</b> for MA5, 10, 20, 50, 100 and 200.</td></tr>
+</table></div>
+<p>Colours: Buy and Strong Buy green, Sell and Strong Sell red, Neutral grey, as on Investing.com.</p>
+
+<h2>3. Where the data comes from</h2>
+<p>Use Yahoo Finance through <code>yfinance</code>, as in Sprint 6. Symbol <code>GCZ26.CMX</code> (gold futures, December 2026). If Yahoo returns fewer than 30 bars for it, use <code>GC=F</code> for that timeframe and show “(GC=F)” next to the bar time. Fetch at least 260 bars per timeframe, because MA200 needs 200.</p>
+<div class="tablewrap"><table>
+<tr><th>Tile</th><th>yfinance interval</th><th>period</th><th>How</th></tr>
+<tr><td>1 Min</td><td><code>1m</code></td><td><code>7d</code></td><td>As downloaded</td></tr>
+<tr><td>5 Min</td><td><code>5m</code></td><td><code>30d</code></td><td>As downloaded</td></tr>
+<tr><td>15 Min</td><td><code>15m</code></td><td><code>60d</code></td><td>As downloaded</td></tr>
+<tr><td>30 Min</td><td><code>30m</code></td><td><code>60d</code></td><td>As downloaded</td></tr>
+<tr><td>Hourly</td><td><code>60m</code></td><td><code>60d</code></td><td>As downloaded</td></tr>
+<tr><td>4 Hours</td><td><code>60m</code></td><td><code>730d</code></td><td>Combine four 1-hour bars, starting 00:00, 04:00, 08:00, 12:00, 16:00 and 20:00 UTC: open of the first, highest high, lowest low, close of the last, summed volume.</td></tr>
+<tr><td>Daily</td><td><code>60m</code></td><td><code>730d</code></td><td>Combine 1-hour bars into one bar per trading session, starting 22:00 UTC.</td></tr>
+</table></div>
+<div class="card"><b>The data is about 10 minutes delayed.</b> Yahoo marks gold futures as a delayed quote. That is fine for this sprint: a delay does not change whether RSI or MA200 is calculated correctly. It does mean the 30 Min tile may differ slightly from Investing.com. <b>Hourly and Daily are the strict checks.</b> Do not use this page to trade.</div>
+
+<h2>4. The 12 indicators and their rules</h2>
+<p>Your first task (R3) is to open <b>Technical Indicators ›</b> on Investing.com, compare its list and settings with this table, and record any difference in <code>docs/verify.md</code>. Where Investing.com differs, follow Investing.com and note it.</p>
+<div class="tablewrap"><table>
+<tr><th>Indicator</th><th>Calculation</th><th>Action</th></tr>
+<tr><td>RSI(14)</td><td>Wilder’s 14-bar average gain and loss. RSI = 100 − 100/(1 + avg gain/avg loss)</td><td>Buy &gt; 50, Sell &lt; 50, Neutral above 70 or below 30</td></tr>
+<tr><td>STOCH(9,6)</td><td>%K = (close − 9-bar low)/(9-bar high − 9-bar low) × 100; %D = 6-bar average of %K</td><td>Buy if %K &gt; %D and %K &lt; 80; Sell if %K &lt; %D and %K &gt; 20; else Neutral</td></tr>
+<tr><td>STOCHRSI(14)</td><td>(RSI − lowest RSI of 14 bars)/(highest − lowest) × 100</td><td>Buy &gt; 50, Sell &lt; 50, Neutral above 80 or below 20</td></tr>
+<tr><td>MACD(12,26)</td><td>EMA12 − EMA26; signal = 9-bar EMA of MACD</td><td>Buy if MACD &gt; signal, else Sell</td></tr>
+<tr><td>ADX(14)</td><td>Wilder’s +DI, −DI and ADX over 14 bars</td><td>If ADX &gt; 20: Buy when +DI &gt; −DI, Sell when −DI &gt; +DI. Otherwise Neutral</td></tr>
+<tr><td>Williams %R(14)</td><td>(14-bar high − close)/(14-bar high − 14-bar low) × −100</td><td>Buy &gt; −50, Sell &lt; −50, Neutral above −20 or below −80</td></tr>
+<tr><td>CCI(14)</td><td>(typical price − its 14-bar average)/(0.015 × mean deviation); typical price = (H + L + C)/3</td><td>Buy &gt; 0, Sell &lt; 0, Neutral beyond ±200</td></tr>
+<tr><td>ATR(14)</td><td>Wilder’s 14-bar average of the true range</td><td>No vote. “High Volatility” if above its own 14-bar average, else “Less Volatility”</td></tr>
+<tr><td>Highs/Lows(14)</td><td>close − midpoint of the 14-bar high and low</td><td>Buy &gt; 0, Sell &lt; 0. <i>Check Investing.com’s definition (R3).</i></td></tr>
+<tr><td>Ultimate Oscillator</td><td>100 × (4·A7 + 2·A14 + A28)/7, where An = sum of buying pressure ÷ sum of true range over n bars</td><td>Buy &gt; 50, Sell &lt; 50, Neutral above 70 or below 30</td></tr>
+<tr><td>ROC(12)</td><td>(close ÷ close 12 bars ago − 1) × 100</td><td>Buy &gt; 0, Sell &lt; 0</td></tr>
+<tr><td>Bull/Bear Power(13)</td><td>(high − EMA13) + (low − EMA13)</td><td>Buy &gt; 0, Sell &lt; 0</td></tr>
+</table></div>
+<h3>Moving averages (12 votes)</h3>
+<p>For n = 5, 10, 20, 50, 100 and 200: the simple (SMA) and exponential (EMA) moving average of the close. <b>Buy</b> if the last close is above it, <b>Sell</b> if below.</p>
+<h3>Ratings (our rule, the same for every team)</h3>
+<p><b>score = (number of Buys − number of Sells) ÷ number of votes.</b> Strong Buy ≥ 0.5 · Buy ≥ 0.1 · Neutral between −0.1 and 0.1 · Sell ≤ −0.1 · Strong Sell ≤ −0.5.<br>Technical Indicators gauge: the 11 voting indicators. Moving Averages gauge: the 12 MA votes. Summary: all 23 votes together. The needle points at the score, from −1 (far left) to +1 (far right). Write this rule on your page.</p>
+
+<h2>5. How to run it (and why)</h2>
+<p>The page is not hosted anywhere. It runs on your laptop.</p>
+<pre>python engine/dashboard_data.py --loop 60   # refreshes ui/data.json every 60 s
+cd ui &amp;&amp; python -m http.server 8000       # then open http://localhost:8000</pre>
+<ul>
+<li><b>Open it through the local server, not by double-clicking the file.</b> Browsers usually block a page opened as a file from reading <code>data.json</code>; that is the classic “it works on my machine” failure.</li>
+<li><b>Do not use GitHub Actions’ schedule to refresh data.</b> Its short-interval timing is unreliable; it has stalled for hours.</li>
+<li>The only workflow allowed in your repo is still <code>.github/workflows/predict.yml</code>. No Netlify, no Pages, no public hosting.</li>
+</ul>
+
+<h2>6. The five pass-or-fail rules</h2>
+<div class="task"><span class="num">1</span><b>Show the working.</b> Tapping any indicator row opens its inputs and calculation, for example: <code>avg gain 1.82, avg loss 2.23 → RSI = 44.98 → Sell</code>. A value with no working scores zero for that row.</div>
+<div class="task"><span class="num">2</span><b>Verify and commit the proof.</b> <code>docs/verify.md</code> lists Investing.com’s values next to yours for <b>30 Min, Hourly and Daily</b>, row by row, at the same bar time, with a screenshot of each. Every mismatch is explained, never deleted.</div>
+<div class="task"><span class="num">3</span><b>Midweek checkpoint.</b> By <b>Wednesday 21 Oct, 12:00</b>, <code>ui/index.html</code> on <code>main</code> shows the seven tiles and at least one working timeframe. Prof Tan will check GitHub, not ask you.</div>
+<div class="task"><span class="num">4</span><b>Everything in the repo.</b> The page reads only from code and data committed to your repo. If it is not on <code>main</code> by Saturday 23:59, it does not exist.</div>
+<div class="task"><span class="num">5</span><b>Live test on Monday.</b> No slides or screenshots in place of the page (section 9).</div>
+
+<h2>7. Files and deadlines</h2>
+<pre>engine/
+├── tech_summary.py          R3 + R6 · the 12 indicators + 12 MAs, Wed 12:00
+├── dashboard_data.py        R6 · all seven timeframes → ui/data.json, Wed 12:00
+ui/
+├── index.html               R5 · checkpoint Wed 12:00, final Sat 23:59
+├── data.json                R6 · committed snapshot, Sat 23:59
+docs/
+├── verify.md                R4 · Sat 23:59
+predictions/vW7.json         R1 · Wed 23:59 (same format as vW6)
+checkin/wednesday.md         R1 · Wed 12:00</pre>
+
+<h2>8. Roles</h2>
+<div class="task"><span class="num">R1</span><b>Lock the calls, keep the board real.</b> File <code>predictions/vW7.json</code> as in Sprint 6 by Wednesday 23:59. FigJam: one card per section of part 2, each with a Definition of Done and a link to its commit. Compile the Wednesday check-in.</div>
+<div class="task"><span class="num">R2</span><b>Your weekly call and the price line.</b> Make your weekly call as in Sprint 6, then build part 1 (the price line) and check it against Investing.com.</div>
+<div class="task"><span class="num">R3</span><b>The indicators.</b> Compare the indicator list with Investing.com (section 4). Write all 12 indicators and the working text that rule 1 needs.</div>
+<div class="task"><span class="num">R4</span><b>The verification.</b> Build <code>docs/verify.md</code> (rule 2). You are the team’s internal auditor: find the mismatches before Prof Tan does.</div>
+<div class="task"><span class="num">R5</span><b>The page.</b> Build <code>ui/index.html</code> to match section 2 and the screenshots: tiles, gauges, pills, tables, colours.</div>
+<div class="task"><span class="num">R6</span><b>The data and the moving averages.</b> Write <code>dashboard_data.py</code> for all seven timeframes, including the 4 Hours and Daily bars built from 1-hour bars, and the 12 MA votes. Keep <code>predict.yml</code> the only workflow.</div>
+
+<h2>9. Monday 26 Oct: the live test</h2>
+<ol>
+<li><b>R6 starts the data script and the local server in front of Prof Tan.</b> The bar time must be from today.</li>
+<li><b>Prof Tan names a timeframe.</b> R5 clicks the tile. Prof Tan opens the same timeframe on Investing.com on his phone and compares.</li>
+<li><b>Prof Tan picks any indicator row.</b> Any team member taps it and explains the working.</li>
+<li><b>Prof Tan clicks 1, 5 and 15 Min.</b> Those are the views you unlocked; they are trusted because the same code passed on Hourly and Daily.</li>
+<li><b>R4 opens <code>docs/verify.md</code></b> and explains the biggest mismatch.</li>
+<li>Then the four weekly calls, as in Sprint 6.</li>
+</ol>
+
+<h2>Coming in Sprint 8</h2>
+<p>A chart of how each rating moved over time, drawn as smooth lines across shaded Strong Sell to Strong Buy bands, and a volume panel. Together they turn this page into a scalping tool. Sprint 8 is built on Sprint 7’s numbers, so they need to be right.</p>
 </div>
-
-<header>
-  <p class="eyebrow">CP3405 Design Thinking 3 · TR2 2026 · Course Week 7</p>
-  <h1>Sprint 7 <span>— The Scrum Master Sprint</span></h1>
-  <div class="header-meta">
-    <span class="badge badge-gold">vW29 · Due Sun 19 July 2026 · 23:59 SGT</span>
-    <span class="badge badge-teal">Presentation · Mon 20 July 2026</span>
-    <span class="badge badge-danger">R2 is under the spotlight this sprint</span>
-    <span class="badge badge-white">Scrum · Agile · AI Tools · TR2 2026</span>
-  </div>
-</header>
-
-<nav>
-  <a href="/">Home</a><span class="nav-sep">·</span>
-  <a href="/sprint7/" class="active">Sprint 7</a><span class="nav-sep">·</span>
-  <a href="/sprint6/">Sprint 6</a><span class="nav-sep">·</span>
-  <a href="/sprint5/">Sprint 5</a><span class="nav-sep">·</span>
-  <a href="/scrum/">Scrum Reference</a><span class="nav-sep">·</span>
-  <a href="/roadmap/">Roadmap</a><span class="nav-sep">·</span>
-  <a href="/system/">System</a>
-</nav>
-
-<main>
-
-<div class="countdown-strip">
-  <div class="cd-item"><span class="label">Sprint</span><span class="value">7 · W7</span></div>
-  <div class="cd-item"><span class="label">Tag Required</span><span class="value">vW29</span></div>
-  <div class="cd-item"><span class="label">Deadline</span><span class="value">Sun 19 Jul · 23:59 SGT</span></div>
-  <div class="cd-item"><span class="label">Presentation</span><span class="value teal">Mon 20 Jul</span></div>
-  <div class="cd-item"><span class="label">Sprint focus</span><span class="value teal">R2 · Scrum Master</span></div>
-</div>
-
-<!-- SM SPOTLIGHT -->
-<section id="sm-spotlight">
-  <div class="sm-spotlight">
-    <h2>🔴 The Scrum Master Problem</h2>
-
-    <p class="quote">"In Sprint 6, several teams reported blocked progress caused by role dependencies — one member not delivering meant others could not proceed. This is not a dependency problem. This is a Scrum Master problem."</p>
-
-    <p>A dependency that surfaces on Sunday night was visible on Wednesday. The agent outputs were not committed. The LLM synthesis could not run. The pipeline stalled. And R2 — the Scrum Master — either did not know, or knew and did not act.</p>
-
-    <p>Both are failures of the same role.</p>
-
-    <p>Sprint 7 exists to fix this. <strong>The Scrum Master is the centrepiece of this sprint.</strong> Every other role's performance will be evaluated through the lens of whether R2 created the conditions for them to succeed. And R2's performance will be evaluated on one thing above all others: <strong>did the blocker surface by Wednesday or by Sunday?</strong></p>
-  </div>
-</section>
-
-<!-- WHAT SM FAILURE LOOKS LIKE -->
-<section id="sm-failure">
-  <div class="section-title">What Scrum Master Failure Looks Like — And Why It's Invisible</div>
-
-  <p>The dangerous thing about SM failure is that it looks like everyone else's fault. R3 didn't commit the agent output. R8 couldn't run the synthesis. R9 couldn't cut the tag. The team blames R3. But the question to ask is: <strong>when did R2 know R3 was behind?</strong></p>
-
-  <div class="callout danger">
-    <div class="callout-title danger">The Sunday Discovery Pattern — a Scrum failure</div>
-    <p>Monday: sprint starts. Roles assigned. Goals committed.<br>
-    Tuesday–Friday: silence. No standups. No check-ins. Everyone "working."<br>
-    Saturday: R8 asks R3 for the agent output. R3 hasn't started.<br>
-    Sunday: scramble. Partial submission. Blame distributed.<br><br>
-    <strong>This is not bad luck. This is the absence of Scrum.</strong> The daily standup — 15 minutes, three questions — exists precisely to catch R3 on Tuesday before it becomes a Sunday crisis.</p>
-  </div>
-
-  <div class="callout">
-    <div class="callout-title gold">The Wednesday Test — the SM's primary accountability</div>
-    <p>By Wednesday of every sprint, R2 must be able to answer yes to each of these:<br><br>
-    • Has every role member checked in since Monday?<br>
-    • Does every role know what they are delivering and by when?<br>
-    • Is there any dependency that has not started?<br>
-    • Has any blocker been raised — and if so, has it been acted on?<br><br>
-    <strong>If R2 cannot answer yes to all four by Wednesday, the sprint is already at risk.</strong> The job is not to report failure on Monday. The job is to prevent it by Wednesday.</p>
-  </div>
-
-  <div class="callout teal">
-    <div class="callout-title teal">What a functioning SM looks like in practice</div>
-    <p>R2 does not wait for the standup to find out what people are doing. R2 checks in with R3, R4, R5 individually by Tuesday — not in a group call, but specifically: "Have you started the Almanac output? When will it be committed?" R2 does not accept "I'll do it this weekend." R2 sets a Wednesday commit deadline for every agent output, because R8 cannot synthesise on Thursday if the agents commit on Sunday.<br><br>
-    This is not micromanagement. This is the job. The Scrum Master's value is proportional to how early they surface what is not working.</p>
-  </div>
-</section>
-
-<!-- THE DEPENDENCY CHAIN — VISUALISED -->
-<section id="dependency">
-  <div class="section-title">The Dependency Chain — Why Order Matters</div>
-
-  <p>Every pipeline has a strict execution order. Violating it does not just delay one step — it collapses the entire sprint into Sunday night.</p>
-
-  <div style="background:var(--navy-2);border-radius:12px;padding:1.5rem;margin-bottom:1.25rem;overflow-x:auto;">
-    <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;font-size:.85rem;font-weight:600;">
-      <div style="background:rgba(45,212,191,.12);color:var(--teal);padding:.4rem .8rem;border-radius:6px;">R3 Almanac</div>
-      <div style="color:var(--muted);">→</div>
-      <div style="background:rgba(45,212,191,.12);color:var(--teal);padding:.4rem .8rem;border-radius:6px;">R4 Macro</div>
-      <div style="color:var(--muted);">→</div>
-      <div style="background:rgba(45,212,191,.12);color:var(--teal);padding:.4rem .8rem;border-radius:6px;">R5 Technical</div>
-      <div style="color:var(--muted);">→</div>
-      <div style="background:rgba(201,168,76,.12);color:var(--gold);padding:.4rem .8rem;border-radius:6px;">R8 LLM Synthesis</div>
-      <div style="color:var(--muted);">→</div>
-      <div style="background:rgba(201,168,76,.12);color:var(--gold);padding:.4rem .8rem;border-radius:6px;">R7 Human Score</div>
-      <div style="color:var(--muted);">→</div>
-      <div style="background:rgba(61,204,138,.12);color:var(--success);padding:.4rem .8rem;border-radius:6px;">R9 Tag vW29</div>
-    </div>
-    <p style="margin-top:1rem;font-size:.8rem;color:var(--muted);">R8 cannot start until R3, R4, R5 have all committed. R7 cannot apply the Wild Card until R8 has logged all LLM responses. R9 cannot cut the tag until R7 has committed the final prediction. <strong style="color:var(--white);">One missing link collapses the entire chain.</strong></p>
-  </div>
-
-  <p>R2's job is to watch this chain. Not on Sunday. From Monday. The moment any link looks uncertain, R2 acts.</p>
-
-  <div class="callout soft">
-    <div class="callout-title muted">What R2 says when a link is at risk</div>
-    <p><em>"R3 — your Almanac output needs to be committed by Wednesday noon. R8 is blocked until it lands. If something is stopping you, tell me now and we'll solve it together. If you need to swap the role with someone else this sprint, we can do that too."</em><br><br>
-    That conversation on Tuesday takes two minutes. The equivalent conversation on Saturday takes two hours and produces a worse result.</p>
-  </div>
-</section>
-
-<!-- WHAT TO SUBMIT -->
-<section id="must-submit">
-  <div class="section-title">What to Submit by Sunday 19 July · 23:59 SGT</div>
-
-  <div class="grid3">
-    <div class="card">
-      <div class="big">1</div>
-      <strong>Pipeline ran automatically</strong><br>
-      <span style="font-size:.85rem;color:var(--muted)">GitHub Actions triggered after Friday 17 July US market close — Saturday morning SGT. Run log is the evidence.</span>
-    </div>
-    <div class="card">
-      <div class="big">2</div>
-      <strong>Release tag <code>vW29</code></strong><br>
-      <span style="font-size:.85rem;color:var(--muted)">Exact format: lowercase <code>v</code>, capital <code>W</code>, two digits. The immutable record that the sprint was sealed on time.</span>
-    </div>
-    <div class="card">
-      <div class="big">3</div>
-      <strong>R2 mid-week check-in committed</strong><br>
-      <span style="font-size:.85rem;color:var(--muted)">New this sprint. R2 must commit a <code>standup_midweek_W29.md</code> by Wednesday 15 July showing all roles checked in and any blockers surfaced. <strong>This is assessed.</strong></span>
-    </div>
-  </div>
-</section>
-
-<!-- R2 OBLIGATIONS THIS SPRINT -->
-<section id="r2-obligations">
-  <div class="section-title">R2 Obligations — Sprint 7 Specific</div>
-  <p>The following are R2's mandatory deliverables this sprint. Each is assessable. Each must be committed to the repository with a timestamp that proves it happened before the stated deadline.</p>
-
-  <div class="obligation-list">
-    <div class="ob">
-      <div class="ob-day">Mon 13</div>
-      <div class="ob-text">
-        <strong>Sprint Planning facilitated.</strong> Sprint goal written by R1 and committed. All roles confirmed. DoD checklist agreed. Pipeline dependency order reviewed with the team — every role knows who depends on them and by when.
-        <div class="evidence-box"><strong>Evidence:</strong> <code>sprint_goal_W29.md</code> committed before end of Monday. Discord sprint goal post timestamped.</div>
-      </div>
-    </div>
-    <div class="ob critical">
-      <div class="ob-day">Wed 15 ⚠️</div>
-      <div class="ob-text">
-        <strong>Mid-week check-in — the new mandatory artefact.</strong> R2 contacts every role member individually (Discord DM or standup note). Confirms: started / not started / blocked. Any blocker escalated same day. Result committed as <code>standup_midweek_W29.md</code>.
-        <div class="evidence-box"><strong>Evidence:</strong> <code>standup_midweek_W29.md</code> committed by Wednesday 23:59 SGT. Must name every role and their status. Blockers must include R2's response action — not just acknowledgement.</div>
-      </div>
-    </div>
-    <div class="ob">
-      <div class="ob-day">Thu 16</div>
-      <div class="ob-text">
-        <strong>Agent outputs confirmed committed.</strong> R2 verifies R3, R4, R5 have all committed their outputs before R8 begins LLM synthesis. If any agent is missing, R2 acts immediately — escalates, reassigns, or negotiates scope reduction. Does not wait.
-        <div class="evidence-box"><strong>Evidence:</strong> Commit timestamps on agent files. If any were late, R2's <code>standup_midweek_W29.md</code> should have flagged it Wednesday.</div>
-      </div>
-    </div>
-    <div class="ob">
-      <div class="ob-day">Sat 18</div>
-      <div class="ob-text">
-        <strong>All branches merged.</strong> R2 confirms R9 has merged all branches before end of Saturday. Merge conflicts discovered Sunday cannot be resolved in time.
-        <div class="evidence-box"><strong>Evidence:</strong> GitHub branch merge timestamps visible on pull request history.</div>
-      </div>
-    </div>
-    <div class="ob critical">
-      <div class="ob-day">Mon 20 ⚠️</div>
-      <div class="ob-text">
-        <strong>Sprint 7 retrospective presented.</strong> R2 leads the retrospective section of the Monday presentation. Must answer specifically: when did blockers surface this sprint? How many days earlier than Sprint 6? What one process change made the difference?
-        <div class="evidence-box"><strong>Evidence:</strong> <code>retrospective_W29.md</code> committed before Sunday midnight. Must reference the mid-week check-in and whether it caught anything.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- WEEKLY WORKFLOW -->
-<section id="workflow">
-  <div class="section-title">Sprint Cadence — With SM Checkpoints</div>
-  <table class="wf-table">
-    <thead>
-      <tr><th>When</th><th>What happens</th><th>R2's responsibility</th></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="day">Mon 13</td>
-        <td><span class="scrum-tag">SPRINT PLANNING</span><br>Sprint goal, roles, DoD, dependency order reviewed.</td>
-        <td>Facilitate. Ensure every role knows who depends on them. Commit sprint goal today.</td>
-      </tr>
-      <tr>
-        <td class="day">Tue–Wed</td>
-        <td><span class="scrum-tag">EXECUTION + CHECK-IN</span><br>R3–R5 agent work. R8 wires API calls. R6 confirms Friday fetch scheduled.</td>
-        <td><strong>Contact every role individually by Wednesday.</strong> Not a group message. Each person, each role status. Commit <code>standup_midweek_W29.md</code> by Wed 23:59.</td>
-      </tr>
-      <tr class="hl">
-        <td class="day">Thu 16</td>
-        <td><span class="scrum-tag">SYNTHESIS GATE</span><br>R8 cannot run LLMs until R3, R4, R5 have all committed. This is the dependency gate.</td>
-        <td>Confirm all agent outputs are committed before R8 starts. If not — escalate immediately, not tomorrow.</td>
-      </tr>
-      <tr>
-        <td class="day">Sat morning SGT</td>
-        <td><span class="scrum-tag">AUTOMATED FETCH</span><br>GitHub Actions collects Friday 17 Jul US closes. No manual action needed if pipeline works.</td>
-        <td>Monitor that the fetch ran. If it failed — R2 surfaces it to R9 immediately.</td>
-      </tr>
-      <tr>
-        <td class="day">Sat 18</td>
-        <td><span class="scrum-tag">HUMAN REVIEW</span><br>R7 Wild Card. R9 merges all branches. R10 delta scoring begins.</td>
-        <td>Confirm all branches merged by end of Saturday. Chase R10 if delta scoring hasn't started.</td>
-      </tr>
-      <tr class="hl">
-        <td class="day">Sun 19 · 23:59</td>
-        <td><span class="scrum-tag">SPRINT SEALED</span><br><code>vW29</code> tag cut. Discord submission posted. Retrospective committed.</td>
-        <td>Confirm all DoD items checked. R2 signs off before R9 cuts the tag.</td>
-      </tr>
-    </tbody>
-  </table>
-</section>
-
-<!-- WHAT CHANGES FROM SPRINT 6 -->
-<section id="whats-new">
-  <div class="section-title">What Changes From Sprint 6</div>
-
-  <div class="callout teal">
-    <div class="callout-title teal">🆕 New: Mid-week check-in is a graded artefact</div>
-    <p><code>standup_midweek_W29.md</code> committed by Wednesday 15 July 23:59 SGT is mandatory. It must name every role, confirm their status, and document any blockers with R2's response action. A check-in that says "everyone is fine" with no specifics does not count. A check-in that says "R4 has not started and R2 has reassigned to R2 temporarily" is exactly what this artefact is for.</p>
-  </div>
-
-  <div class="callout teal">
-    <div class="callout-title teal">🆕 New: R2 speaks first at Monday presentation</div>
-    <p>In Sprint 7, R2 opens the team's Monday presentation — not R1. R2's opening covers: did blockers surface by Wednesday or Sunday? Show the mid-week check-in. What was the hardest dependency to manage and how was it resolved? This is assessed as part of the Sprint Review.</p>
-  </div>
-
-  <div class="callout teal">
-    <div class="callout-title teal">🆕 New: Sector coverage increases to all 11 S&P ETFs</div>
-    <p>Sprint 6 required the three core indices plus sectors. Sprint 7 requires complete coverage: XLK · XLV · XLF · XLY · XLC · XLI · XLP · XLE · XLB · XLRE · XLU. R6 adds these to the data collector. The pipeline fetches them. R10 scores them.</p>
-  </div>
-</section>
-
-<!-- ROLES -->
-<section id="roles">
-  <div class="section-title">Sprint 7 Roles — R2 Under the Spotlight</div>
-  <div class="role-grid">
-    <div class="role-card spotlight">
-      <div class="role-id">R2 · Scrum Master</div>
-      <div class="role-name">This sprint's focus role</div>
-      <div class="role-focus">Mid-week check-in mandatory. Contact every role individually by Wednesday. Commit <code>standup_midweek_W29.md</code>. Open Monday presentation. Lead retrospective. Surface blockers before Sunday.</div>
-      <div><span class="scrum-principle">Blockers surfaced Wednesday can be solved. Sunday cannot.</span></div>
-    </div>
-    <div class="role-card gold-spot">
-      <div class="role-id">R1 · Product Owner</div>
-      <div class="role-name">Sprint Goal + DoD</div>
-      <div class="role-focus">Write sprint goal Monday. DoD checklist must include mid-week check-in and Wednesday agent commit deadline as explicit items.</div>
-    </div>
-    <div class="role-card">
-      <div class="role-id">R3 · Almanac</div>
-      <div class="role-real">→ Research Analyst</div>
-      <div class="role-focus">Commit output by Wednesday. R8 is blocked until you do. R2 will check on Tuesday. Have something to show.</div>
-    </div>
-    <div class="role-card">
-      <div class="role-id">R4 · Macro</div>
-      <div class="role-real">→ Macro Analyst</div>
-      <div class="role-focus">Commit output by Wednesday. Key macro events w/c 14 Jul. R2 will check on Tuesday.</div>
-    </div>
-    <div class="role-card">
-      <div class="role-id">R5 · Technical</div>
-      <div class="role-real">→ Data Analyst</div>
-      <div class="role-focus">Technical read from Sat 19 Jul close (post Sprint 6 fetch). Commit before Wednesday.</div>
-    </div>
-    <div class="role-card">
-      <div class="role-id">R6 · Data</div>
-      <div class="role-real">→ Data Engineer</div>
-      <div class="role-focus">Add all 11 sector ETFs to fetch. Confirm Friday cron scheduled for 17 Jul.</div>
-    </div>
-    <div class="role-card gold-spot">
-      <div class="role-id">R7 · Human Score</div>
-      <div class="role-real">→ Senior Analyst</div>
-      <div class="role-focus">Wild Card must be sourced and specific. Review all LLM outputs. Apply override if warranted. This is the primary marks differentiator.</div>
-    </div>
-    <div class="role-card gold-spot">
-      <div class="role-id">R8 · LLM Operator</div>
-      <div class="role-real">→ AI/ML Engineer</div>
-      <div class="role-focus">Cannot start until R3, R4, R5 committed. Call at least 2 LLMs via API. Save responses as files. Build comparison table.</div>
-    </div>
-    <div class="role-card gold-spot">
-      <div class="role-id">R9 · GitHub Lead</div>
-      <div class="role-real">→ DevOps Engineer</div>
-      <div class="role-focus">Own the Friday cron. Merge all branches Saturday. Cut <code>vW29</code> tag before Sunday midnight. Show Actions log Monday.</div>
-    </div>
-    <div class="role-card">
-      <div class="role-id">R10 · Calibration</div>
-      <div class="role-real">→ Product Analyst</div>
-      <div class="role-focus">Score vW29 against Saturday 19 Jul actuals. Build cumulative accuracy W3–W7. delta_W28.md committed before tag.</div>
-    </div>
-  </div>
-</section>
-
-<!-- TIMELINE -->
-<section id="timeline">
-  <div class="section-title">Sprint 7 Timeline</div>
-  <div class="timeline">
-    <div class="tl-item"><div class="tl-date">MON 13 JUL — SPRINT PLANNING</div><div class="tl-event">Sprint 7 opens · Dependency order reviewed</div><div class="tl-detail">Sprint goal committed. Every role knows who waits on them. DoD includes Wednesday agent deadline.</div></div>
-    <div class="tl-item critical"><div class="tl-date">WED 15 JUL — SM MID-WEEK CHECK-IN ⚠️</div><div class="tl-event">R2 contacts every role individually</div><div class="tl-detail"><code>standup_midweek_W29.md</code> committed by 23:59. Blockers surfaced and acted on today — not Sunday.</div></div>
-    <div class="tl-item"><div class="tl-date">THU 16 JUL — SYNTHESIS GATE</div><div class="tl-event">R3 + R4 + R5 must be committed · R8 starts</div><div class="tl-detail">LLM API calls run. Comparison table committed. R10 begins delta_W28.md.</div></div>
-    <div class="tl-item deadline"><div class="tl-date">SAT MORNING 19 JUL ~4AM SGT — AUTO FETCH</div><div class="tl-event">⚡ Pipeline collects Friday 17 Jul US closes</div><div class="tl-detail">github-actions[bot] commits timestamped data file. No human involvement.</div></div>
-    <div class="tl-item"><div class="tl-date">SAT 18 JUL — HUMAN REVIEW</div><div class="tl-event">R7 Wild Card · All branches merged</div><div class="tl-detail">R9 merges everything by end of Saturday. R2 confirms DoD checklist.</div></div>
-    <div class="tl-item deadline"><div class="tl-date">SUN 19 JUL · 23:59 SGT — SPRINT SEALED</div><div class="tl-event">🏁 vW29 cut · Discord posted · Retrospective committed</div><div class="tl-detail">delta_W28.md committed. R2 signs off DoD. R9 cuts tag. Done.</div></div>
-    <div class="tl-item"><div class="tl-date">MON 20 JUL — SPRINT REVIEW</div><div class="tl-event">R2 presents first · Mid-week check-in reviewed</div><div class="tl-detail">R2 opens with blocker timeline. Did they surface Wednesday or Sunday? Show the evidence.</div></div>
-  </div>
-</section>
-
-<!-- DISCORD TEMPLATE -->
-<section id="discord">
-  <div class="section-title">Discord Submission Template — Sprint 7 · vW29</div>
-  <p>Post in your team channel before Sunday 19 July 23:59 SGT.</p>
-<pre>TEAM: Team __ / Practical __
-SPRINT: 7 · vW29
-GITHUB REPO:
-RELEASE LINK:
-
-━━━ SM CHECK-IN (R2) ━━━
-standup_midweek_W29.md committed by Wed 15 Jul: Y/N
-Blockers surfaced mid-week: Y/N
-If Y — what was the blocker and how was it resolved:
-Did any dependency slip past Wednesday: Y/N
-If Y — what will change in Sprint 8:
-
-━━━ SPRINT GOAL ━━━
-Our Sprint 7 goal was:
-Did we meet it: Y / Partial / N
-
-━━━ PREDICTION ━━━
-File committed (prediction_W29.json or .md): Y/N
-SPX direction + confidence:
-NDX direction + confidence:
-IWM direction + confidence:
-All 11 sectors covered: Y/N
-Human Score Wild Card applied: Y/N
-Wild Card reasoning:
-
-━━━ PIPELINE ━━━
-Automated fetch ran Sat morning SGT: Y/N
-GitHub Actions run URL:
-All branches merged before tag: Y/N
-
-━━━ AGENTS (all committed before R8 synthesis) ━━━
-Almanac R3 committed by Wed: Y/N
-Macro R4 committed by Wed: Y/N
-Technical R5 committed by Wed: Y/N
-
-━━━ AI SYNTHESIS ━━━
-LLM 1 via API: Y/N · model:
-LLM 2 via API: Y/N · model:
-Responses saved as files: Y/N
-Comparison table committed: Y/N
-
-━━━ CALIBRATION ━━━
-delta_W28.md committed: Y/N
-vW29 SPX direction correct: Y/N · error %:
-vW29 NDX direction correct: Y/N · error %:
-vW29 IWM direction correct: Y/N · error %:
-
-━━━ SCRUM HEALTH ━━━
-retrospective_W29.md committed: Y/N
-Every role R1–R10 ready to present Mon 20 Jul: Y/N
-One thing R2 will do differently in Sprint 8:</pre>
-</section>
-
-<!-- REMINDERS -->
-
-<!-- FREE LLM GUIDE -->
-<section id="free-llm">
-  <div class="section-title">Free LLM API Options — For Teams Hitting Limits</div>
-
-  <p>If your team is hitting rate limits or does not want to pay for API access, the following options are free, API-accessible, and capable enough for this pipeline. You do not need GPT-4 for market synthesis. You need consistent structured output — and all three options below deliver that.</p>
-
-  <div class="callout teal">
-    <div class="callout-title teal">Option 1 — Google AI Studio (Gemini 1.5 Flash) · Recommended</div>
-    <p><strong>Cost:</strong> Free. No credit card required.<br>
-    <strong>Limits:</strong> 15 requests/minute · 1,000,000 tokens/day — far more than a weekly pipeline needs.<br>
-    <strong>Get your key:</strong> <a href="https://aistudio.google.com" target="_blank" style="color:var(--teal)">aistudio.google.com</a> → Sign in with Google → Get API key → Create API key.<br>
-    <strong>Model string:</strong> <code>gemini-1.5-flash</code><br>
-    <strong>Store as:</strong> GitHub Secret <code>GEMINI_API_KEY</code></p>
-  </div>
-
-  <div class="callout teal">
-    <div class="callout-title teal">Option 2 — Groq (Llama 3.1 70B) · Fastest free option</div>
-    <p><strong>Cost:</strong> Free. No credit card required.<br>
-    <strong>Limits:</strong> 14,400 requests/day · 6,000 tokens/minute — effectively unlimited for a once-a-week pipeline.<br>
-    <strong>Get your key:</strong> <a href="https://console.groq.com" target="_blank" style="color:var(--teal)">console.groq.com</a> → Sign up → API Keys → Create API Key.<br>
-    <strong>Model string:</strong> <code>llama-3.1-70b-versatile</code><br>
-    <strong>Store as:</strong> GitHub Secret <code>GROQ_API_KEY</code></p>
-  </div>
-
-  <div class="callout teal">
-    <div class="callout-title teal">Option 3 — OpenRouter (multiple free models)</div>
-    <p><strong>Cost:</strong> Free tier includes Llama 3.1 70B, Mistral 7B, Gemma 2 9B, Qwen 2.5 72B.<br>
-    <strong>Get your key:</strong> <a href="https://openrouter.ai" target="_blank" style="color:var(--teal)">openrouter.ai</a> → Sign up → Keys → Create Key.<br>
-    <strong>Model string:</strong> <code>meta-llama/llama-3.1-70b-instruct:free</code><br>
-    <strong>Store as:</strong> GitHub Secret <code>OPENROUTER_API_KEY</code><br>
-    Already used by Team A in this cohort — proven to work for this exact pipeline.</p>
-  </div>
-
-  <div class="callout">
-    <div class="callout-title gold">Why you are hitting rate limits — and how to stop</div>
-    <p>Rate limits are almost always caused by <strong>repeated testing</strong> — running the full pipeline manually multiple times during the week while developing. The fix is simple: <strong>test with short prompts and small inputs during development. Let the GitHub Actions workflow make the real call on Friday night.</strong> One call per model per sprint. Free tiers are designed for exactly this cadence — they are not designed for a developer calling the API 50 times in an hour.<br><br>
-    Store your API key as a GitHub Secret (<code>GEMINI_API_KEY</code>, <code>GROQ_API_KEY</code>, etc). The workflow reads it from the secret. You never hardcode it in your script. You never paste it in Discord.</p>
-  </div>
-
-  <div class="callout soft">
-    <div class="callout-title muted">This section is for teams with API issues only</div>
-    <p>If your current API setup is working — keep it. These options are alternatives for teams who are hitting limits or do not want to pay. You do not need to switch if your pipeline is running correctly.</p>
-  </div>
-</section>
-
-<section id="reminders">
-  <div class="section-title">Sprint 7 Standing Reminders</div>
-  <div style="display:flex;flex-direction:column;gap:.9rem">
-    <div class="callout soft">
-      <div class="callout-title muted">The mid-week check-in is not a Discord message</div>
-      <p>Posting "hey everyone how are you going" in the team channel is not a mid-week check-in. R2 must contact each role member individually, confirm their specific deliverable, confirm its status, and document the result in <code>standup_midweek_W29.md</code>. The file must name each role (R3, R4, R5...) with a status line and any blocker. Generic check-ins score zero.</p>
-    </div>
-    <div class="callout soft">
-      <div class="callout-title muted">Agents must commit before R8 — no exceptions</div>
-      <p>This is the rule that Sprint 6 teams broke when dependencies collapsed. R8 synthesises what the agents have produced. If R8 synthesises without agent outputs — the synthesis is based on the LLMs' own knowledge, not your team's research. That is not a pipeline. That is prompt engineering. They are not the same thing.</p>
-    </div>
-    <div class="callout soft">
-      <div class="callout-title muted">Tag format: vW29 — still enforced</div>
-      <p>Lowercase <code>v</code>, capital <code>W</code>, two digits. <code>W29</code>, <code>vw29</code>, <code>v1.0.0</code> all result in no credit for the release. Put it on the DoD checklist. Check it explicitly. Do not rely on memory.</p>
-    </div>
-    <div class="callout teal">
-      <div class="callout-title teal">The data domain is the training environment. Scrum is the lesson.</div>
-      <p>You are not being assessed on whether you predicted the market correctly. You are being assessed on whether your team ran a professional delivery cycle — planned, executed, reviewed, and retrospected — with a system that improves sprint over sprint. R2 is the role that makes that cycle work. Sprint 7 is R2's sprint.</p>
-    </div>
-  </div>
-</section>
-
-</main>
-
-<footer>CP3405 Design Thinking 3 · TR2 2026 · Sprint 7 · vW29 Due Sunday 19 July 2026 · 23:59 SGT · Presentation Monday 20 July 2026</footer>
-
-</body>
-</html>
+<p style="text-align:center;color:#8493a8;font-size:.85rem;padding:20px">CP3405 Design Thinking III · TR3 2026 · Sprint 7 — Unlock the Paywall</p>
+</body></html>

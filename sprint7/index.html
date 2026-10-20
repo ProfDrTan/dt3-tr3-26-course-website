@@ -50,7 +50,8 @@ footer{max-width:920px;margin:40px auto 0;padding:20px 22px;border-top:1px solid
 <h1>Sprint 7 <span style="color:#8493a8;font-weight:700">— vW7</span> — Unlock the Paywall</h1>
 <p style="color:#3a4a5e;font-size:1.05rem;margin-top:0">Build Investing.com’s gold technical page yourselves, including the 1, 5 and 15-minute views that Investing.com locks behind a subscription.</p>
 
-<div class="card key"><b>This sprint has one deliverable: <code>ui/index.html</code>, a working copy of Investing.com’s gold technical page.</b> Same layout, same three gauges, same tables, for seven timeframes. Every number on it must show how it was calculated. It is a study week, so nothing else new is asked of you: lock your weekly calls as in Sprint 6, and spend the rest of the week on this page.</div>
+<div class="card key"><b>Correction (20 Oct):</b> build the gold page as <code>ui/gold.html</code>. Do <b>not</b> overwrite <code>ui/index.html</code>: it stays your team dashboard (roles, commit history, FigJam) and must link to <code>gold.html</code>.</div>
+<div class="card key"><b>This sprint has one deliverable: <code>ui/gold.html</code>, a working copy of Investing.com’s gold technical page.</b> Same layout, same three gauges, same tables, for seven timeframes. Every number on it must show how it was calculated. It is a study week, so nothing else new is asked of you: lock your weekly calls as in Sprint 6, and spend the rest of the week on this page.</div>
 
 <div class="card red"><b>Why this sprint exists.</b> In Sprint 6, dashboards were not shown, numbers could not be checked against Investing.com, and the formulas behind them could not be found. This sprint fixes that. <b>If it cannot be checked during your presentation, it scores zero.</b> The five rules below are pass or fail.</div>
 
@@ -113,7 +114,7 @@ footer{max-width:920px;margin:40px auto 0;padding:20px 22px;border-top:1px solid
 <h2>5. How to run it (and why)</h2>
 <p>The page is not hosted anywhere. It runs on your laptop.</p>
 <pre>python engine/dashboard_data.py --loop 60   # refreshes ui/data.json every 60 s
-cd ui &amp;&amp; python -m http.server 8000       # then open http://localhost:8000</pre>
+cd ui &amp;&amp; python -m http.server 8000       # then open http://localhost:8000/gold.html</pre>
 <ul>
 <li><b>Open it through the local server, not by double-clicking the file.</b> Browsers usually block a page opened as a file from reading <code>data.json</code>; that is the classic “it works on my machine” failure.</li>
 <li><b>Do not use GitHub Actions’ schedule to refresh data.</b> Its short-interval timing is unreliable; it has stalled for hours.</li>
@@ -123,7 +124,7 @@ cd ui &amp;&amp; python -m http.server 8000       # then open http://localhost:8
 <h2>6. The five pass-or-fail rules</h2>
 <div class="task"><span class="num">1</span><b>Show the working.</b> Tapping any indicator row opens its inputs and calculation, for example: <code>avg gain 1.82, avg loss 2.23 → RSI = 44.98 → Sell</code>. A value with no working scores zero for that row.</div>
 <div class="task"><span class="num">2</span><b>Verify and commit the proof.</b> <code>docs/verify.md</code> lists Investing.com’s values next to yours for <b>30 Min, Hourly and Daily</b>, row by row, at the same bar time, with a screenshot of each. Every mismatch is explained, never deleted.</div>
-<div class="task"><span class="num">3</span><b>Midweek checkpoint.</b> By <b>Wednesday 21 Oct, 12:00</b>, <code>ui/index.html</code> on <code>main</code> shows the seven tiles and at least one working timeframe. Prof Tan will check GitHub, not ask you.</div>
+<div class="task"><span class="num">3</span><b>Midweek checkpoint.</b> By <b>Wednesday 21 Oct, 12:00</b>, <code>ui/gold.html</code> on <code>main</code> shows the seven tiles and at least one working timeframe. Prof Tan will check GitHub, not ask you.</div>
 <div class="task"><span class="num">4</span><b>Everything in the repo.</b> The page reads only from code and data committed to your repo. If it is not on <code>main</code> by Saturday 23:59, it does not exist.</div>
 <div class="task"><span class="num">5</span><b>Live test on Monday.</b> No slides or screenshots in place of the page (section 9).</div>
 
@@ -132,7 +133,8 @@ cd ui &amp;&amp; python -m http.server 8000       # then open http://localhost:8
 ├── tech_summary.py          R3 + R6 · the 12 indicators + 12 MAs, Wed 12:00
 ├── dashboard_data.py        R6 · all seven timeframes → ui/data.json, Wed 12:00
 ui/
-├── index.html               R5 · checkpoint Wed 12:00, final Sat 23:59
+├── index.html               team dashboard (keep it; add a link to gold.html)
+├── gold.html                R5 · checkpoint Wed 12:00, final Sat 23:59
 ├── data.json                R6 · committed snapshot, Sat 23:59
 docs/
 ├── verify.md                R4 · Sat 23:59
@@ -144,7 +146,7 @@ checkin/wednesday.md         R1 · Wed 12:00</pre>
 <div class="task"><span class="num">R2</span><b>Your weekly call and the price line.</b> Make your weekly call as in Sprint 6, then build part 1 (the price line) and check it against Investing.com.</div>
 <div class="task"><span class="num">R3</span><b>The indicators.</b> Compare the indicator list with Investing.com (section 4). Write all 12 indicators and the working text that rule 1 needs.</div>
 <div class="task"><span class="num">R4</span><b>The verification.</b> Build <code>docs/verify.md</code> (rule 2). You are the team’s internal auditor: find the mismatches before Prof Tan does.</div>
-<div class="task"><span class="num">R5</span><b>The page.</b> Build <code>ui/index.html</code> to match section 2 and the screenshots: tiles, gauges, pills, tables, colours.</div>
+<div class="task"><span class="num">R5</span><b>The page.</b> Build <code>ui/gold.html</code> to match section 2 and the screenshots: tiles, gauges, pills, tables, colours.</div>
 <div class="task"><span class="num">R6</span><b>The data and the moving averages.</b> Write <code>dashboard_data.py</code> for all seven timeframes, including the 4 Hours and Daily bars built from 1-hour bars, and the 12 MA votes. Keep <code>predict.yml</code> the only workflow.</div>
 
 <h2>9. Monday 26 Oct: the live test</h2>

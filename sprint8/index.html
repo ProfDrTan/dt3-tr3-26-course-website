@@ -2,558 +2,147 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sprint 8 — System Hardening + Demo Prep · CP3405 DT3 TR2 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sprint 8 · Catch Up, Then Read the Volume · CP3405 DT3 · TR3 2026</title>
 <style>
-    :root {
-      --navy:#0a1628;--navy-2:#0d1f3c;--navy-3:#112244;
-      --gold:#9d7de8;--gold-lt:#c4b5fd;--teal:#2dd4bf;--teal-dk:#1fa89a;
-      --white:#f0f4fa;--muted:#8fa3bf;--danger:#e05c5c;--success:#3dcc8a;--warn:#f0a500;
-    }
-    *{box-sizing:border-box;margin:0;padding:0;}
-    body{background:var(--navy);color:var(--white);font-family:'Segoe UI',system-ui,sans-serif;font-size:16px;line-height:1.65;}
-    header{background:linear-gradient(135deg,#070e1c 0%,var(--navy-3) 60%,#0b2040 100%);border-bottom:2px solid var(--gold);padding:2.5rem 2rem 2rem;text-align:center;position:relative;overflow:hidden;}
-    header::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:600px;height:200px;background:radial-gradient(ellipse,rgba(201,168,76,.12) 0%,transparent 70%);pointer-events:none;}
-    .eyebrow{font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:.5rem;}
-    header h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;color:var(--gold);letter-spacing:-.01em;line-height:1.15;}
-    header h1 span{color:var(--white);font-weight:300;}
-    .header-meta{margin-top:1rem;display:flex;justify-content:center;flex-wrap:wrap;gap:.5rem .75rem;}
-    .badge{display:inline-block;padding:.25rem .75rem;border-radius:99px;font-size:.78rem;font-weight:600;letter-spacing:.05em;}
-    .badge-gold{background:rgba(201,168,76,.18);color:var(--gold);border:1px solid rgba(201,168,76,.4);}
-    .badge-teal{background:rgba(45,212,191,.15);color:var(--teal);border:1px solid rgba(45,212,191,.35);}
-    .badge-white{background:rgba(240,244,250,.08);color:var(--white);border:1px solid rgba(240,244,250,.2);}
-    .badge-danger{background:rgba(224,92,92,.15);color:var(--danger);border:1px solid rgba(224,92,92,.35);}
-    nav{background:var(--navy-2);border-bottom:1px solid rgba(201,168,76,.2);padding:.75rem 2rem;display:flex;gap:1.25rem;flex-wrap:wrap;align-items:center;}
-    nav a{color:var(--muted);text-decoration:none;font-size:.85rem;}
-    nav a:hover{color:var(--gold);}
-    nav a.active{color:var(--gold);font-weight:600;}
-    .nav-sep{color:rgba(255,255,255,.15);}
-    main{max-width:960px;margin:0 auto;padding:2.5rem 1.5rem 4rem;}
-    .countdown-strip{background:linear-gradient(90deg,rgba(201,168,76,.1) 0%,rgba(45,212,191,.08) 100%);border:1px solid rgba(201,168,76,.3);border-radius:10px;padding:1.1rem 1.5rem;margin-bottom:2.5rem;display:flex;flex-wrap:wrap;gap:.75rem 2rem;align-items:center;}
-    .cd-item{display:flex;flex-direction:column;}
-    .countdown-strip .label{color:var(--muted);font-size:.82rem;text-transform:uppercase;letter-spacing:.1em;}
-    .countdown-strip .value{color:var(--gold);font-size:1.05rem;font-weight:700;}
-    .countdown-strip .value.teal{color:var(--teal);}
-    section{margin-bottom:2.75rem;}
-    .section-title{font-size:1.05rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--teal);border-bottom:1px solid rgba(45,212,191,.25);padding-bottom:.5rem;margin-bottom:1.25rem;}
-    p{color:rgba(240,244,250,.82);margin-bottom:1rem;}
-    strong{color:var(--white);}
-    code{background:rgba(45,212,191,.12);color:var(--teal);padding:.1rem .4rem;border-radius:4px;font-size:.88em;}
-    .callout{border-left:3px solid var(--gold);background:rgba(201,168,76,.07);border-radius:0 8px 8px 0;padding:1rem 1.25rem;margin-bottom:1.25rem;}
-    .callout.teal{border-color:var(--teal);background:rgba(45,212,191,.07);}
-    .callout.danger{border-color:var(--danger);background:rgba(224,92,92,.07);}
-    .callout.success{border-color:var(--success);background:rgba(61,204,138,.07);}
-    .callout.soft{border-color:var(--muted);background:rgba(143,163,191,.05);}
-    .callout .callout-title{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem;}
-    .callout .callout-title.gold{color:var(--gold);}
-    .callout .callout-title.teal{color:var(--teal);}
-    .callout .callout-title.danger{color:var(--danger);}
-    .callout .callout-title.success{color:var(--success);}
-    .callout p{margin-bottom:0;font-size:.92rem;}
-    .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;}
-    .card{background:var(--navy-2);border:1px solid rgba(255,255,255,.09);border-radius:10px;padding:1.1rem 1.25rem;}
-    .card .big{font-size:2rem;font-weight:800;color:rgba(45,212,191,.25);line-height:1;margin-bottom:.4rem;}
-    .wf-table{width:100%;border-collapse:collapse;font-size:.9rem;}
-    .wf-table th{background:var(--navy-3);color:var(--gold);font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;padding:.65rem 1rem;text-align:left;border-bottom:1px solid rgba(201,168,76,.3);}
-    .wf-table td{padding:.75rem 1rem;border-bottom:1px solid rgba(255,255,255,.07);color:rgba(240,244,250,.8);vertical-align:top;}
-    .wf-table tr:last-child td{border-bottom:none;}
-    .wf-table tr:hover td{background:rgba(255,255,255,.03);}
-    .wf-table .day{color:var(--teal);font-weight:700;white-space:nowrap;}
-    .wf-table .scrum-tag{display:inline-block;background:rgba(45,212,191,.1);color:var(--teal);border-radius:4px;padding:.1rem .45rem;font-size:.72rem;font-weight:700;margin-bottom:.3rem;}
-    .wf-table .hl td{background:rgba(201,168,76,.05);border-left:3px solid var(--gold);}
-
-    /* SM spotlight */
-    .sm-spotlight{background:linear-gradient(135deg,rgba(224,92,92,.08),rgba(201,168,76,.05));border:2px solid rgba(224,92,92,.3);border-radius:14px;padding:2rem;margin-bottom:2rem;}
-    .sm-spotlight h2{color:var(--danger);font-size:1.3rem;font-weight:700;margin-bottom:.75rem;}
-    .sm-spotlight p{color:rgba(240,234,214,.85);margin-bottom:.9rem;}
-    .sm-spotlight .quote{font-size:1.05rem;font-style:italic;color:var(--white);border-left:3px solid var(--danger);padding-left:1rem;margin:1.25rem 0;line-height:1.7;}
-
-    /* R2 obligations */
-    .obligation-list{display:flex;flex-direction:column;gap:.75rem;margin-top:1rem;}
-    .ob{display:flex;gap:1rem;align-items:flex-start;background:var(--navy-2);border-radius:8px;padding:.9rem 1.1rem;border:1px solid rgba(255,255,255,.07);}
-    .ob-day{color:var(--teal);font-weight:700;font-size:.82rem;white-space:nowrap;min-width:60px;padding-top:.1rem;}
-    .ob-text{font-size:.88rem;color:rgba(240,244,250,.8);line-height:1.55;}
-    .ob-text strong{color:var(--white);}
-    .ob.critical{border-color:rgba(201,168,76,.3);}
-    .ob.critical .ob-day{color:var(--gold);}
-
-    /* Evidence required box */
-    .evidence-box{background:var(--navy-3);border:1px solid rgba(45,212,191,.2);border-radius:8px;padding:1rem 1.25rem;margin-top:.75rem;font-size:.82rem;color:var(--muted);}
-    .evidence-box strong{color:var(--teal);}
-
-    .role-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:.75rem;}
-    .role-card{background:var(--navy-2);border:1px solid rgba(255,255,255,.09);border-radius:8px;padding:.85rem 1rem;}
-    .role-card.spotlight{border-color:rgba(224,92,92,.4);background:rgba(224,92,92,.06);}
-    .role-card.gold-spot{border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06);}
-    .role-id{font-size:.7rem;color:var(--teal);font-weight:700;letter-spacing:.08em;margin-bottom:.25rem;}
-    .role-card.spotlight .role-id{color:var(--danger);}
-    .role-card.gold-spot .role-id{color:var(--gold);}
-    .role-name{font-size:.88rem;font-weight:600;color:var(--white);margin-bottom:.3rem;}
-    .role-real{font-size:.73rem;color:var(--gold);font-style:italic;margin-bottom:.3rem;}
-    .role-focus{font-size:.78rem;color:var(--muted);line-height:1.45;}
-    .scrum-principle{display:inline-block;background:rgba(201,168,76,.1);color:var(--gold-lt);border-radius:4px;padding:.1rem .45rem;font-size:.7rem;font-weight:600;margin-top:.4rem;}
-
-    .timeline{position:relative;padding-left:1.5rem;}
-    .timeline::before{content:'';position:absolute;left:.45rem;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,var(--teal) 0%,var(--gold) 100%);border-radius:2px;}
-    .tl-item{position:relative;margin-bottom:1.25rem;}
-    .tl-item::before{content:'';position:absolute;left:-1.06rem;top:.35rem;width:9px;height:9px;background:var(--navy);border:2px solid var(--teal);border-radius:50%;}
-    .tl-item.deadline::before{border-color:var(--gold);background:var(--gold);}
-    .tl-item.critical::before{border-color:var(--danger);background:var(--danger);}
-    .tl-date{font-size:.78rem;color:var(--teal);font-weight:700;letter-spacing:.06em;margin-bottom:.15rem;}
-    .tl-item.deadline .tl-date{color:var(--gold);}
-    .tl-item.critical .tl-date{color:var(--danger);}
-    .tl-event{font-size:.92rem;color:var(--white);font-weight:600;}
-    .tl-detail{font-size:.82rem;color:var(--muted);margin-top:.1rem;}
-
-    pre{white-space:pre-wrap;background:#071426;color:#e2e8f0;border-radius:14px;padding:18px;overflow:auto;font-size:.88rem;line-height:1.7;border:1px solid rgba(45,212,191,.15);}
-    footer{border-top:1px solid rgba(201,168,76,.15);padding:1.5rem 2rem;text-align:center;font-size:.8rem;color:var(--muted);}
-    @media(max-width:600px){.countdown-strip{flex-direction:column;gap:.6rem;}.grid3{grid-template-columns:1fr;}}
+*{box-sizing:border-box}
+body{margin:0;background:#f5f7fb;font-family:Inter,Segoe UI,Arial,sans-serif;color:#102033;line-height:1.6}
+a{color:#0f6fbd;text-decoration:none;font-weight:800}
+.preview{background:#f5b942;color:#111827;text-align:center;padding:8px 12px;font-weight:800;font-size:.85rem}
+.top{background:#071426;color:#fff;border-bottom:4px solid #12c7b7;padding:18px 22px;display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}
+.brand{display:flex;gap:14px;align-items:center;font-weight:900;font-size:1.25rem}
+.badge{background:#12c7b7;color:#071426;padding:8px 12px;border-radius:8px;font-family:monospace}
+.nav{display:flex;overflow:auto;background:#132747;border-bottom:1px solid #0f2040}
+.nav a{padding:14px 18px;color:#dbeafe;white-space:nowrap;font-weight:700;font-size:.9rem;transition:background .2s}
+.nav a:hover{background:#1e3a6e}
+.nav a.active{background:#f5b942;color:#111827}
+.nav a.sys{border-left:3px solid #12c7b7}
+.main{max-width:920px;margin:0 auto;padding:36px 22px 70px}
+h1{font-size:2rem;margin:0 0 6px}
+h2{color:#0e2a52;margin-top:40px;border-bottom:2px solid #e8edf5;padding-bottom:8px}
+h3{color:#0e2a52;margin:20px 0 6px;font-size:1.02rem}
+.eyebrow{display:inline-block;background:rgba(18,199,183,.15);border:1px solid #12c7b7;color:#0e7a70;padding:5px 14px;border-radius:999px;font-size:.8rem;font-weight:900;letter-spacing:.03em;margin-bottom:12px}
+.card{background:#fff;border:1px solid #e6ebf3;border-radius:12px;padding:18px 20px;margin:14px 0;box-shadow:0 1px 3px rgba(16,32,51,.06)}
+.card b{color:#0e2a52}
+.card.key{border-left:5px solid #f5b942;background:linear-gradient(135deg,#fffbeb,#fff)}
+.card.red{border-left:4px solid #dc2626}
+.task{background:#fff;border:1px solid #e6ebf3;border-left:5px solid #12c7b7;border-radius:0 12px 12px 0;padding:16px 20px;margin:12px 0}
+.task .num{display:inline-block;min-width:34px;height:26px;padding:0 6px;border-radius:13px;background:#132747;color:#f5b942;font-weight:900;font-size:.8rem;text-align:center;line-height:26px;margin-right:8px}
+.dod{margin-top:8px;padding:8px 12px;background:#f0faf9;border-radius:8px;font-size:.88em;color:#0e5a52}
+.dod b{color:#0e7a70;font-size:.78em;letter-spacing:.05em}
+code{background:#eef2f8;padding:2px 7px;border-radius:5px;font-family:monospace;font-size:.92em;color:#0e2a52}
+pre{background:#0f1c33;color:#dbeafe;border-radius:10px;padding:14px 16px;overflow-x:auto;font-size:.82rem;line-height:1.5;margin:10px 0}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem;background:#fff}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid #e6ebf3;vertical-align:top}
+th{background:#eef2f8;color:#0e2a52;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
+.tablewrap{overflow-x:auto}
+ul,ol{margin:8px 0 8px 22px}
+li{margin-bottom:6px}
+footer{max-width:920px;margin:40px auto 0;padding:20px 22px;border-top:1px solid #e6ebf3;color:#8493a8;font-size:.82rem;text-align:center}
+@media(max-width:700px){.main{padding:24px 16px 50px}}
 </style>
 </head>
-<body>
-<div style="background:#374151;color:#e5e7eb;text-align:center;padding:10px 16px;font-size:.82rem;font-weight:700;letter-spacing:.05em;">
-  📦 SPRINT 8 — ARCHIVED · Sprint 9 is now active → <a href="/sprint9/" style="color:#f5b942;text-decoration:none;">View Sprint 9 →</a>
+<body data-sprint-monday="2026-10-26" data-sprint-number="8">
+<div class="top"><div class="brand"><span class="badge" data-tag>vW8</span> CP3405 · Design Thinking III</div><div style="color:#12c7b7;font-family:monospace;font-size:.9rem">TR3 2026</div></div>
+<nav class="nav"><a href="../index.html">Home</a><a class="active" href="index.html">Sprint 8 — Catch Up, Then Read the Volume</a><a href="../sprint7/index.html">Sprint 7</a><a href="../sprint6/index.html">Sprint 6</a><a href="../sprint5/index.html">Sprint 5</a><a href="../sprint4/index.html">Sprint 4</a><a href="../sprint3/index.html">Sprint 3</a><a href="../archive/index.html">Archive (Sprint 1–2)</a><a href="../github/index.html">GitHub</a><a href="../almanac/index.html">Almanac Agent</a><a class="sys" href="../scrum/index.html">Scrum Reference</a></nav>
+<div class="main">
+<span class="eyebrow">Starts Monday 26 Oct — checkpoint Wednesday 28 Oct 12:00 — prediction locks Wednesday 28 Oct 23:59 SGT — everything else due Saturday 31 Oct 23:59 SGT — presented live Monday 2 Nov</span>
+<h1>Sprint 8 <span style="color:#8493a8;font-weight:700">— vW8</span> — Catch Up, Then Read the Volume</h1>
+<p style="color:#3a4a5e;font-size:1.05rem;margin-top:0">Every team finishes a gold page that passes the live test. Then every team adds the one thing a price-only page cannot tell you: how much conviction is behind the move.</p>
+
+<div class="card key"><b>This sprint has two steps, in order.</b> <b>Step A — finish Sprint 7:</b> your <code>ui/gold.html</code> passes all five Sprint 7 rules. <b>Step B — add volume:</b> a Price &amp; Volume panel on the same page (section 3). Teams that passed Monday’s live test start at Step B on day one. Teams that did not pass do Step A first; a reference engine is available to help (section 2). Nobody is left behind, and nobody gets credit for Step B while Step A still fails.</div>
+
+<div class="card red"><b>Why.</b> By Saturday, the Sprint 7 repos showed most teams close but not finished: needles pointing the wrong way, a Summary built from only some of the votes, missing team pages, files appearing on Saturday night. This sprint gives everyone the time to close those gaps — and the Wednesday checkpoint is now checked automatically from GitHub, so the work has to happen during the week, not at the end.</div>
+
+<h2>1. Where each team starts</h2>
+<div class="tablewrap"><table>
+<tr><th>Team</th><th>Monday live test</th><th>Gaps found in the repo (as of Sat 24 Oct)</th><th>Starts at</th></tr>
+<tr><td>Team 1</td><td><i>decided Mon 26 Oct</i></td><td>Gauge needles point the wrong way for their own score; price change shows 0.00</td><td><i>set Mon 26 Oct</i></td></tr>
+<tr><td>Team 2</td><td><i>decided Mon 26 Oct</i></td><td><code>ui/index.html</code> (team dashboard) missing from <code>ui/</code></td><td><i>set Mon 26 Oct</i></td></tr>
+<tr><td>Team 3</td><td><i>decided Mon 26 Oct</i></td><td>Gold page very short (52 lines); no branch merges into <code>main</code>; exact-time verification noted as pending</td><td><i>set Mon 26 Oct</i></td></tr>
+<tr><td>Team 4</td><td><i>decided Mon 26 Oct</i></td><td>No gauges or price line; Summary uses only the 12 moving-average votes; no Buy/Sell per moving average; Bar Time shows the file time; <code>predictions/vW7.json</code> and Wednesday check-in missing</td><td><i>set Mon 26 Oct</i></td></tr>
+</table></div>
+
+<h2>2. Step A — finish Sprint 7 (catch-up)</h2>
+<p>The target is unchanged: the <a href="../sprint7/index.html">Sprint 7 brief</a>, sections 2–7, and its five pass-or-fail rules. Check yourself against this list before Wednesday:</p>
+<div class="tablewrap"><table>
+<tr><th>#</th><th>Check</th><th>How it is tested on 2 Nov</th></tr>
+<tr><td>1</td><td>Seven tiles, each showing its own Summary rating</td><td>Checking team clicks every tile</td></tr>
+<tr><td>2</td><td>Summary gauge = all <b>23</b> votes (11 indicators + 12 moving averages; ATR does not vote)</td><td>Checking team adds up your Buy / Neutral / Sell counts</td></tr>
+<tr><td>3</td><td>Needle points at the score: −1 far left (Strong Sell), +1 far right (Strong Buy)</td><td>Compares needle with pill</td></tr>
+<tr><td>4</td><td>Price, change and % change from the previous daily close</td><td>Compares with Investing.com</td></tr>
+<tr><td>5</td><td>Bar time = time of the last <b>completed bar</b>, in SGT (not the time the file was written)</td><td>Checking team asks what the bar time means</td></tr>
+<tr><td>6</td><td>Every indicator row opens its working; every moving average shows Buy/Sell</td><td>Checking team taps a row at random</td></tr>
+<tr><td>7</td><td><code>docs/verify.md</code>: 30 Min, Hourly, Daily at the same bar time, with screenshots, mismatches explained</td><td>Checking team asks for the biggest mismatch</td></tr>
+<tr><td>8</td><td><code>ui/index.html</code> is the team dashboard and links to <code>ui/gold.html</code></td><td>Checking team opens index.html first</td></tr>
+</table></div>
+<div class="card"><b>Reference engine (optional).</b> Teams may start from the course’s reference indicator engine (<code>tech_summary.py</code>, released on the course site on Monday). Conditions: credit it at the top of your README; the page, the data script and <code>verify.md</code> are still yours; and on 2 Nov <b>every member explains one indicator from it live</b>. Copying it without understanding it fails in front of the class.</div>
+
+<h2>3. Step B — add a Price &amp; Volume panel</h2>
+<p>Every rating on your page is built from price. Volume tells you whether real money is behind the move. Add this panel to <code>ui/gold.html</code>, directly under the bar time, so it changes with the selected tile. This is what it must look like:</p>
+<p style="text-align:center"><img alt="Target: price and volume panel" src="data:image/png;base64,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" style="width:420px;max-width:100%;border:1px solid #e6ebf3;border-radius:10px"></p>
+<div class="tablewrap"><table>
+<tr><th>Part</th><th>Exactly what it shows</th></tr>
+<tr><td>Candles</td><td>The last 60 completed bars of the selected timeframe (green up, red down)</td></tr>
+<tr><td>Volume bars</td><td>Under the candles, one bar per candle, same colour as its candle</td></tr>
+<tr><td>Average line</td><td>Dashed line: the average volume of the <b>20 bars before</b> each bar</td></tr>
+<tr><td>Time axis</td><td>Times in SGT along the bottom (dates for 4 Hours and Daily)</td></tr>
+<tr><td>Relative volume</td><td><b>last completed bar’s volume ÷ average of the 20 bars before it</b>, shown as e.g. “1.62×”</td></tr>
+<tr><td>Volume label</td><td>One of four, by this rule (same for every team):<br>
+<b>Confirmed</b> — relative volume ≥ 1.5 and the last bar moved in the Summary’s direction<br>
+<b>Warning</b> — relative volume ≥ 1.5 and the last bar moved <i>against</i> the Summary<br>
+<b>Thin</b> — relative volume &lt; 0.7 (low conviction)<br>
+<b>Normal</b> — anything else</td></tr>
+</table></div>
+<ul>
+<li><b>Data:</b> Yahoo already gives you volume in the same download (<code>Volume</code> column). For 4 Hours and Daily, add up the volume of the 1-hour bars you combine.</li>
+<li><b>Write it into <code>data.json</code></b> per timeframe: the 60 bars (time, open, high, low, close, volume), the 20-bar average, relative volume and label. The page only reads <code>data.json</code>.</li>
+<li><b>Gotcha:</b> the last bar of the week (Friday night) or a bar still forming has partial volume. Use completed bars only, and say so on the page.</li>
+<li><b>Verify:</b> add one line per timeframe to <code>verify.md</code>: your volume for one bar vs the volume shown for the same bar on Investing.com’s gold chart.</li>
+</ul>
+<div class="card"><b>Stretch (optional, for teams that finish early):</b> a chart of how the Summary score moved over the last 60 bars, drawn as a smooth line across shaded Strong Sell → Strong Buy bands.</div>
+
+<h2>4. How the team works this week (all teams)</h2>
+<div class="task"><span class="num">1</span><b>Working agreement by Tuesday 23:59</b> on FigJam: how you communicate (Discord), how decisions are made, what happens when someone goes quiet. Every member’s name on it.</div>
+<div class="task"><span class="num">2</span><b>Sprint board:</b> every member’s name on at least one card with a Definition of Done and a link to its commit.</div>
+<div class="task"><span class="num">3</span><b>Stand-ups:</b> three lines in your Discord channel (done / next / blocked) on at least three days.</div>
+<div class="task"><span class="num">4</span><b>Everyone commits under their own GitHub account.</b> No member makes more than 40% of the team’s commits this sprint.</div>
+<div class="task"><span class="num">5</span><b>Branches, then merge:</b> work goes on a branch and is merged into <code>main</code> by R6 — not pushed straight to <code>main</code>.</div>
+<div class="task"><span class="num">6</span><b>Wednesday 28 Oct 12:00 checkpoint, checked automatically:</b> Step A teams — the eight checks in section 2 at least half done; Step B teams — the volume panel showing on one timeframe.</div>
+
+<h2>5. Roles</h2>
+<div class="task"><span class="num">R1</span>Working agreement, sprint board, stand-up log; lock the weekly calls in <code>predictions/vW8.json</code> by Wednesday 23:59; Wednesday check-in.</div>
+<div class="task"><span class="num">R2</span>Your weekly call; then the price line and change (check 4).</div>
+<div class="task"><span class="num">R3</span>Indicators and their working (checks 2, 6); the volume label rule.</div>
+<div class="task"><span class="num">R4</span><code>verify.md</code>, including the new volume lines. You find the mismatches before the checking team does.</div>
+<div class="task"><span class="num">R5</span><code>gold.html</code>: needles, tiles, and the Price &amp; Volume panel.</div>
+<div class="task"><span class="num">R6</span><code>dashboard_data.py</code>: the 60-bar series, volume, 4 Hours and Daily volume; branches and merges.</div>
+
+<h2>6. Files and deadlines</h2>
+<pre>ui/index.html               R1/R5 · team dashboard, links to gold.html
+ui/gold.html                R5 · Step A checks + Price &amp; Volume panel
+ui/data.json                R6 · adds series + volume per timeframe
+engine/dashboard_data.py    R6
+docs/verify.md              R4 · Saturday 31 Oct 23:59
+predictions/vW8.json        R1 · Wednesday 28 Oct 23:59
+checkin/wednesday.md        R1 · Wednesday 28 Oct 12:00
+FigJam working agreement    R1 · Tuesday 27 Oct 23:59</pre>
+
+<h2>7. Monday 2 Nov: the team-run live test</h2>
+<p>Teams test each other. <b>Team 1 ↔ Team 2</b> and <b>Team 3 ↔ Team 4</b>: one team presents while its partner team checks, then they swap. About 15 minutes each way. The teams run the whole session themselves.</p>
+<div class="card key"><b>Every team uses the same 10-slide presentation template</b> (<a href="../assets/sprint8/sprint8-presentation-template.pdf">download the template, PDF</a>), in the same order as the steps below. Replace every [bracketed] placeholder; do not add, remove or reorder slides. Commit the finished deck as <code>docs/sprint8-presentation.pdf</code> by Monday 2 Nov 09:00.</div>
+<ol>
+<li><b>Presenting R6</b> starts the data script and the local server live. The bar time must be from that day.</li>
+<li><b>Presenting R5</b> opens <code>index.html</code>, then the gold page, and clicks through all seven tiles.</li>
+<li><b>Checking R4</b> names a timeframe and compares it with Investing.com on their own phone.</li>
+<li><b>The checking team picks</b> any indicator row <b>and</b> which presenting member explains it. Teams using the reference engine: every member explains one indicator.</li>
+<li><b>Presenting R3</b> explains the volume label; the checking team asks why it says what it says.</li>
+<li><b>Presenting R4</b> explains the biggest mismatch in <code>verify.md</code>.</li>
+<li><b>Presenting R2</b> presents the four weekly calls.</li>
+<li><b>Checking R1</b> scores the eight Step A checks and the volume panel (pass / fail each, one line of reason) and commits the result to the checking team’s own repo as <code>docs/peer-check-team-N.md</code> (N = the team they checked).</li>
+<li><b>Presenting R1</b> commits <code>docs/live-test.md</code> the same day: what passed, what failed, and what the team will fix first in Sprint 9.</li>
+</ol>
+<div class="card"><b>Fair checking counts too.</b> A peer check that passes something that clearly fails, or fails something that clearly passes, counts against the checking team.</div>
 </div>
-<header>
-  <p class="eyebrow">CP3405 Design Thinking 3 · TR2 2026 · Course Week 8</p>
-  <h1>Sprint 8 <span>— System Hardening + Demo Prep</span></h1>
-  <div class="header-meta">
-    <span class="badge badge-gold">vW30 · Due Sprint Day 7 · 23:59 SGT (Sunday)</span>
-    <span class="badge badge-teal">Presentation · Sprint Day 8 (Monday)</span>
-    <span class="badge badge-danger">R2 is under the spotlight this sprint</span>
-    <span class="badge badge-white">Scrum · Agile · AI Tools · TR2 2026</span>
-  </div>
-</header>
-
-<nav>
-  <a href="/">Home</a><span class="nav-sep">·</span>
-  <a href="/sprint8/" class="active">Sprint 8</a><span class="nav-sep">·</span>
-  <a href="/sprint7/">Sprint 7 Archive</a><span class="nav-sep">·</span>
-  <a href="/sprint5/">Sprint 5</a><span class="nav-sep">·</span>
-  <a href="/scrum/">Scrum Reference</a><span class="nav-sep">·</span>
-
-  <a href="/system/">System</a>
-</nav>
-
-<main>
-
-<div class="countdown-strip">
-  <div class="cd-item"><span class="label">Sprint</span><span class="value">8 · W8</span></div>
-  <div class="cd-item"><span class="label">Tag Required</span><span class="value">vW30</span></div>
-  <div class="cd-item"><span class="label">Deadline</span><span class="value">Sprint Day 7 · 23:59 SGT</span></div>
-  <div class="cd-item"><span class="label">Presentation</span><span class="value teal">Sprint Day 8 (Mon)</span></div>
-  <div class="cd-item"><span class="label">Sprint focus</span><span class="value teal">R2 · Scrum Master</span></div>
-</div>
-
-<!-- HARDENING SPOTLIGHT -->
-<section id="hardening-spotlight">
-  <div class="sm-spotlight">
-    <h2>🛠️ The System Hardening Problem</h2>
-
-    <p class="quote">"By Sprint 8, your pipeline should not need you anymore for the parts you built in Sprint 3. If it still does, that's not a feature gap — that's unfinished automation."</p>
-
-    <p>Sprint 7 tested whether your team could run a professional Scrum cycle. Sprint 8 tests something different: whether the system you built can survive contact with reality without a human quietly patching it every week.</p>
-
-    <p>One real example from this cohort: a team hit an LLM API rate limit mid-pipeline last week. They didn't panic and they didn't rebuild anything — they simply switched to a non-rate-limited model and kept moving. That's the standard for Sprint 8. Not "never hit a failure" — <strong>recover from failure without a fire drill.</strong></p>
-
-    <p>Sprint 8 exists to get every team there. <strong>Minimal human intervention is the centrepiece of this sprint.</strong> Every role's work this sprint should be judged against one question: <strong>if you were unavailable this week, would the pipeline still run?</strong></p>
-  </div>
-</section>
-
-<!-- WHAT HARDENING LOOKS LIKE -->
-<section id="hardening-detail">
-  <div class="section-title">What a Hardened Pipeline Looks Like — And Why Most Aren't There Yet</div>
-
-  <p>The dangerous thing about an unhardened pipeline is that it looks fine right up until the week something breaks and nobody's around to fix it by hand. The question to ask isn't "did it run this week" — it's <strong>"what happens the week it doesn't?"</strong></p>
-
-  <div class="callout danger">
-    <div class="callout-title danger">The Manual Patch Pattern — a hardening failure</div>
-    <p>Monday: pipeline runs fine.<br>
-    Tuesday–Thursday: an API call fails silently, or returns malformed data.<br>
-    Friday: someone notices the output looks wrong, opens the code, patches it by hand.<br>
-    Saturday: pipeline runs again — because a human intervened, not because the system recovered.<br><br>
-    <strong>This is not resilience. This is a human pretending to be the system's error handling.</strong> A hardened pipeline catches the same failure automatically — retries, falls back, or flags it clearly — without anyone opening an editor.</p>
-  </div>
-
-  <div class="callout">
-    <div class="callout-title gold">The Minimal-Intervention Test — this sprint's primary accountability</div>
-    <p>By the end of Sprint 8, your team should be able to answer yes to each of these:<br><br>
-    • Did this week's prediction run without anyone manually editing a data file or re-running a failed step?<br>
-    • If an API call failed or returned bad data, did the pipeline handle it — retry, fallback, or a clear error — rather than silently producing wrong output?<br>
-    • Could someone unfamiliar with your code trigger the whole pipeline from one command or one GitHub Actions run?<br>
-    • Has your team started assigning who presents which segment on Demo Day?<br><br>
-    <strong>If the answer to any of these is no, that's exactly what Sprint 8 is for.</strong> Sprint 9 is the final sprint, not a scramble to finish hardening.</p>
-  </div>
-
-  <div class="callout teal">
-    <div class="callout-title teal">What "minimal intervention" looks like in practice</div>
-    <p>It doesn't mean no humans ever touch the system. It means the weekly prediction cycle — fetch data, run agents, synthesize, score — completes without someone babysitting each step. A team member reviewing and approving the output before it's posted is expected. A team member manually re-running a crashed step or hand-fixing a data file every week is the thing to eliminate this sprint.</p>
-  </div>
-</section>
-
-
-<!-- THE DEPENDENCY CHAIN — VISUALISED -->
-<section id="dependency">
-  <div class="section-title">The Dependency Chain — Why Order Matters</div>
-
-  <p>Every pipeline has a strict execution order. Violating it does not just delay one step — it collapses the entire sprint into Sunday night.</p>
-
-  <div style="background:var(--navy-2);border-radius:12px;padding:1.5rem;margin-bottom:1.25rem;overflow-x:auto;">
-    <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;font-size:.85rem;font-weight:600;">
-      <div style="background:rgba(45,212,191,.12);color:var(--teal);padding:.4rem .8rem;border-radius:6px;">R3 Almanac</div>
-      <div style="color:var(--muted);">→</div>
-      <div style="background:rgba(45,212,191,.12);color:var(--teal);padding:.4rem .8rem;border-radius:6px;">R4 Macro</div>
-      <div style="color:var(--muted);">→</div>
-      <div style="background:rgba(45,212,191,.12);color:var(--teal);padding:.4rem .8rem;border-radius:6px;">R5 Technical</div>
-      <div style="color:var(--muted);">→</div>
-      <div style="background:rgba(201,168,76,.12);color:var(--gold);padding:.4rem .8rem;border-radius:6px;">R8 LLM Synthesis</div>
-      <div style="color:var(--muted);">→</div>
-      <div style="background:rgba(201,168,76,.12);color:var(--gold);padding:.4rem .8rem;border-radius:6px;">R7 Human Score</div>
-      <div style="color:var(--muted);">→</div>
-      <div style="background:rgba(61,204,138,.12);color:var(--success);padding:.4rem .8rem;border-radius:6px;">R9 Tag vW30</div>
-    </div>
-    <p style="margin-top:1rem;font-size:.8rem;color:var(--muted);">R8 cannot start until R3, R4, R5 have all committed. R7 cannot apply the Wild Card until R8 has logged all LLM responses. R9 cannot cut the tag until R7 has committed the final prediction. <strong style="color:var(--white);">One missing link collapses the entire chain.</strong></p>
-  </div>
-
-  <p>R2's job is to watch this chain. Not on Sunday. From Monday. The moment any link looks uncertain, R2 acts.</p>
-
-  <div class="callout soft">
-    <div class="callout-title muted">What R2 says when a link is at risk</div>
-    <p><em>"R3 — your Almanac output needs to be committed by Wednesday noon. R8 is blocked until it lands. If something is stopping you, tell me now and we'll solve it together. If you need to swap the role with someone else this sprint, we can do that too."</em><br><br>
-    That conversation on Tuesday takes two minutes. The equivalent conversation on Saturday takes two hours and produces a worse result.</p>
-  </div>
-</section>
-
-<!-- WHAT TO SUBMIT -->
-<section id="must-submit">
-  <div class="section-title">What to Submit by Sprint Day 7 · 23:59 SGT (Sunday)</div>
-
-  <div class="grid3">
-    <div class="card">
-      <div class="big">1</div>
-      <strong>Pipeline ran automatically</strong><br>
-      <span style="font-size:.85rem;color:var(--muted)">GitHub Actions triggered after Sprint Day 5 (Friday) US market close — Saturday morning SGT. Run log is the evidence.</span>
-    </div>
-    <div class="card">
-      <div class="big">2</div>
-      <strong>Release tag <code>vW30</code></strong><br>
-      <span style="font-size:.85rem;color:var(--muted)">Exact format: lowercase <code>v</code>, capital <code>W</code>, two digits. The immutable record that the sprint was sealed on time.</span>
-    </div>
-    <div class="card">
-      <div class="big">3</div>
-      <strong>R2 mid-week check-in committed</strong><br>
-      <span style="font-size:.85rem;color:var(--muted)">New this sprint. R2 must commit a <code>standup_midweek_W30.md</code> by Wednesday (Sprint Day 3) showing all roles checked in and any blockers surfaced. <strong>This is assessed.</strong></span>
-    </div>
-  </div>
-</section>
-
-<!-- R2 OBLIGATIONS THIS SPRINT -->
-<section id="r2-obligations">
-  <div class="section-title">Standing Scrum Obligations — Still Enforced</div>
-  <p>The following are R2's mandatory deliverables this sprint. Each is assessable. Each must be committed to the repository with a timestamp that proves it happened before the stated deadline.</p>
-
-  <div class="obligation-list">
-    <div class="ob">
-      <div class="ob-day">Day 1 (Mon)</div>
-      <div class="ob-text">
-        <strong>Sprint Planning facilitated.</strong> Sprint goal written by R1 and committed. All roles confirmed. DoD checklist agreed. Pipeline dependency order reviewed with the team — every role knows who depends on them and by when.
-        <div class="evidence-box"><strong>Evidence:</strong> <code>sprint_goal_W30.md</code> committed before end of Monday. Discord sprint goal post timestamped.</div>
-      </div>
-    </div>
-    <div class="ob critical">
-      <div class="ob-day">Day 3 (Wed) ⚠️</div>
-      <div class="ob-text">
-        <strong>Mid-week check-in — the new mandatory artefact.</strong> R2 contacts every role member individually (Discord DM or standup note). Confirms: started / not started / blocked. Any blocker escalated same day. Result committed as <code>standup_midweek_W30.md</code>.
-        <div class="evidence-box"><strong>Evidence:</strong> <code>standup_midweek_W30.md</code> committed by Wednesday 23:59 SGT. Must name every role and their status. Blockers must include R2's response action — not just acknowledgement.</div>
-      </div>
-    </div>
-    <div class="ob">
-      <div class="ob-day">Day 4 (Thu)</div>
-      <div class="ob-text">
-        <strong>Agent outputs confirmed committed.</strong> R2 verifies R3, R4, R5 have all committed their outputs before R8 begins LLM synthesis. If any agent is missing, R2 acts immediately — escalates, reassigns, or negotiates scope reduction. Does not wait.
-        <div class="evidence-box"><strong>Evidence:</strong> Commit timestamps on agent files. If any were late, R2's <code>standup_midweek_W30.md</code> should have flagged it Wednesday.</div>
-      </div>
-    </div>
-    <div class="ob">
-      <div class="ob-day">Day 6 (Sat)</div>
-      <div class="ob-text">
-        <strong>All branches merged.</strong> R2 confirms R9 has merged all branches before end of Saturday. Merge conflicts discovered Sunday cannot be resolved in time.
-        <div class="evidence-box"><strong>Evidence:</strong> GitHub branch merge timestamps visible on pull request history.</div>
-      </div>
-    </div>
-    <div class="ob critical">
-      <div class="ob-day">Day 8 (Mon) ⚠️</div>
-      <div class="ob-text">
-        <strong>Sprint 8 retrospective presented.</strong> R2 leads the retrospective section of the Monday presentation. Must answer specifically: when did blockers surface this sprint? How many days earlier than Sprint 7? What one process change made the difference?
-        <div class="evidence-box"><strong>Evidence:</strong> <code>retrospective_W30.md</code> committed before Sunday midnight. Must reference the mid-week check-in and whether it caught anything.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- WEEKLY WORKFLOW -->
-<section id="workflow">
-  <div class="section-title">Sprint Cadence — With SM Checkpoints</div>
-  <table class="wf-table">
-    <thead>
-      <tr><th>When</th><th>What happens</th><th>R2's responsibility</th></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="day">Day 1 (Mon)</td>
-        <td><span class="scrum-tag">SPRINT PLANNING</span><br>Sprint goal, roles, DoD, dependency order reviewed.</td>
-        <td>Facilitate. Ensure every role knows who depends on them. Commit sprint goal today.</td>
-      </tr>
-      <tr>
-        <td class="day">Tue–Wed</td>
-        <td><span class="scrum-tag">EXECUTION + CHECK-IN</span><br>R3–R5 agent work. R8 wires API calls. R6 confirms Friday fetch scheduled.</td>
-        <td><strong>Contact every role individually by Wednesday.</strong> Not a group message. Each person, each role status. Commit <code>standup_midweek_W30.md</code> by Day 3 (Wed):59.</td>
-      </tr>
-      <tr class="hl">
-        <td class="day">Day 4 (Thu)</td>
-        <td><span class="scrum-tag">SYNTHESIS GATE</span><br>R8 cannot run LLMs until R3, R4, R5 have all committed. This is the dependency gate.</td>
-        <td>Confirm all agent outputs are committed before R8 starts. If not — escalate immediately, not tomorrow.</td>
-      </tr>
-      <tr>
-        <td class="day">Sat morning SGT</td>
-        <td><span class="scrum-tag">AUTOMATED FETCH</span><br>GitHub Actions collects Sprint Day 5 (Friday) US closes. No manual action needed if pipeline works.</td>
-        <td>Monitor that the fetch ran. If it failed — R2 surfaces it to R9 immediately.</td>
-      </tr>
-      <tr>
-        <td class="day">Day 6 (Sat)</td>
-        <td><span class="scrum-tag">HUMAN REVIEW</span><br>R7 Wild Card. R9 merges all branches. R10 delta scoring begins.</td>
-        <td>Confirm all branches merged by end of Saturday. Chase R10 if delta scoring hasn't started.</td>
-      </tr>
-      <tr class="hl">
-        <td class="day">Day 7 (Sun) · 23:59</td>
-        <td><span class="scrum-tag">SPRINT SEALED</span><br><code>vW30</code> tag cut. Discord submission posted. Retrospective committed.</td>
-        <td>Confirm all DoD items checked. R2 signs off before R9 cuts the tag.</td>
-      </tr>
-    </tbody>
-  </table>
-</section>
-
-<!-- WHAT CHANGES FROM SPRINT 6 -->
-<section id="whats-new">
-  <div class="section-title">What Changes From Sprint 7</div>
-
-  <div class="callout teal">
-    <div class="callout-title teal">Still in effect: Mid-week check-in is a graded artefact</div>
-    <p><code>standup_midweek_W30.md</code> committed by Wednesday (Sprint Day 3) 23:59 SGT is mandatory. It must name every role, confirm their status, and document any blockers with R2's response action. A check-in that says "everyone is fine" with no specifics does not count.</p>
-  </div>
-
-  <div class="callout teal">
-    <div class="callout-title teal">🆕 New: Demo role assignment begins</div>
-    <p>By the end of Sprint 8, every team must have assigned which role presents which pipeline segment on Demo Day. Sprint 9 is the final sprint — it should not start with "who's presenting what" still undecided.</p>
-  </div>
-
-  <div class="callout teal">
-    <div class="callout-title teal">🆕 New: System story drafted</div>
-    <p>Start writing the narrative you'll present on Demo Day: Level 1 in Week 1 → where you are now. What changed, what broke, what you learned fixing it. This does not need to be polished this sprint — it needs to exist so Sprint 9 is refinement, not a first draft under pressure.</p>
-  </div>
-</section>
-
-<!-- ROLES -->
-<section id="roles">
-  <div class="section-title">Sprint 8 Roles — Hardening Checklist by Role</div>
-  <div class="role-grid">
-    <div class="role-card spotlight">
-      <div class="role-id">R2 · Scrum Master</div>
-      <div class="role-name">This sprint's focus role</div>
-      <div class="role-focus">Mid-week check-in mandatory. Contact every role individually by Wednesday. Commit <code>standup_midweek_W30.md</code>. Open Monday presentation. Lead retrospective. Surface blockers before Sunday.</div>
-      <div><span class="scrum-principle">Blockers surfaced Wednesday can be solved. Sunday cannot.</span></div>
-    </div>
-    <div class="role-card gold-spot">
-      <div class="role-id">R1 · Product Owner</div>
-      <div class="role-name">Sprint Goal + DoD</div>
-      <div class="role-focus">Write sprint goal Monday. DoD checklist must include mid-week check-in and Wednesday agent commit deadline as explicit items.</div>
-    </div>
-    <div class="role-card">
-      <div class="role-id">R3 · Almanac</div>
-      <div class="role-real">→ Research Analyst</div>
-      <div class="role-focus">Commit output by Wednesday. R8 is blocked until you do. R2 will check on Tuesday. Have something to show.</div>
-    </div>
-    <div class="role-card">
-      <div class="role-id">R4 · Macro</div>
-      <div class="role-real">→ Macro Analyst</div>
-      <div class="role-focus">Commit output by Wednesday. Key macro events for this sprint week. R2 will check on Tuesday.</div>
-    </div>
-    <div class="role-card">
-      <div class="role-id">R5 · Technical</div>
-      <div class="role-real">→ Data Analyst</div>
-      <div class="role-focus">Technical read from Sprint Day 6 (Saturday) close (post Sprint 7 fetch). Commit before Wednesday.</div>
-    </div>
-    <div class="role-card">
-      <div class="role-id">R6 · Data</div>
-      <div class="role-real">→ Data Engineer</div>
-      <div class="role-focus">Add all 11 sector ETFs to fetch. Confirm Friday cron scheduled for Sprint Day 5.</div>
-    </div>
-    <div class="role-card gold-spot">
-      <div class="role-id">R7 · Human Score</div>
-      <div class="role-real">→ Senior Analyst</div>
-      <div class="role-focus">Wild Card must be sourced and specific. Review all LLM outputs. Apply override if warranted. This is the primary marks differentiator.</div>
-    </div>
-    <div class="role-card gold-spot">
-      <div class="role-id">R8 · LLM Operator</div>
-      <div class="role-real">→ AI/ML Engineer</div>
-      <div class="role-focus">Cannot start until R3, R4, R5 committed. Call at least 2 LLMs via API. Save responses as files. Build comparison table.</div>
-    </div>
-    <div class="role-card gold-spot">
-      <div class="role-id">R9 · GitHub Lead</div>
-      <div class="role-real">→ DevOps Engineer</div>
-      <div class="role-focus">Own the Friday cron. Merge all branches Saturday. Cut <code>vW30</code> tag before Sunday midnight. Show Actions log Monday.</div>
-    </div>
-    <div class="role-card">
-      <div class="role-id">R10 · Calibration</div>
-      <div class="role-real">→ Product Analyst</div>
-      <div class="role-focus">Score vW30 against Saturday Sprint Day 7 actuals. Build cumulative accuracy W3–W8. delta_W30.md committed before tag.</div>
-    </div>
-  </div>
-</section>
-
-<!-- TIMELINE -->
-<section id="timeline">
-  <div class="section-title">Sprint 8 Timeline</div>
-  <div class="timeline">
-    <div class="tl-item"><div class="tl-date">SPRINT DAY 1 — SPRINT PLANNING (MONDAY)</div><div class="tl-event">Sprint 8 opens · Dependency order reviewed</div><div class="tl-detail">Sprint goal committed. Every role knows who waits on them. DoD includes Wednesday agent deadline.</div></div>
-    <div class="tl-item critical"><div class="tl-date">SPRINT DAY 3 — SM MID-WEEK CHECK-IN ⚠️ (WEDNESDAY)</div><div class="tl-event">R2 contacts every role individually</div><div class="tl-detail"><code>standup_midweek_W30.md</code> committed by 23:59. Blockers surfaced and acted on today — not Sunday.</div></div>
-    <div class="tl-item"><div class="tl-date">SPRINT DAY 4 — SYNTHESIS GATE (THURSDAY)</div><div class="tl-event">R3 + R4 + R5 must be committed · R8 starts</div><div class="tl-detail">LLM API calls run. Comparison table committed. R10 begins delta_W30.md.</div></div>
-    <div class="tl-item deadline"><div class="tl-date">SPRINT DAY 6 ~4AM SGT — AUTO FETCH (SATURDAY)</div><div class="tl-event">⚡ Pipeline collects Friday Sprint Day 5 US closes</div><div class="tl-detail">github-actions[bot] commits timestamped data file. No human involvement.</div></div>
-    <div class="tl-item"><div class="tl-date">SPRINT DAY 6 — HUMAN REVIEW (SATURDAY)</div><div class="tl-event">R7 Wild Card · All branches merged</div><div class="tl-detail">R9 merges everything by end of Saturday. R2 confirms DoD checklist.</div></div>
-    <div class="tl-item deadline"><div class="tl-date">SPRINT DAY 7 · 23:59 SGT — SPRINT SEALED (SUNDAY)</div><div class="tl-event">🏁 vW30 cut · Discord posted · Retrospective committed</div><div class="tl-detail">delta_W30.md committed. R2 signs off DoD. R9 cuts tag. Done.</div></div>
-    <div class="tl-item"><div class="tl-date">SPRINT DAY 1 (MON) — SPRINT REVIEW</div><div class="tl-event">R2 presents first · Mid-week check-in reviewed</div><div class="tl-detail">R2 opens with blocker timeline. Did they surface Wednesday or Sunday? Show the evidence.</div></div>
-  </div>
-</section>
-
-<!-- DISCORD TEMPLATE -->
-<section id="discord">
-  <div class="section-title">Discord Submission Template — Sprint 8 · vW30</div>
-  <p>Post in your team channel before Sunday Sprint Day 7 (Sunday) 23:59 SGT.</p>
-<pre>TEAM: Team __ / Practical __
-SPRINT: 8 · vW30
-GITHUB REPO:
-RELEASE LINK:
-
-━━━ SM CHECK-IN (R2) ━━━
-standup_midweek_W30.md committed by Sprint Day 3 (Wed): Y/N
-Blockers surfaced mid-week: Y/N
-If Y — what was the blocker and how was it resolved:
-Did any dependency slip past Wednesday: Y/N
-If Y — what will change in Sprint 8:
-
-━━━ SPRINT GOAL ━━━
-Our Sprint 8 goal was:
-Did we meet it: Y / Partial / N
-
-━━━ PREDICTION ━━━
-File committed (prediction_W30.json or .md): Y/N
-SPX direction + confidence:
-NDX direction + confidence:
-IWM direction + confidence:
-All 11 sectors covered: Y/N
-Human Score Wild Card applied: Y/N
-Wild Card reasoning:
-
-━━━ PIPELINE ━━━
-Automated fetch ran Sat morning SGT: Y/N
-GitHub Actions run URL:
-All branches merged before tag: Y/N
-
-━━━ AGENTS (all committed before R8 synthesis) ━━━
-Almanac R3 committed by Wed: Y/N
-Macro R4 committed by Wed: Y/N
-Technical R5 committed by Wed: Y/N
-
-━━━ AI SYNTHESIS ━━━
-LLM 1 via API: Y/N · model:
-LLM 2 via API: Y/N · model:
-Responses saved as files: Y/N
-Comparison table committed: Y/N
-
-━━━ CALIBRATION ━━━
-delta_W30.md committed: Y/N
-vW30 SPX direction correct: Y/N · error %:
-vW30 NDX direction correct: Y/N · error %:
-vW30 IWM direction correct: Y/N · error %:
-
-━━━ SCRUM HEALTH ━━━
-retrospective_W30.md committed: Y/N
-Every role R1–R10 ready to present Mon Sprint Day 8: Y/N
-One thing R2 will do differently in Sprint 8:</pre>
-</section>
-
-<!-- REMINDERS -->
-
-<!-- FREE LLM GUIDE -->
-<section id="free-llm">
-  <div class="section-title">Free LLM API Options — For Teams Hitting Limits</div>
-
-  <p>If your team is hitting rate limits or does not want to pay for API access, the following options are free, API-accessible, and capable enough for this pipeline. You do not need GPT-4 for market synthesis. You need consistent structured output — and all three options below deliver that.</p>
-
-  <div class="callout teal">
-    <div class="callout-title teal">Option 1 — Google AI Studio (Gemini 1.5 Flash) · Recommended</div>
-    <p><strong>Cost:</strong> Free. No credit card required.<br>
-    <strong>Limits:</strong> 15 requests/minute · 1,000,000 tokens/day — far more than a weekly pipeline needs.<br>
-    <strong>Get your key:</strong> <a href="https://aistudio.google.com" target="_blank" style="color:var(--teal)">aistudio.google.com</a> → Sign in with Google → Get API key → Create API key.<br>
-    <strong>Model string:</strong> <code>gemini-1.5-flash</code><br>
-    <strong>Store as:</strong> GitHub Secret <code>GEMINI_API_KEY</code></p>
-  </div>
-
-  <div class="callout teal">
-    <div class="callout-title teal">Option 2 — Groq (Llama 3.1 70B) · Fastest free option</div>
-    <p><strong>Cost:</strong> Free. No credit card required.<br>
-    <strong>Limits:</strong> 14,400 requests/day · 6,000 tokens/minute — effectively unlimited for a once-a-week pipeline.<br>
-    <strong>Get your key:</strong> <a href="https://console.groq.com" target="_blank" style="color:var(--teal)">console.groq.com</a> → Sign up → API Keys → Create API Key.<br>
-    <strong>Model string:</strong> <code>llama-3.1-70b-versatile</code><br>
-    <strong>Store as:</strong> GitHub Secret <code>GROQ_API_KEY</code></p>
-  </div>
-
-  <div class="callout teal">
-    <div class="callout-title teal">Option 3 — OpenRouter (multiple free models)</div>
-    <p><strong>Cost:</strong> Free tier includes Llama 3.1 70B, Mistral 7B, Gemma 2 9B, Qwen 2.5 72B.<br>
-    <strong>Get your key:</strong> <a href="https://openrouter.ai" target="_blank" style="color:var(--teal)">openrouter.ai</a> → Sign up → Keys → Create Key.<br>
-    <strong>Model string:</strong> <code>meta-llama/llama-3.1-70b-instruct:free</code><br>
-    <strong>Store as:</strong> GitHub Secret <code>OPENROUTER_API_KEY</code><br>
-    Already used by Team A in this cohort — proven to work for this exact pipeline.</p>
-  </div>
-
-  <div class="callout">
-    <div class="callout-title gold">Why you are hitting rate limits — and how to stop</div>
-    <p>Rate limits are almost always caused by <strong>repeated testing</strong> — running the full pipeline manually multiple times during the week while developing. The fix is simple: <strong>test with short prompts and small inputs during development. Let the GitHub Actions workflow make the real call on Friday night.</strong> One call per model per sprint. Free tiers are designed for exactly this cadence — they are not designed for a developer calling the API 50 times in an hour.<br><br>
-    Store your API key as a GitHub Secret (<code>GEMINI_API_KEY</code>, <code>GROQ_API_KEY</code>, etc). The workflow reads it from the secret. You never hardcode it in your script. You never paste it in Discord.</p>
-  </div>
-
-  <div class="callout soft">
-    <div class="callout-title muted">This section is for teams with API issues only</div>
-    <p>If your current API setup is working — keep it. These options are alternatives for teams who are hitting limits or do not want to pay. You do not need to switch if your pipeline is running correctly.</p>
-  </div>
-</section>
-
-<section id="reminders">
-  <div class="section-title">Sprint 8 Standing Reminders</div>
-  <div style="display:flex;flex-direction:column;gap:.9rem">
-    <div class="callout soft">
-      <div class="callout-title muted">The mid-week check-in is not a Discord message</div>
-      <p>Posting "hey everyone how are you going" in the team channel is not a mid-week check-in. R2 must contact each role member individually, confirm their specific deliverable, confirm its status, and document the result in <code>standup_midweek_W30.md</code>. The file must name each role (R3, R4, R5...) with a status line and any blocker. Generic check-ins score zero.</p>
-    </div>
-    <div class="callout soft">
-      <div class="callout-title muted">Agents must commit before R8 — no exceptions</div>
-      <p>This is the rule that Sprint 7 teams broke when dependencies collapsed. R8 synthesises what the agents have produced. If R8 synthesises without agent outputs — the synthesis is based on the LLMs' own knowledge, not your team's research. That is not a pipeline. That is prompt engineering. They are not the same thing.</p>
-    </div>
-    <div class="callout soft">
-      <div class="callout-title muted">Tag format: vW30 — still enforced</div>
-      <p>Lowercase <code>v</code>, capital <code>W</code>, two digits. <code>W30</code>, <code>vw30</code>, <code>v1.0.0</code> all result in no credit for the release. Put it on the DoD checklist. Check it explicitly. Do not rely on memory.</p>
-    </div>
-    <div class="callout teal">
-      <div class="callout-title teal">The data domain is the training environment. Scrum is the lesson.</div>
-      <p>You are not being assessed on whether you predicted the market correctly. You are being assessed on whether your team ran a professional delivery cycle — planned, executed, reviewed, and retrospected — with a system that improves sprint over sprint. R2 is the role that makes that cycle work. Sprint 8 is R2's sprint.</p>
-    </div>
-  </div>
-</section>
-
-</main>
-
-<footer>CP3405 Design Thinking 3 · TR2 2026 · Sprint 8 · vW30 · Due Sprint Day 7 (Sunday) · 23:59 SGT · Presentation Sprint Day 8 (Monday)</footer>
-
-</body>
-</html>
+<p style="text-align:center;color:#8493a8;font-size:.85rem;padding:20px">CP3405 Design Thinking III · TR3 2026 · Sprint 8 — Catch Up, Then Read the Volume</p>
+</body></html>

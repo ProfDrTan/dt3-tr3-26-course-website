@@ -61,14 +61,14 @@ footer{max-width:920px;margin:40px auto 0;padding:20px 22px;border-top:1px solid
 <p>The target is unchanged: the <a href="../sprint7/index.html">Sprint 7 brief</a>, sections 2–7, and its five pass-or-fail rules. Check yourself against this list before Wednesday:</p>
 <div class="tablewrap"><table>
 <tr><th>#</th><th>Check</th><th>How it is tested on 2 Nov</th></tr>
-<tr><td>1</td><td>Seven tiles, each showing its own Summary rating</td><td>Checking team clicks every tile</td></tr>
-<tr><td>2</td><td>Summary gauge = all <b>23</b> votes (11 indicators + 12 moving averages; ATR does not vote)</td><td>Checking team adds up your Buy / Neutral / Sell counts</td></tr>
-<tr><td>3</td><td>Needle points at the score: −1 far left (Strong Sell), +1 far right (Strong Buy)</td><td>Compares needle with pill</td></tr>
-<tr><td>4</td><td>Price, change and % change from the previous daily close</td><td>Compares with Investing.com</td></tr>
-<tr><td>5</td><td>Bar time = time of the last <b>completed bar</b>, in SGT (not the time the file was written)</td><td>Checking team asks what the bar time means</td></tr>
-<tr><td>6</td><td>Every indicator row opens its working; every moving average shows Buy/Sell</td><td>Checking team taps a row at random</td></tr>
-<tr><td>7</td><td><code>docs/verify.md</code>: 30 Min, Hourly, Daily at the same bar time, with screenshots, mismatches explained</td><td>Checking team asks for the biggest mismatch</td></tr>
-<tr><td>8</td><td><code>ui/index.html</code> is the team dashboard and links to <code>ui/gold.html</code></td><td>Checking team opens index.html first</td></tr>
+<tr><td>1</td><td>Seven tiles, each showing its own Summary rating</td><td>R5 clicks every tile live</td></tr>
+<tr><td>2</td><td>Summary gauge = all <b>23</b> votes (11 indicators + 12 moving averages; ATR does not vote)</td><td>R3 adds up the Buy / Neutral / Sell counts on screen</td></tr>
+<tr><td>3</td><td>Needle points at the score: −1 far left (Strong Sell), +1 far right (Strong Buy)</td><td>R4 shows needle and pill agree</td></tr>
+<tr><td>4</td><td>Price, change and % change from the previous daily close</td><td>R4 compares with Investing.com live</td></tr>
+<tr><td>5</td><td>Bar time = time of the last <b>completed bar</b>, in SGT (not the time the file was written)</td><td>R6 explains what the bar time means</td></tr>
+<tr><td>6</td><td>Every indicator row opens its working; every moving average shows Buy/Sell</td><td>A row drawn at random is opened and explained</td></tr>
+<tr><td>7</td><td><code>docs/verify.md</code>: 30 Min, Hourly, Daily at the same bar time, with screenshots, mismatches explained</td><td>R4 shows the biggest mismatch</td></tr>
+<tr><td>8</td><td><code>ui/index.html</code> is the team dashboard and links to <code>ui/gold.html</code></td><td>R5 opens index.html first</td></tr>
 </table></div>
 <div class="card"><b>Reference engine (optional).</b> Teams may start from the course’s reference indicator engine (<code>tech_summary.py</code>, released on the course site on Monday). Conditions: credit it at the top of your README; the page, the data script and <code>verify.md</code> are still yours; and on 2 Nov <b>every member explains one indicator from it live</b>. Copying it without understanding it fails in front of the class.</div>
 
@@ -108,7 +108,7 @@ footer{max-width:920px;margin:40px auto 0;padding:20px 22px;border-top:1px solid
 <div class="task"><span class="num">R1</span>Working agreement, sprint board, stand-up log; lock the weekly calls in <code>predictions/vW8.json</code> by Wednesday 23:59; Wednesday check-in.</div>
 <div class="task"><span class="num">R2</span>Your weekly call; then the price line and change (check 4).</div>
 <div class="task"><span class="num">R3</span>Indicators and their working (checks 2, 6); the volume label rule.</div>
-<div class="task"><span class="num">R4</span><code>verify.md</code>, including the new volume lines. You find the mismatches before the checking team does.</div>
+<div class="task"><span class="num">R4</span><code>verify.md</code>, including the new volume lines. You are the team’s own auditor: you run the eight checks live and record the result.</div>
 <div class="task"><span class="num">R5</span><code>gold.html</code>: needles, tiles, and the Price &amp; Volume panel.</div>
 <div class="task"><span class="num">R6</span><code>dashboard_data.py</code>: the 60-bar series, volume, 4 Hours and Daily volume; branches and merges.</div>
 
@@ -123,20 +123,20 @@ checkin/wednesday.md        R1 · Wednesday 28 Oct 12:00
 FigJam working agreement    R1 · Tuesday 27 Oct 23:59</pre>
 
 <h2>7. Monday 2 Nov: the team-run live test</h2>
-<p>Teams test each other. <b>Team 1 ↔ Team 2</b> and <b>Team 3 ↔ Team 4</b>: one team presents while its partner team checks, then they swap. About 15 minutes each way. The teams run the whole session themselves.</p>
+<p>Each team runs its own live test in front of the class, about 15 minutes, following the same steps in the same order. Every role has a job; the team’s R4 is the auditor who runs the checks and records the result.</p>
 <div class="card key"><b>Every team uses the same 10-slide presentation template</b> (<a href="../assets/sprint8/sprint8-presentation-template.pptx">download the template, PowerPoint</a>), in the same order as the steps below. Replace every [bracketed] placeholder; do not add, remove or reorder slides. Commit the finished deck as <code>docs/sprint8-presentation.pdf</code> by Monday 2 Nov 09:00.</div>
 <ol>
-<li><b>Presenting R6</b> starts the data script and the local server live. The bar time must be from that day.</li>
-<li><b>Presenting R5</b> opens <code>index.html</code>, then the gold page, and clicks through all seven tiles.</li>
-<li><b>Checking R4</b> names a timeframe and compares it with Investing.com on their own phone.</li>
-<li><b>The checking team picks</b> any indicator row <b>and</b> which presenting member explains it. Teams using the reference engine: every member explains one indicator.</li>
-<li><b>Presenting R3</b> explains the volume label; the checking team asks why it says what it says.</li>
-<li><b>Presenting R4</b> explains the biggest mismatch in <code>verify.md</code>.</li>
-<li><b>Presenting R2</b> presents the four weekly calls.</li>
-<li><b>Checking R1</b> scores the eight Step A checks and the volume panel (pass / fail each, one line of reason) and commits the result to the checking team’s own repo as <code>docs/peer-check-team-N.md</code> (N = the team they checked).</li>
-<li><b>Presenting R1</b> commits <code>docs/live-test.md</code> the same day: what passed, what failed, and what the team will fix first in Sprint 9.</li>
+<li><b>R1</b> presents the team’s Step A status (slide 3).</li>
+<li><b>R6</b> starts the data script and the local server live. The bar time must be from that day.</li>
+<li><b>R5</b> opens <code>index.html</code>, then the gold page, and clicks through all seven tiles.</li>
+<li><b>R4</b> names a timeframe and compares it with Investing.com live on screen.</li>
+<li><b>R1 draws at random</b>, on screen, one indicator row and one team member (for example with a random-number generator); that member explains the row. Teams using the reference engine: every member explains one indicator.</li>
+<li><b>R3</b> explains the volume label: why it says what it says.</li>
+<li><b>R4</b> explains the biggest mismatch in <code>verify.md</code>.</li>
+<li><b>R2</b> presents the four weekly calls.</li>
+<li><b>R1</b> closes with teamwork evidence and the first fix for Sprint 9.</li>
+<li><b>R4</b> commits <code>docs/live-test.md</code> the same day: each of the eight checks and the volume panel, pass or fail, with one line of evidence, plus what the team fixes first.</li>
 </ol>
-<div class="card"><b>Fair checking counts too.</b> A peer check that passes something that clearly fails, or fails something that clearly passes, counts against the checking team.</div>
 </div>
 <p style="text-align:center;color:#8493a8;font-size:.85rem;padding:20px">CP3405 Design Thinking III · TR3 2026 · Sprint 8 — Catch Up, Then Read the Volume</p>
 </body></html>

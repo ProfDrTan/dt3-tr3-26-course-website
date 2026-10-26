@@ -108,7 +108,7 @@ footer{max-width:920px;margin:40px auto 0;padding:20px 22px;border-top:1px solid
 <div class="task"><span class="num">R1</span>Working agreement, sprint board, stand-up log; lock the weekly calls in <code>predictions/vW8.json</code> by Wednesday 23:59; Wednesday check-in.</div>
 <div class="task"><span class="num">R2</span>Your weekly call; then the price line and change (check 4).</div>
 <div class="task"><span class="num">R3</span>Indicators and their working (checks 2, 6); the volume label rule.</div>
-<div class="task"><span class="num">R4</span><code>verify.md</code>, including the new volume lines. You are the team’s own auditor: you run the eight checks live and record the result.</div>
+<div class="task"><span class="num">R4</span><code>verify.md</code>, including the new volume lines. You are the auditor: in Practical A you check another team in rotation (1→2, 2→3, 3→1); in Team 4 you check your own team. You also commit your team’s <code>docs/live-test.md</code>.</div>
 <div class="task"><span class="num">R5</span><code>gold.html</code>: needles, tiles, and the Price &amp; Volume panel.</div>
 <div class="task"><span class="num">R6</span><code>dashboard_data.py</code>: the 60-bar series, volume, 4 Hours and Daily volume; branches and merges.</div>
 
@@ -123,20 +123,27 @@ checkin/wednesday.md        R1 · Wednesday 28 Oct 12:00
 FigJam working agreement    R1 · Tuesday 27 Oct 23:59</pre>
 
 <h2>7. Monday 2 Nov: the team-run live test</h2>
-<p>Each team runs its own live test in front of the class, about 15 minutes, following the same steps in the same order. Every role has a job; the team’s R4 is the auditor who runs the checks and records the result.</p>
+<p>Each team runs its own live test in front of its practical class, about 15 minutes, following the same steps in the same order. Every role has a job.</p>
+<div class="tablewrap"><table>
+<tr><th>Practical</th><th>Who checks</th><th>How</th></tr>
+<tr><td><b>Practical A</b>: Teams 1, 2, 3</td><td>Another team, in rotation: <b>Team 1 checks Team 2, Team 2 checks Team 3, Team 3 checks Team 1</b></td><td>The checking team’s R4 does steps 4 and 5 below, and the checking team commits <code>docs/peer-check-team-N.md</code> (N = the team it checked): each of the eight checks and the volume panel, pass or fail, one line of reason.</td></tr>
+<tr><td><b>Team 4</b></td><td>Team 4 itself</td><td>Team 4’s own R4 is the auditor and does steps 4 and 5.</td></tr>
+</table></div>
 <div class="card key"><b>Every team uses the same 10-slide presentation template</b> (<a href="../assets/sprint8/sprint8-presentation-template.pptx">download the template, PowerPoint</a>), in the same order as the steps below. Replace every [bracketed] placeholder; do not add, remove or reorder slides. Commit the finished deck as <code>docs/sprint8-presentation.pdf</code> by Monday 2 Nov 09:00.</div>
 <ol>
 <li><b>R1</b> presents the team’s Step A status (slide 3).</li>
 <li><b>R6</b> starts the data script and the local server live. The bar time must be from that day.</li>
 <li><b>R5</b> opens <code>index.html</code>, then the gold page, and clicks through all seven tiles.</li>
-<li><b>R4</b> names a timeframe and compares it with Investing.com live on screen.</li>
-<li><b>R1 draws at random</b>, on screen, one indicator row and one team member (for example with a random-number generator); that member explains the row. Teams using the reference engine: every member explains one indicator.</li>
+<li><b>The checker’s R4</b> (the checking team in Practical A; Team 4’s own R4) names a timeframe and compares it with Investing.com live on screen.</li>
+<li><b>The checker’s R4 draws at random</b>, on screen, one indicator row and one presenting member (for example with a random-number generator); that member explains the row. Teams using the reference engine: every member explains one indicator.</li>
 <li><b>R3</b> explains the volume label: why it says what it says.</li>
 <li><b>R4</b> explains the biggest mismatch in <code>verify.md</code>.</li>
 <li><b>R2</b> presents the four weekly calls.</li>
 <li><b>R1</b> closes with teamwork evidence and the first fix for Sprint 9.</li>
-<li><b>R4</b> commits <code>docs/live-test.md</code> the same day: each of the eight checks and the volume panel, pass or fail, with one line of evidence, plus what the team fixes first.</li>
+<li><b>The presenting team’s R4</b> commits <code>docs/live-test.md</code> the same day: each of the eight checks and the volume panel, pass or fail, with one line of evidence, plus what the team fixes first. In Practical A, the checking team also commits its <code>docs/peer-check-team-N.md</code>.</li>
 </ol>
+<div class="card"><b>Fair checking counts (Practical A).</b> A peer check that passes something that clearly fails, or fails something that clearly passes, counts against the checking team.</div>
+
 </div>
 <p style="text-align:center;color:#8493a8;font-size:.85rem;padding:20px">CP3405 Design Thinking III · TR3 2026 · Sprint 8 — Catch Up, Then Read the Volume</p>
 </body></html>

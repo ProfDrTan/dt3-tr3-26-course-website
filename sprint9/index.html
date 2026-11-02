@@ -51,10 +51,19 @@ a:focus-visible{outline:2px solid var(--lit);outline-offset:2px}
 <p>Think of a weather forecaster. Making forecasts is only half the job. The other half is looking back: "I said 30 degrees, it was 26. I keep forecasting too hot. Why? What do I change?" A forecaster who never looks back never improves.</p>
 <div class="scroll"><table>
 <tr><th>Step</th><th>Plain meaning</th><th>Example</th></tr>
-<tr><td><b>Check the error</b> (Sprint 9A)</td><td>How far was our prediction from what actually happened?</td><td>We said SPX would close at 7,750. It closed at 7,580. We were 2.2% too high.</td></tr>
-<tr><td><b>Fix the method</b> (decide in Sprint 9A, test in Sprint 9B)</td><td>Given that error, what do we change?</td><td>We were too high three weeks in a row, so next time we start from Thursday's close instead of last week's level.</td></tr>
+<tr><td><b>Check the error</b> (Sprint 9A, Deep Dive Stage 6)</td><td>How far was our prediction from what actually happened?</td><td>We said SPX would close at 7,750. It closed at 7,580. We were 2.2% too high.</td></tr>
+<tr><td><b>Fix the method</b> (decide in Sprint 9A, test in Sprint 9B, Deep Dive Stage 7)</td><td>Given that error, what do we change?</td><td>We were too high three weeks in a row, so next time we start from Thursday's close instead of last week's level.</td></tr>
 </table></div>
-<p class="key">On the System Architecture page these are the boxes called "Delta" and "Prescribe". You don't need to read that page for this sprint.</p>
+<h2>Where Sprint 9 fits: the Architecture Deep Dive</h2>
+<p>The <a href="../architecture/index.html">Architecture Deep Dive</a> shown in class walks through the whole system in nine stages. Sprint 9 is where your team moves from the first half of that system into the second.</p>
+<div class="scroll"><table>
+<tr><th>Deep Dive stages</th><th>What it means</th><th>Where you are</th></tr>
+<tr><td><b>Phase 1, Stages 1–5:</b> Data Sources → Agent Analysis → LLM Synthesis → Human Score → Locked Prediction</td><td>Gather data, analyse it, make a call, and lock it before the week plays out.</td><td>What you have been doing since Sprint 4: data scripts, the gold technical engine and a locked weekly prediction.</td></tr>
+<tr><td><b>Phase 2, Stage 6:</b> Delta Measurement</td><td>Compare each locked prediction with what actually happened. In Scrum terms, this is the Sprint Review.</td><td><b>Sprint 9A</b>, milestones 3–5: your error table and charts.</td></tr>
+<tr><td><b>Phase 2, Stage 7:</b> Prescriptions</td><td>Decide what to change because of the error. In Scrum terms, this is the Retrospective action item.</td><td><b>Sprint 9A</b>, milestone 6: what went wrong and what you will change.</td></tr>
+<tr><td>Back to Stage 2</td><td>The change goes back into how the next prediction is made. This closes the loop.</td><td><b>Sprint 9B</b>: test your change on the next locked prediction.</td></tr>
+</table></div>
+<p class="key">To see it: open the <a href="../architecture/index.html">Deep Dive</a> and click Next ▶ until Stage 6 (Delta Measurement) and Stage 7 (Prescriptions). That is what your team builds this week, using your own predictions.</p>
 
 <h2>Sprint 9A: your six milestones</h2>
 <p>Each milestone is one item in a fixed place by a fixed time. The Scrum Scoreboard shows every team's result publicly, and that includes your actual work, not just a tick.</p>

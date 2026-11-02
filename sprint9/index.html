@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>CP3405 TR3 — Sprint 9, Part 1</title>
+<title>CP3405 TR3 — Sprint 9A</title>
 <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#f3f5f7;--ink:#17222d;--mute:#5b6875;--card:#ffffff;--line:#d5dbe1;--lit:#0e6e6a;--litbg:#d9efed;--next:#8a6d1f;--nextbg:#f6ecd2;--dim:#9aa5b0;--dimbg:#e7ebef;--warn:#9b2c2c;--warnbg:#f9e3e3;
@@ -42,21 +42,21 @@ nav a{color:var(--lit);margin-right:14px;font-weight:600;text-decoration:none}
 a:focus-visible{outline:2px solid var(--lit);outline-offset:2px}
 </style></head><body><main>
 <p class="sub"><a href="../index.html">← Course home</a></p>
-<h1>Sprint 9, Part 1: How wrong were we?</h1>
-<p class="sub"><b>Sprint 9 comes in two parts.</b> <b>Part 1</b> (this brief) runs from Mon 2 Nov to Sat 7 Nov. <b>Part 2</b> will be released over the weekend of 7–8 Nov, based on where each team stands after Part 1. Mon 9 Nov is a public holiday, so there is no presentation between the two parts. Instead, your progress is shown on the new <b>Scrum Scoreboard</b>, linked from the course home page from Thu 5 Nov.</p>
-<p><b>Part 1 goal:</b> by Saturday, every team can show, with real numbers, how accurate its past predictions were, and has written down what it will change. In Part 2 you will put that change to the test.</p>
+<h1>Sprint 9A: How wrong were we?</h1>
+<p class="sub"><b>Sprint 9 comes in two parts: Sprint 9A and Sprint 9B.</b> <b>Sprint 9A</b> (this brief) runs from Mon 2 Nov to Sat 7 Nov. <b>Sprint 9B</b> will be released over the weekend of 7–8 Nov, based on where each team stands after Sprint 9A. Mon 9 Nov is a public holiday, so there is no presentation between the two parts. Instead, your progress is shown on the new <b>Scrum Scoreboard</b>, linked from the course home page from Thu 5 Nov.</p>
+<p><b>Sprint 9A goal:</b> by Saturday, every team can show, with real numbers, how accurate its past predictions were, and has written down what it will change. In Sprint 9B you will put that change to the test.</p>
 
 <h2>The idea in one minute</h2>
 <p>Every week since Sprint 4 your team has locked a prediction for where SPX, NDX, gold and the 10-year yield (TNX) would close on Friday. Those predictions are sitting in your repo, and nobody has checked them yet.</p>
 <p>Think of a weather forecaster. Making forecasts is only half the job. The other half is looking back: "I said 30 degrees, it was 26. I keep forecasting too hot. Why? What do I change?" A forecaster who never looks back never improves.</p>
 <div class="scroll"><table>
 <tr><th>Step</th><th>Plain meaning</th><th>Example</th></tr>
-<tr><td><b>Check the error</b> (Part 1)</td><td>How far was our prediction from what actually happened?</td><td>We said SPX would close at 7,750. It closed at 7,580. We were 2.2% too high.</td></tr>
-<tr><td><b>Fix the method</b> (decide in Part 1, test in Part 2)</td><td>Given that error, what do we change?</td><td>We were too high three weeks in a row, so next time we start from Thursday's close instead of last week's level.</td></tr>
+<tr><td><b>Check the error</b> (Sprint 9A)</td><td>How far was our prediction from what actually happened?</td><td>We said SPX would close at 7,750. It closed at 7,580. We were 2.2% too high.</td></tr>
+<tr><td><b>Fix the method</b> (decide in Sprint 9A, test in Sprint 9B)</td><td>Given that error, what do we change?</td><td>We were too high three weeks in a row, so next time we start from Thursday's close instead of last week's level.</td></tr>
 </table></div>
 <p class="key">On the System Architecture page these are the boxes called "Delta" and "Prescribe". You don't need to read that page for this sprint.</p>
 
-<h2>Part 1: your six milestones</h2>
+<h2>Sprint 9A: your six milestones</h2>
 <p>Each milestone is one item in a fixed place by a fixed time. The Scrum Scoreboard shows every team's result publicly, and that includes your actual work, not just a tick.</p>
 <div class="scroll"><table>
 <tr><th>Deadline (SGT)</th><th>Milestone</th><th>Where</th><th>Owner</th></tr>
@@ -118,13 +118,13 @@ vW8,2026-10-30,TNX,4.99,4.929,6.1,bp</pre>
 <li><b>Only <code>main</code> counts.</b> Work on another branch, on a laptop, in a chat or on a hosting site doesn't count. Every team's <code>main</code> is checked every hour, so the time each file arrived is recorded automatically.</li>
 <li><b>Each milestone shows one result:</b> ✅ On time, ⚠️ Late (with the time it arrived), or ❌ No submission. A result is fixed at its deadline and is not changed afterwards.</li>
 <li><b>Your work appears on the scoreboard:</b> your numbers, your table, a picture of your charts and your paragraphs. Predictions appear only after their lock time has passed.</li>
-<li><b>When the scoreboard updates:</b> Thursday 5 Nov for milestones 1–3, and Sunday 8 Nov for milestones 4–6. Part 2 is shaped by these results.</li>
+<li><b>When the scoreboard updates:</b> Thursday 5 Nov for milestones 1–3, and Sunday 8 Nov for milestones 4–6. Sprint 9B is shaped by these results.</li>
 <li>The scoreboard also shows whether your Daily Scrum is happening in your Discord team channel.</li>
 </ul>
 
 <h2>Who does what</h2>
 <div class="scroll"><table>
-<tr><th>Role</th><th>Part 1</th></tr>
+<tr><th>Role</th><th>Sprint 9A</th></tr>
 <tr><td>R1 Product Owner &amp; Scrum Master</td><td>Sprint 9 backlog on FigJam (milestone 1). Locks the vW9 prediction. Keeps the cards moving.</td></tr>
 <tr><td>R2 Almanac &amp; Macro</td><td>SPX: vW9 number and its paragraph in milestone 6.</td></tr>
 <tr><td>R3 Technical &amp; Economic</td><td>NDX: vW9 number and its paragraph in milestone 6.</td></tr>

@@ -136,7 +136,7 @@ footer{text-align:center;color:#64748b;padding:36px 22px;border-top:1px solid #d
 
   <!-- CANVAS -->
   <div style="border-radius:16px;overflow:hidden;border:1px solid #1e3a5f;background:#0a1628">
-    <canvas id="flowCanvas" width="860" height="390" style="display:block;max-width:100%;height:auto" title="Step through using Next ▶ button above"></canvas>
+    <canvas id="flowCanvas" width="860" height="400" style="display:block;max-width:100%;height:auto" title="Step through using Next ▶ button above"></canvas>
   </div>
   <p class="small" style="margin-top:6px;color:#64748b">Use <strong>Next ▶</strong> to advance. <strong>◀ Back</strong> to review. Click any stage dot to jump directly. 🔊 Audio plays when you advance a stage.</p>
 </section>
@@ -269,7 +269,7 @@ footer{text-align:center;color:#64748b;padding:36px 22px;border-top:1px solid #d
   const canvas = document.getElementById('flowCanvas');
   if(!canvas) return;
   const ctx = canvas.getContext('2d');
-  const W=860, H=390;
+  const W=860, H=400;
 
   if(!ctx.roundRect){
     ctx.roundRect=function(x,y,w,h,r){
@@ -290,7 +290,7 @@ footer{text-align:center;color:#64748b;padding:36px 22px;border-top:1px solid #d
     finviz: {x:15, y:18,w:90,h:44,label:'FINVIZ',  sub:'Sector Map',      fill:'#1e3a8a',text:'#bfdbfe'},
     yahoo:  {x:120,y:18,w:90,h:44,label:'YAHOO',   sub:'5D Sectors',      fill:'#1e3a8a',text:'#bfdbfe'},
     tecon:  {x:225,y:18,w:100,h:44,label:'TRAD.ECON',sub:'Calendar',      fill:'#1e3a8a',text:'#bfdbfe'},
-    charts: {x:340,y:18,w:90,h:44,label:'CHARTS',  sub:'SPX NDX IWM',     fill:'#1e3a8a',text:'#bfdbfe'},
+    charts: {x:340,y:18,w:90,h:54,label:'CHARTS',  sub:'SPX NDX Gold\nTNX Oil',     fill:'#1e3a8a',text:'#bfdbfe'},
     almanac:{x:10, y:98,w:90,h:54,label:'ALMANAC', sub:'R2·Historical',   fill:'#0d9488',text:'#fff'},
     macro:  {x:115,y:98,w:90,h:54,label:'MACRO',   sub:'R2·Macro-Econ',   fill:'#0d9488',text:'#fff'},
     tech:   {x:225,y:98,w:100,h:54,label:'TECHNICAL',sub:'R3·Charts',     fill:'#0d9488',text:'#fff'},
@@ -336,7 +336,9 @@ footer{text-align:center;color:#64748b;padding:36px 22px;border-top:1px solid #d
   const calibData=[
     {ticker:'SPX',pred:'+1.2%',actual:'+0.4%',delta:'-0.8%',dir:true, score:72},
     {ticker:'NDX',pred:'+1.8%',actual:'-0.3%',delta:'-2.1%',dir:false,score:41},
-    {ticker:'IWM',pred:'+0.5%',actual:'+1.1%',delta:'+0.6%',dir:true, score:68},
+    {ticker:'GOLD',pred:'+0.9%',actual:'+1.3%',delta:'+0.4%',dir:true, score:78},
+    {ticker:'TNX',pred:'+5bp',actual:'-8bp',delta:'-13bp',dir:false,score:38},
+    {ticker:'OIL',pred:'-1.0%',actual:'-0.4%',delta:'+0.6%',dir:true, score:66},
   ];
   const rxItems=[
     {color:'#fcd34d',text:'↑ Macro weight — NFP surprise: macro signal was underweighted'},
@@ -417,7 +419,7 @@ footer{text-align:center;color:#64748b;padding:36px 22px;border-top:1px solid #d
     if(stageIdx!==5)return;
     const alpha=Math.min(1,stageTimer/60);
     // Bottom strip — fully below all pipeline nodes (which end ~y270)
-    const px=10,py=292,pw=840,ph=82;
+    const px=10,py=292,pw=840,ph=100;
     ctx.save();ctx.globalAlpha=alpha;
     rr(px,py,pw,ph,12,'rgba(8,18,36,0.97)','#1e3a8a',1.5);
     ctx.fillStyle='#93c5fd';ctx.font='bold 8px Arial';ctx.textAlign='left';
@@ -428,7 +430,7 @@ footer{text-align:center;color:#64748b;padding:36px 22px;border-top:1px solid #d
       ctx.fillText(h,cols[i]+px,py+28);
     });
     calibData.forEach((d,row)=>{
-      const ry=py+42+row*14;
+      const ry=py+40+row*12;
       ctx.fillStyle='#e2e8f0';ctx.font='7.5px Arial';
       ctx.fillText(d.ticker,cols[0]+px,ry);
       ctx.fillStyle='#93c5fd';ctx.fillText(d.pred,cols[1]+px,ry);
@@ -759,7 +761,7 @@ footer{text-align:center;color:#64748b;padding:36px 22px;border-top:1px solid #d
     </div>
     <div class="card">
       <strong>TradingView Lightweight Charts</strong><br>
-      <span class="small">Interactive candlestick rendering for SPX, NDX, IWM. Visual layer on top of the Technical Agent R5 output.</span>
+      <span class="small">Interactive candlestick rendering for SPX, NDX, gold, the 10-year yield (TNX) and oil. Visual layer on top of the Technical Agent R3 output.</span>
     </div>
     <div class="card">
       <strong>Multi-LLM Insights Panel</strong><br>

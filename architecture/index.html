@@ -343,7 +343,7 @@ footer{text-align:center;color:#64748b;padding:36px 22px;border-top:1px solid #d
   const rxItems=[
     {color:'#fcd34d',text:'↑ Macro weight — NFP surprise: macro signal was underweighted'},
     {color:'#f87171',text:'✗ Add contrarian check — LLM consensus had tech sector bias'},
-    {color:'#6ee7b7',text:'↑ Expand R6 evidence — add options flow data to Data/Actuals'},
+    {color:'#6ee7b7',text:'↑ Expand R4 evidence — add options flow data to Data/Actuals'},
   ];
 
   // ── PARTICLE SPAWN ────────────────────────────────────────────
@@ -404,6 +404,10 @@ footer{text-align:center;color:#64748b;padding:36px 22px;border-top:1px solid #d
     // draw all paths as faint guides
     PATHS.forEach((p,i)=>{
       const isActive=STAGES[stageIdx].pathIdxs.includes(i);
+      // only draw a connection once the walkthrough has reached it (no ghost lines to hidden or future steps)
+      const first=STAGES.findIndex(st=>st.pathIdxs.includes(i));
+      if(first<0||stageIdx<first)return;
+      if(i>=10&&!isActive)return; // dashed feedback lines show only in their own stage
       ctx.save();
       ctx.globalAlpha=isActive?0.35:0.12;
       ctx.beginPath();ctx.moveTo(p.pts[0].x,p.pts[0].y);

@@ -1,0 +1,169 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CP3405 TR3 — Sprint 9B</title>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f5f7;--ink:#17222d;--mute:#5b6875;--card:#ffffff;--line:#d5dbe1;--lit:#0e6e6a;--litbg:#d9efed;--next:#8a6d1f;--nextbg:#f6ecd2;--dim:#9aa5b0;--dimbg:#e7ebef;--warn:#9b2c2c;--warnbg:#f9e3e3;
+color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121a21;--ink:#e6ecf1;--mute:#9fb0bf;--card:#1a242d;--line:#2d3a46;--lit:#5fc9c2;--litbg:#173836;--next:#e2c27a;--nextbg:#3a3220;--dim:#6d7b88;--dimbg:#222d37;--warn:#f0a3a3;--warnbg:#3d2224;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121a21;--ink:#e6ecf1;--mute:#9fb0bf;--card:#1a242d;--line:#2d3a46;--lit:#5fc9c2;--litbg:#173836;--next:#e2c27a;--nextbg:#3a3220;--dim:#6d7b88;--dimbg:#222d37;--warn:#f0a3a3;--warnbg:#3d2224;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:860px;margin:0 auto;padding:28px 18px 60px}
+h1,h2,h3{font-family:Literata,Georgia,serif;line-height:1.25}
+h1{font-size:clamp(1.6rem,4.5vw,2.3rem);margin:.2em 0 .3em}
+h2{font-size:1.45rem;margin:2.2em 0 .5em;padding-top:.6em;border-top:2px solid var(--line)}
+h3{font-size:1.1rem;margin:1.4em 0 .4em}
+p,li{max-width:72ch}
+.draft{background:var(--warnbg);color:var(--warn);padding:10px 14px;border-radius:6px;font-weight:600;font-size:.92rem}
+.sub{color:var(--mute)}
+.pipe{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:18px 0 6px}
+.node{border-radius:8px;padding:8px 6px;text-align:center;font-size:.78rem;font-weight:700;line-height:1.25;border:2px solid transparent}
+.node small{display:block;font-weight:400;font-size:.7rem;margin-top:3px}
+.n-done{background:var(--litbg);color:var(--lit);border-color:var(--lit)}
+.n-s9{background:var(--nextbg);color:var(--next);border-color:var(--next)}
+.n-s10{background:var(--dimbg);color:var(--ink);border:2px dashed var(--mute)}
+.n-s11{background:var(--dimbg);color:var(--dim);border:2px dashed var(--dim)}
+@media (max-width:620px){.pipe{grid-template-columns:repeat(4,1fr)}}
+.key{font-size:.82rem;color:var(--mute)}
+.scroll{overflow-x:auto;margin:10px 0}
+table{border-collapse:collapse;width:100%;font-size:.92rem;min-width:520px}
+th,td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}
+th{background:var(--dimbg)}
+code,pre{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.86rem}
+pre{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px;overflow-x:auto}
+.box{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--lit);border-radius:6px;padding:12px 16px;margin:14px 0}
+.box.s10{border-left-color:var(--mute)}.box.s11{border-left-color:var(--dim)}.box.w10{border-left-color:var(--warn)}
+img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:6px;background:#fff}
+nav{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:8px 0;font-size:.9rem;z-index:5;border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+nav a{color:var(--lit);margin-right:14px;font-weight:600;text-decoration:none}
+a:focus-visible{outline:2px solid var(--lit);outline-offset:2px}
+.draft{position:sticky;top:0}
+</style></head><body><main>
+<p class="sub"><a href="../index.html">← Course home</a> · <a href="../sprint9/index.html">Sprint 9A brief</a> · <a href="../scoreboard/index.html">Scrum Scoreboard</a></p>
+<h1>Sprint 9B: Did our change work?</h1>
+<p class="sub"><b>Sprint 9B</b> runs from Tue 10 Nov to the Sprint Review in class on <b>Mon 16 Nov</b>. Sprint 10 repeats the same test on a second week and ends at <b>Demo Day, Mon 23 Nov</b>.</p>
+<p><b>Sprint 9B goal:</b> by Monday 16 Nov, every team can show, with its own locked numbers, whether the change it wrote down in Sprint 9A made its prediction better, worse or no different, and what it will do about it.</p>
+
+<h2>The idea in one minute</h2>
+<p>In Sprint 9A you measured how wrong your past predictions were and wrote down what you would change. Now you test that change.</p>
+<p>The obvious test is: “Last week we were 3% off. This week, with the change, we were 1% off. It worked.” That test tells you almost nothing. This week might simply have been an easier week to predict, and you would have been 1% off anyway.</p>
+<p>Think of a farmer testing a new fertiliser. Comparing this year’s harvest with last year’s proves nothing, because the weather was different. Planting two halves of the <i>same</i> field, one with the fertiliser and one without, does.</p>
+<p>So this week you lock <b>two predictions for the same Friday</b>:</p>
+<div class="scroll"><table>
+<tr><th></th><th>What it is</th><th>File</th></tr>
+<tr><td><b>A · Old method</b></td><td>Your prediction made the way you made vW9, as if nothing had changed.</td><td><code>predictions/vW10_old.json</code></td></tr>
+<tr><td><b>B · New method</b></td><td>The same prediction with your change applied.</td><td><code>predictions/vW10.json</code></td></tr>
+<tr><td><b>Baseline · Do nothing</b></td><td>Tuesday’s close, the last close anyone knows at the Wednesday lock. Your script adds it; you do not lock it.</td><td>added by <code>engine/check_error.py</code></td></tr>
+</table></div>
+<p>All three face the same market on Friday 13 Nov. The change is the only difference between A and B, so if B lands closer to the close than A, the change gets the credit. The baseline asks the honest question every forecaster has to face: <i>did all our analysis beat simply repeating the last close?</i></p>
+<div class="box w10"><b>One week cannot prove a method.</b> Markets are noisy: a change can win one week by luck and lose the next. That is why Sprint 10 runs the same test on a second week (vW11), and why your verdict on 16 Nov is “keep, adjust or drop for one more test”, not “proven”.</div>
+
+<h2>Where Sprint 9B fits: the Architecture Deep Dive</h2>
+<p>In the <a href="../architecture/index.html">Architecture Deep Dive</a>, Sprint 9A built <b>Stage 6 (Delta Measurement)</b>: how far off you were. Sprint 9B completes <b>Stage 7 (Prescriptions)</b>: a change, applied and tested. By Demo Day your system runs the whole loop: prediction → error → change → tested result.</p>
+
+<h2>Before you start: three things to fix</h2>
+<p>Sprint 9A results stay as they are on the scoreboard. These fixes are not re-scored, but Sprint 9B cannot work without them, because your vW10 errors are added to the same files.</p>
+<ul>
+<li><b>Every row in <code>data/errors.csv</code> uses the Friday close of its own week.</b> Check your vW9 rows against Friday 6 Nov, not Thursday 5 Nov.</li>
+<li><b>Your old predictions table is at exactly <code>data/old_predictions.csv</code></b>, with a blank cell (not “DOWN”, not “NaN”) where a week had no number.</li>
+<li><b>Your sealed prediction files <code>predictions/vW4.json</code> to <code>vW9.json</code> are exactly as they were when locked.</b> If any were edited, restore them from your Git history. From now on they are read-only; any later change to them is shown on the scoreboard.</li>
+</ul>
+
+<h2>Sprint 9B: your five milestones</h2>
+<p>Each milestone is one item in a fixed place by a fixed time, on <code>main</code>. The Scrum Scoreboard shows every team’s result and its actual work, exactly as in Sprint 9A.</p>
+<div class="scroll"><table>
+<tr><th>Deadline (SGT)</th><th>Milestone</th><th>Where</th><th>Owner</th></tr>
+<tr><td>Tue 10 Nov, 23:59</td><td>1. Sprint 9B backlog</td><td>Your team’s FigJam section <b>and</b> <code>docs/backlog-9b.md</code></td><td>R1</td></tr>
+<tr><td>Wed 11 Nov, 23:59</td><td>2. Your change, as rules</td><td><code>docs/change.md</code></td><td>R2, R3, R4, R6</td></tr>
+<tr><td>Wed 11 Nov, 23:59</td><td>3. Two vW10 locks</td><td><code>predictions/vW10_old.json</code> and <code>predictions/vW10.json</code></td><td>R1 (locks), R2, R3, R4, R6</td></tr>
+<tr><td>Sat 14 Nov, 23:59</td><td>4. A/B errors and chart</td><td><code>data/errors.csv</code> (vW10 rows) and <code>ui/index.html</code></td><td>R4, R6, R5</td></tr>
+<tr><td>Sat 14 Nov, 23:59</td><td>5. Did it work?</td><td><code>docs/did_it_work.md</code></td><td>R2, R3, R4, R6</td></tr>
+</table></div>
+<p class="key">Mon 16 Nov: Sprint Review in class, using the <a href="../assets/sprint9b/sprint9b-presentation-template.pptx">Sprint 9B presentation template</a>.</p>
+
+<h3>1. Sprint 9B backlog (FigJam + GitHub)</h3>
+<p>One card for each of milestones 2–5, each with an owner and a one-line “done” statement, in your team’s FigJam section. Copy the same cards into <code>docs/backlog-9b.md</code> and merge it into <code>main</code> by the same deadline. FigJam is where you work; the GitHub copy is what records the time.</p>
+
+<h3>2. Your change, as rules</h3>
+<p>In Sprint 9A each market owner named a change. Now write it as <b>one rule per market</b> that someone outside your team could apply without asking you. One rule only per market, so the A/B test can show what that rule did.</p>
+<pre>docs/change.md
+
+## SPX
+Rule: New-method SPX = old-method SPX reduced by our median SPX error
+over vW4–vW9 (in %), because we were too high in 4 of those 6 weeks.
+Uses only: Tuesday 10 Nov close, data/errors.csv (vW4–vW9).
+Comes from: our SPX rows in data/errors.csv, too high in vW6–vW9.
+Would stop working if: the market turns and rises for several weeks.</pre>
+<p>Each rule must:</p>
+<ul>
+<li><b>Use only information available before Wed 11 Nov 23:59 SGT.</b> At that moment the latest completed US close is <b>Tuesday’s</b>. Wednesday’s and Thursday’s closes do not exist yet, so a rule like “start from Thursday’s close” cannot be applied at the lock.</li>
+<li><b>Produce a number.</b> “Consider recent trends” is not a rule; “subtract 1%” or “use Tuesday’s close if it is below the 20-day average” is.</li>
+<li><b>Point to the error rows it comes from</b>, and say when it would stop working.</li>
+</ul>
+<p>If a market keeps its old method, write <code>Rule: no change</code> for it, and say why.</p>
+
+<h3>3. Two vW10 locks</h3>
+<p>Both files use exactly the Sprint 9A format: numbers only, no % signs, no actual closes. Both are locked by the same deadline, and the old-method file must not borrow anything from the new rule.</p>
+<pre>predictions/vW10_old.json                predictions/vW10.json
+{                                        {
+  "week": "vW10",                          "week": "vW10",
+  "target_date": "2026-11-13",             "target_date": "2026-11-13",
+  "SPX": 7400,                             "SPX": 7330,
+  "NDX": 27100,                            "NDX": 26800,
+  "GOLD": 4080,                            "GOLD": 4080,
+  "TNX": 4.88                              "TNX": 4.84
+}                                        }</pre>
+<p class="key">Example numbers only. Here GOLD is the same in both files because that market’s rule was “no change”.</p>
+<div class="box"><b>Typo check before you lock (R1).</b> Compare every number in both files with Tuesday 10 Nov’s close. Anything more than 10% away is almost certainly a typo, like a yield of 4.15 when it was trading near 5.1. Fix it before 23:59: after the lock it stays as it is.</div>
+
+<h3>4. A/B errors and chart</h3>
+<p>Extend <code>engine/check_error.py</code> so that <code>data/errors.csv</code> gets three vW10 rows per market, one for each method, with a <code>method</code> column:</p>
+<pre>week,target_date,instrument,method,predicted,actual,error,unit
+vW10,2026-11-13,SPX,old,7400,[Fri close],[..],pct
+vW10,2026-11-13,SPX,new,7330,[Fri close],[..],pct
+vW10,2026-11-13,SPX,baseline,[Tue close],[Fri close],[..],pct</pre>
+<p>Same rules as Sprint 9A: actual closes from Yahoo Finance (<code>^GSPC</code>, <code>^NDX</code>, <code>GCZ26.CMX</code>, <code>^TNX</code>), error = (predicted − actual) ÷ actual × 100 for SPX, NDX and GOLD, and in basis points for TNX. Rows vW4–vW9 have <code>old</code> in the <code>method</code> column.</p>
+<div class="box w10"><b>Run the script after the Friday close.</b> The US market closes on Friday at 16:00 New York time, which is about <b>05:00 SGT on Saturday 14 Nov</b>. Run it any time on Saturday after that, and check that the vW10 actual dates say 13 Nov.</div>
+<p>On <code>ui/index.html</code>, add one chart per market showing the three vW10 errors side by side (old, new, baseline) with a zero line, next to your Sprint 9A error charts.</p>
+
+<h3>5. Did it work?</h3>
+<p>In <code>docs/did_it_work.md</code>, one short paragraph per market (SPX, NDX, GOLD, TNX), each written by that market’s owner. Each paragraph must:</p>
+<ul>
+<li>quote the three vW10 error rows from <code>data/errors.csv</code>;</li>
+<li>say whether the new method beat the old one, and whether either beat the Tuesday-close baseline;</li>
+<li>give a verdict for Sprint 10: <b>keep</b> the rule, <b>adjust</b> it once (say exactly how), or <b>drop</b> it.</li>
+</ul>
+<p>An honest “the change did not help” is a good result. The point is that your team can now tell.</p>
+
+<h2>How results are shown</h2>
+<p>Exactly as in Sprint 9A. Only <code>main</code> counts, at exactly the paths above, and arrival times come from GitHub’s own server record. Each milestone shows one result: ✅ On time, ⚠️ Late (with the time it arrived), or ❌ No submission. A result is fixed at its deadline and is not changed afterwards. The scoreboard updates shortly after each deadline: early Wed 11 Nov (milestone 1), early Thu 12 Nov (milestones 2–3) and early Sun 15 Nov (milestones 4–5). Your numbers appear only after the Wednesday lock has passed.</p>
+
+<h2>Path checklist (check on GitHub before each deadline)</h2>
+<div class="scroll"><table>
+<tr><th>Milestone</th><th>Exact path on <code>main</code></th></tr>
+<tr><td>1</td><td><code>docs/backlog-9b.md</code> (plus your FigJam section)</td></tr>
+<tr><td>2</td><td><code>docs/change.md</code></td></tr>
+<tr><td>3</td><td><code>predictions/vW10_old.json</code> · <code>predictions/vW10.json</code></td></tr>
+<tr><td>4</td><td><code>engine/check_error.py</code> · <code>data/errors.csv</code> · <code>ui/index.html</code></td></tr>
+<tr><td>5</td><td><code>docs/did_it_work.md</code></td></tr>
+</table></div>
+<p class="key">Open each file on GitHub, on the <code>main</code> branch, before the deadline. A file in the right folder with the wrong name, or on another branch, does not count.</p>
+
+<h2>Who does what</h2>
+<div class="scroll"><table>
+<tr><th>Role</th><th>Sprint 9B</th></tr>
+<tr><td>R1 Product Owner &amp; Scrum Master</td><td>Backlog on FigJam and in <code>docs/backlog-9b.md</code> (1). Typo check and both vW10 locks (3). Keeps the cards moving.</td></tr>
+<tr><td>R2 Almanac &amp; Macro</td><td>SPX: rule (2), both numbers (3), paragraph (5).</td></tr>
+<tr><td>R3 Technical &amp; Economic</td><td>NDX: rule (2), both numbers (3), paragraph (5).</td></tr>
+<tr><td>R4 Data &amp; Calibration</td><td>Method column and baseline rows in <code>check_error.py</code> (4). GOLD: rule, both numbers, paragraph.</td></tr>
+<tr><td>R5 Human Score &amp; UI</td><td>A/B charts on the team page (4).</td></tr>
+<tr><td>R6 LLM &amp; GitHub</td><td>Runs the script after the Friday close (4). Merges every branch into <code>main</code> on time. TNX: rule, both numbers, paragraph.</td></tr>
+</table></div>
+
+<h2>After Sprint 9B</h2>
+<p><b>Sprint 10 (16–23 Nov)</b> repeats the same A/B test on vW11, using your keep/adjust/drop verdict, so Demo Day on Mon 23 Nov shows two weeks of results for every market.</p>
+
+</main></body></html>

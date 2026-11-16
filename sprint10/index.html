@@ -1,0 +1,163 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CP3405 TR3 — Sprint 10</title>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f5f7;--ink:#17222d;--mute:#5b6875;--card:#ffffff;--line:#d5dbe1;--lit:#0e6e6a;--litbg:#d9efed;--next:#8a6d1f;--nextbg:#f6ecd2;--dim:#9aa5b0;--dimbg:#e7ebef;--warn:#9b2c2c;--warnbg:#f9e3e3;
+color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121a21;--ink:#e6ecf1;--mute:#9fb0bf;--card:#1a242d;--line:#2d3a46;--lit:#5fc9c2;--litbg:#173836;--next:#e2c27a;--nextbg:#3a3220;--dim:#6d7b88;--dimbg:#222d37;--warn:#f0a3a3;--warnbg:#3d2224;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121a21;--ink:#e6ecf1;--mute:#9fb0bf;--card:#1a242d;--line:#2d3a46;--lit:#5fc9c2;--litbg:#173836;--next:#e2c27a;--nextbg:#3a3220;--dim:#6d7b88;--dimbg:#222d37;--warn:#f0a3a3;--warnbg:#3d2224;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:860px;margin:0 auto;padding:28px 18px 60px}
+h1,h2,h3{font-family:Literata,Georgia,serif;line-height:1.25}
+h1{font-size:clamp(1.6rem,4.5vw,2.3rem);margin:.2em 0 .3em}
+h2{font-size:1.45rem;margin:2.2em 0 .5em;padding-top:.6em;border-top:2px solid var(--line)}
+h3{font-size:1.1rem;margin:1.4em 0 .4em}
+p,li{max-width:72ch}
+.draft{background:var(--warnbg);color:var(--warn);padding:10px 14px;border-radius:6px;font-weight:600;font-size:.92rem}
+.sub{color:var(--mute)}
+.pipe{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:18px 0 6px}
+.node{border-radius:8px;padding:8px 6px;text-align:center;font-size:.78rem;font-weight:700;line-height:1.25;border:2px solid transparent}
+.node small{display:block;font-weight:400;font-size:.7rem;margin-top:3px}
+.n-done{background:var(--litbg);color:var(--lit);border-color:var(--lit)}
+.n-s9{background:var(--nextbg);color:var(--next);border-color:var(--next)}
+.n-s10{background:var(--dimbg);color:var(--ink);border:2px dashed var(--mute)}
+.n-s11{background:var(--dimbg);color:var(--dim);border:2px dashed var(--dim)}
+@media (max-width:620px){.pipe{grid-template-columns:repeat(4,1fr)}}
+.key{font-size:.82rem;color:var(--mute)}
+.scroll{overflow-x:auto;margin:10px 0}
+table{border-collapse:collapse;width:100%;font-size:.92rem;min-width:520px}
+th,td{border-bottom:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top}
+th{background:var(--dimbg)}
+code,pre{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.86rem}
+pre{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px;overflow-x:auto}
+.box{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--lit);border-radius:6px;padding:12px 16px;margin:14px 0}
+.box.s10{border-left-color:var(--mute)}.box.s11{border-left-color:var(--dim)}.box.w10{border-left-color:var(--warn)}
+img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:6px;background:#fff}
+nav{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:8px 0;font-size:.9rem;z-index:5;border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+nav a{color:var(--lit);margin-right:14px;font-weight:600;text-decoration:none}
+a:focus-visible{outline:2px solid var(--lit);outline-offset:2px}
+.draft{position:sticky;top:0}
+.rs-chip{display:inline-block;border:2px solid var(--c);color:var(--c);background:#fff;border-radius:999px;padding:1px 9px;font-weight:800;font-size:.82rem;white-space:nowrap;margin:0 2px}.rs-legend .rs-chip{font-size:.85rem}.rs-r4{background:var(--c);color:#fff;box-shadow:0 0 0 3px rgba(0,0,0,.08)}.rs-slot{background:#fff;border:1px solid #e6ebf3;border-left:8px solid var(--c);border-radius:0 12px 12px 0;padding:14px 18px;margin:14px 0}.rs-head{font-size:1.08rem;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:6px}.rs-slotno{background:var(--c);color:#fff;border-radius:6px;padding:2px 9px;font-weight:900;font-size:.85rem}.rs-by{color:#5b6b80}.rs-steps{list-style:none;margin:6px 0;padding:0}.rs-steps li{padding:6px 0;border-top:1px solid #eef2f8;margin:0}.rs-n{display:inline-block;width:24px;height:24px;border-radius:50%;background:#132747;color:#f5b942;text-align:center;line-height:24px;font-weight:900;font-size:.78rem;margin-right:6px}.rs-after{background:#f5f7fb;border-radius:8px;padding:8px 12px;font-size:.9rem;margin:8px 0 0}.rs-fair{background:#fff7ed;border-left:4px solid #c2410c;padding:10px 14px;border-radius:0 8px 8px 0}.rs-chip{background:var(--c)!important;color:#fff!important;border:2px solid var(--c);font-size:.9rem;padding:2px 10px}.rs-r4{background:#fff!important;color:var(--c)!important;border:3px solid var(--c);box-shadow:none}.rs-steps li{color:#1f2937;line-height:1.55}#run-sheet p,#run-sheet li{color:#111827}#run-sheet code{color:#111827;background:#e8edf3;padding:1px 6px;border-radius:4px;font-weight:600}.rs-by{color:#374151!important;font-weight:600}.rs-head b{color:#111827}.rs-fair,.rs-after{color:#111827}</style></head><body><main>
+<p class="sub"><a href="../index.html">← Course home</a> · <a href="../sprint9b/index.html">Sprint 9B brief</a> · <a href="../scoreboard/index.html">Scrum Scoreboard</a></p>
+<h1>Sprint 10: Two weeks of evidence</h1>
+<p class="sub"><b>Sprint 10</b> runs from Tue 17 Nov to <b>Demo Day, Mon 23 Nov</b>. It is the last sprint of the trimester.</p>
+<p><b>Sprint 10 goal:</b> by Demo Day, every team can show, with its own locked numbers, how its prediction system performed over <b>two</b> A/B weeks (vW10 and vW11), and which method it would keep.</p>
+
+<h2>The idea in one minute</h2>
+<p>In Sprint 9B you tested your change on one week and gave each market a verdict: keep, adjust or drop. One week can be luck. Sprint 10 runs <b>the same test on a second week</b>, so your Demo Day result rests on two weeks, not one.</p>
+<div class="scroll"><table>
+<tr><th></th><th>What it is</th><th>File</th></tr>
+<tr><td><b>A · Old method</b></td><td>Your prediction made the way you made vW9, as if nothing had changed.</td><td><code>predictions/vW11_old.json</code></td></tr>
+<tr><td><b>B · New method</b></td><td>The same prediction with your Sprint 9B verdict applied (see milestone 2).</td><td><code>predictions/vW11.json</code></td></tr>
+<tr><td><b>Baseline · Do nothing</b></td><td>Tuesday 17 Nov’s close, the last close anyone knows at the Wednesday lock. Your script adds it; you do not lock it.</td><td>added by <code>engine/check_error.py</code></td></tr>
+</table></div>
+<p>All three face the same market on <b>Friday 20 Nov</b>. Same test, same rules, same files as Sprint 9B, one week later.</p>
+<div class="box w10"><b>No locked vW10 in Sprint 9B?</b> Then vW11 is your first locked A/B test. Use the rules in your <code>docs/change.md</code> as written, lock both vW11 files on time, and on Demo Day say plainly that you have one locked week, not two. One honest locked week is worth far more than two unlocked ones.</div>
+
+<h2>Where Sprint 10 fits: the Architecture Deep Dive</h2>
+<p>In the <a href="../architecture/index.html">Architecture Deep Dive</a>, Sprint 9A built <b>Stage 6 (Delta Measurement)</b> and Sprint 9B <b>Stage 7 (Prescriptions)</b>. Sprint 10 runs the whole loop a second time, prediction → error → change → tested result, and Demo Day shows it working end to end.</p>
+
+<h2>Sprint 10: your five milestones</h2>
+<p>Each milestone is one item in a fixed place by a fixed time, on <code>main</code>. The Scrum Scoreboard shows every team’s result and its actual work, exactly as in Sprint 9B.</p>
+<div class="scroll"><table>
+<tr><th>Deadline (SGT)</th><th>Milestone</th><th>Where</th><th>Owner</th></tr>
+<tr><td>Tue 17 Nov, 23:59</td><td>1. Sprint 10 backlog</td><td>Your team’s FigJam section <b>and</b> <code>docs/backlog-10.md</code></td><td>R1</td></tr>
+<tr><td>Tue 17 Nov, 23:59</td><td>2. Rules for vW11</td><td><code>docs/change-10.md</code></td><td>R2, R3, R4, R6</td></tr>
+<tr><td>Wed 18 Nov, 23:59</td><td>3. Two vW11 locks</td><td><code>predictions/vW11_old.json</code> and <code>predictions/vW11.json</code></td><td>R1 (locks), R2, R3, R4, R6</td></tr>
+<tr><td>Sat 21 Nov, 23:59</td><td>4. Two-week errors and chart</td><td><code>data/errors.csv</code> (vW11 rows) and <code>ui/index.html</code></td><td>R4, R6, R5</td></tr>
+<tr><td>Sat 21 Nov, 23:59</td><td>5. Final verdict</td><td><code>docs/final_verdict.md</code></td><td>R2, R3, R4, R6</td></tr>
+</table></div>
+<p><b>Mon 23 Nov: Demo Day</b> in class (see the end of this page).</p>
+
+<h3>1. Sprint 10 backlog (FigJam + GitHub)</h3>
+<p>One card for each of milestones 2–5 and one for the Demo Day presentation, each with an owner and a one-line “done” statement, in your team’s FigJam section. Copy the same cards into <code>docs/backlog-10.md</code> and merge it into <code>main</code> by the deadline. FigJam is where you work; the GitHub copy is what records the time.</p>
+
+<h3>2. Rules for vW11</h3>
+<p>In <code>docs/change-10.md</code>, one section per market, written by that market’s owner. Each section applies the verdict from your <code>docs/did_it_work.md</code>, and nothing else:</p>
+<ul>
+<li><b>Keep:</b> copy the Sprint 9B rule unchanged.</li>
+<li><b>Adjust:</b> write the rule with the one adjustment your verdict described, and quote that sentence from <code>did_it_work.md</code>.</li>
+<li><b>Drop:</b> write <code>Rule: no change</code>. The new-method number for that market is then the same as the old-method number.</li>
+</ul>
+<pre>docs/change-10.md
+## SPX
+Verdict from did_it_work.md: adjust ("halve the correction")
+Rule: New-method SPX = old-method SPX reduced by half our median SPX error
+over vW4–vW10 (in %).
+Uses only: Tuesday 17 Nov close, data/errors.csv (vW4–vW10).</pre>
+<p>No brand-new rules this week. A rule that changes every week cannot be tested, and the point of Sprint 10 is a second, comparable result. Each rule must use only information available before Wed 18 Nov 23:59 SGT (the latest US close then is <b>Tuesday 17 Nov</b>) and must produce a number.</p>
+
+<h3>3. Two vW11 locks</h3>
+<p>Exactly the Sprint 9B format: numbers only, no % signs, no actual closes, both locked by the deadline, and the old-method file must not borrow anything from the new rule.</p>
+<pre>predictions/vW11_old.json                predictions/vW11.json
+{                                        {
+  "week": "vW11",                          "week": "vW11",
+  "target_date": "2026-11-20",             "target_date": "2026-11-20",
+  "SPX": 7600,                             "SPX": 7560,
+  "NDX": 28100,                            "NDX": 27950,
+  "GOLD": 3900,                            "GOLD": 3900,
+  "TNX": 5.12                              "TNX": 5.12
+}                                        }</pre>
+<p class="key">Example numbers only. Here GOLD and TNX are the same in both files because those markets’ verdict was “drop”.</p>
+<p><b>Typo check before you lock (R1).</b> Compare every number in both files with Tuesday 17 Nov’s close. Anything more than 10% away is almost certainly a typo. Fix it before 23:59: after the lock it stays as it is. Your sealed files <code>vW4.json</code> to <code>vW10.json</code> and <code>vW10_old.json</code> stay exactly as they are.</p>
+
+<h3>4. Two-week errors and chart</h3>
+<p>Run <code>engine/check_error.py</code> after the Friday close so that <code>data/errors.csv</code> gets three vW11 rows per market, in the same format as vW10:</p>
+<pre>week,target_date,instrument,method,predicted,actual,error,unit
+vW11,2026-11-20,SPX,old,7600,[Fri close],[..],pct
+vW11,2026-11-20,SPX,new,7560,[Fri close],[..],pct
+vW11,2026-11-20,SPX,baseline,[Tue close],[Fri close],[..],pct</pre>
+<p>Same rules as Sprint 9B: actual closes from Yahoo Finance (<code>^GSPC</code>, <code>^NDX</code>, <code>GCZ26.CMX</code>, <code>^TNX</code>); error in % for SPX, NDX and GOLD, in basis points for TNX. The US market closes on Friday 20 Nov at 16:00 New York time, about <b>05:00 SGT on Saturday 21 Nov</b>. Run the script after that and check that the vW11 actual dates say 20 Nov. Do not change your vW4–vW10 rows.</p>
+<p>On <code>ui/index.html</code>, extend each market’s A/B chart to show <b>both weeks</b>: old, new and baseline for vW10 and for vW11, with a zero line.</p>
+
+<h3>5. Final verdict</h3>
+<p>In <code>docs/final_verdict.md</code>, one short paragraph per market, written by that market’s owner. Each paragraph must:</p>
+<ul>
+<li>quote the vW10 and vW11 error rows from <code>data/errors.csv</code> (six rows; three if you have only vW11);</li>
+<li>give the average size of the error (ignore the sign) for old, new and baseline across the locked weeks, and say which was smallest;</li>
+<li>give a final verdict: which method your system would use from now on, and one sentence on what would make you change your mind.</li>
+</ul>
+<p>Two weeks is still not proof, and saying so is part of a good answer. A team that shows clearly that its change did not beat the baseline has done the job well.</p>
+
+<h2>How results are shown</h2>
+<p>Exactly as in Sprint 9B. Only <code>main</code> counts, at exactly the paths above, and arrival times come from GitHub’s own server record. Each milestone shows one result: ✅ On time, ⚠️ Late (with the time it arrived), or ❌ No submission. A result is fixed at its deadline and is not changed afterwards. The scoreboard updates shortly after each deadline: early Wed 18 Nov (milestones 1–2), early Thu 19 Nov (milestone 3) and early Sun 22 Nov (milestones 4–5). Your numbers appear only after the Wednesday lock has passed.</p>
+
+<h2>Path checklist (check on GitHub before each deadline)</h2>
+<div class="scroll"><table>
+<tr><th>Milestone</th><th>Exact path on <code>main</code></th></tr>
+<tr><td>1</td><td><code>docs/backlog-10.md</code> (plus your FigJam section)</td></tr>
+<tr><td>2</td><td><code>docs/change-10.md</code></td></tr>
+<tr><td>3</td><td><code>predictions/vW11_old.json</code> · <code>predictions/vW11.json</code></td></tr>
+<tr><td>4</td><td><code>engine/check_error.py</code> · <code>data/errors.csv</code> · <code>ui/index.html</code></td></tr>
+<tr><td>5</td><td><code>docs/final_verdict.md</code></td></tr>
+</table></div>
+<p class="key">Open each file on GitHub, on the <code>main</code> branch, before the deadline. A file in the right folder with the wrong name, or on another branch, does not count.</p>
+
+<h2>Who does what</h2>
+<div class="scroll"><table>
+<tr><th>Role</th><th>Sprint 10</th></tr>
+<tr><td>R1 Product Owner &amp; Scrum Master</td><td>Backlog on FigJam and in <code>docs/backlog-10.md</code> (1). Typo check and both vW11 locks (3). Attendance slide and Demo Day running order.</td></tr>
+<tr><td>R2 Almanac &amp; Macro</td><td>SPX: rule (2), both numbers (3), final paragraph (5).</td></tr>
+<tr><td>R3 Technical &amp; Economic</td><td>NDX: rule (2), both numbers (3), final paragraph (5).</td></tr>
+<tr><td>R4 Data &amp; Calibration</td><td>vW11 rows in <code>errors.csv</code> (4). GOLD: rule, both numbers, final paragraph.</td></tr>
+<tr><td>R5 Human Score &amp; UI</td><td>Two-week A/B charts on the team page (4). Opens Demo Day on the live page.</td></tr>
+<tr><td>R6 LLM &amp; GitHub</td><td>Runs the script after the Friday close (4). Merges every branch into <code>main</code> on time. TNX: rule, both numbers, final paragraph.</td></tr>
+</table></div>
+
+<h2>Demo Day: Mon 23 Nov</h2>
+<p>One presentation per team, about 15 minutes, opening with your live <code>ui/index.html</code>. It covers your whole system: the loop from prediction to error to change to tested result, and your two-week verdict. The Demo Day presentation template and the full run sheet will be posted here before class.</p>
+<p class="rs-fair"><b>Same rules as 16 Nov.</b> Attendance slide first (now up to 23 Nov). Every member presents their own part. Every number must match your files on <code>main</code> at the Sat 21 Nov 23:59 deadline.</p>
+<div class="rs-legend"><span class="rs-chip" style="--c:#1d4ed8">Team 1</span><span class="rs-chip" style="--c:#15803d">Team 2</span><span class="rs-chip" style="--c:#7e22ce">Team 3</span><span class="rs-chip" style="--c:#c2410c">Team 4</span></div>
+<div class="scroll"><table>
+<tr><th>Order</th><th>Presents</th><th>Checked by (R4)</th></tr>
+<tr><td>Practical A · 1</td><td><span class="rs-chip" style="--c:#7e22ce">Team 3</span></td><td><span class="rs-chip rs-r4" style="--c:#15803d">Team 2 · R4</span></td></tr>
+<tr><td>Practical A · 2</td><td><span class="rs-chip" style="--c:#1d4ed8">Team 1</span></td><td><span class="rs-chip rs-r4" style="--c:#7e22ce">Team 3 · R4</span></td></tr>
+<tr><td>Practical A · 3</td><td><span class="rs-chip" style="--c:#15803d">Team 2</span></td><td><span class="rs-chip rs-r4" style="--c:#1d4ed8">Team 1 · R4</span></td></tr>
+<tr><td>Practical B</td><td><span class="rs-chip" style="--c:#c2410c">Team 4</span></td><td><span class="rs-chip rs-r4" style="--c:#c2410c">Team 4 · R4</span></td></tr>
+</table></div>
+<p class="key">Order and checkers rotate again from 16 Nov, so no team checks the same team twice.</p>
+</main></body></html>
